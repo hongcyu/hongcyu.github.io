@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>test</title>
+      <link href="/2019/07/26/test/"/>
+      <url>/2019/07/26/test/</url>
+      
+        <content type="html"><![CDATA[<p>&lt;Excerpt in index | 首页摘要&gt;<br>这是一个摘要！<br>+<a id="more"></a><br>&lt;The rest of contents | 余下全文&gt;<br>这是一个正文！</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo的简单命令</title>
       <link href="/2019/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/"/>
       <url>/2019/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</url>
