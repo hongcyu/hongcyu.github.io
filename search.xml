@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Typora极简教程]]></title>
+    <url>%2F2019%2F07%2F27%2FTypora%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[摘要：” Markdown 是一种轻量级标记语言，创始人是约翰·格鲁伯（John Gruber）。它允许人们 “使用易读易写的纯文本格式编写文档，然后转换成有效的 HTML 文档。” 1.下载Typora官方下载：https://www.typora.io/#download 2.常用快捷键 加粗： Ctrl/Cmd + B 标题： Ctrl/Cmd + H 插入链接： Ctrl/Cmd + K 插入代码： Ctrl/Cmd + Shift + C 行内代码： Ctrl/Cmd + Shift + K 插入图片： Ctrl/Cmd + Shift + I 无序列表： Ctrl/Cmd + Shift + L 撤销： Ctrl/Cmd + Z 一级标题：快捷键为Ctrl + 1，以此类推 3.引用文字1234&gt; + 空格 + 引用文字&gt; 引用内容1&gt; 引用内容2&gt;&gt; 引用内容3 引用内容1引用内容2 引用内容3 4.列表输入 列表内容 将创建一个无序列表，该符号可以替换为+或-。 4.1 无序列表123* 无序列表1+ 无序列表2- 无序列表3 无序列表1 无序列表2 无序列表3 4.2 有序列表1231. 有序列表12. 有序列表23. 有序列表3 有序列表1 有序列表2 有序列表3 4.3 多行无序列表123* 多行无序列表1TAB * 多行无序列表2TAB TAB * 多行无序列表3 多行无序列表1 多行无序列表2 多行无序列表3 4.4 任务列表123-[ ] 不抽烟-[x] 不喝酒-[ ] 不烫头 -[ ] 不抽烟-[x] 不喝酒-[ ] 不烫头 4.5 表格123456|姓名|性别|年龄|手机号||:---|:--:|:--:|---:||居左|居中|居中|居右||张三|男|21|18975346876||李四|女|23|17789548964||王五|男|25|15876513546| 姓名 性别 年龄 手机号 居左 居中 居中 居右 张三 男 21 18975346876 李四 女 23 17789548964 王五 男 25 15876513546 5.链接5.1 图片5.1.1 本地图片1[图片上传失败...(image-61fd19-1520850984854)] 5.1.2 网络图片1![pikachu.jpg](https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1564157419510&amp;di=e96d9359d9cba4b936ed55eb804c54bb&amp;imgtype=0&amp;src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg) 5.2 超链接5.2.1 行内式链接1[我的博客][https://hongcyu.github.io] [我的博客][https://hongcyu.github.io] 5.2.2 参考式链接12[CSDN][CSDN网址][CSDN网址]:https://www.csdn.net/ CSDN 5.2.3 自动链接123&lt;https://www.github.com&gt;或https://www.github.com https://www.github.com https://www.github.com 6.其他6.1 斜体12*斜体*_斜体_ 斜体斜体 6.2 加粗12**加粗**__加粗__ 加粗加粗 6.3 下划线1&lt;u&gt;下划线&lt;/u&gt; 下划线 6.4 删除线1~~删除线~~ 删除线 6.5 分隔线123***---___ 6.6 注脚12Typora[^1][^1]A markdown editor Typora[^1][^1]A markdown editor 6.7 符号的输入123456789101112\\ 反斜线\` 反引号\* 星号\_ 底线\&#123; \&#125; 花括号\[ \] 方括号\( \) 括弧\# 井字号\+ 加号\- 减号\. 英文句点\! 惊叹号 \ 反斜线` 反引号* 星号_ 底线{ } 花括号[ ] 方括号( ) 括弧# 井字号+ 加号- 减号. 英文句点! 惊叹号 6.8 特殊字符1234567891011121314151617181920&amp;copy; 版权 &amp;reg; 注册商标&amp;trade; 商标&amp;nbsp; 空格&amp;amp; 和号&amp;quot; 引号&amp;apos; 撇号&amp;lt; 小于号&amp;gt; 大于号&amp;ne; 不等号&amp;le; 小于等于&amp;ge; 大于等于&amp;cent; 分&amp;pound; 磅&amp;euro; 欧元&amp;yen; 元&amp;sect; 节&amp;times; 乘号&amp;divide; 除号&amp;plusmn; 正负号 &copy; 版权&reg; 注册商标&trade; 商标&nbsp; 空格&amp; 和号&quot; 引号&apos; 撇号&lt; 小于号&gt; 大于号&ne; 不等号&le; 小于等于&ge; 大于等于&cent; 分&pound; 磅&euro; 欧元&yen; 元&sect; 节&times; 乘号&divide; 除号&plusmn; 正负号 附件：[HTML特殊字符编码对照表][https://www.jb51.net/onlineread/htmlchar.htm]]]></content>
+      <tags>
+        <tag>Typora</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Post Format]]></title>
     <url>%2F2019%2F07%2F26%2FPost-Format%2F</url>
     <content type="text"><![CDATA[一些post的书写格式。 写作介绍1，字体介绍这是斜体 或 这也是斜体这是粗体这是加粗斜体这是删除线 2，分级标题一级标题二级标题三级标题3，超链接写法： 行内形式：我的博客 自动链接：我的博客地址https://hongcyu.github.io/ 4,列表无序列表：写法： 无序列表项1 无序列表项2 无序列表项3 有序列表：写法：1.有序列表项12.有序列表项23.有序列表项3 5，插入图片在 Hexo 中插入图片，首先需要将图片放在 source/img/ 文件夹下，然后如下方式进行插入： 6，表格 表头1 表头2 表头3 表头4 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2019%2F07%2F26%2Ftest%2F</url>
-    <content type="text"><![CDATA[这是一个摘要！ 这是一个正文1！213123123123 这是一个正文2！这是一个正文2-1！]]></content>
-      <tags>
-        <tag>test</tag>
-      </tags>
   </entry>
   <entry>
     <title><![CDATA[hexo的简单命令]]></title>
