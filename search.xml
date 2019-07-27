@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[Post Format]]></title>
-    <url>%2F2019%2F07%2F26%2FPost-Format%2F</url>
-    <content type="text"><![CDATA[一些post的书写格式。 写作介绍1，字体介绍这是斜体 或 这也是斜体这是粗体这是加粗斜体这是删除线 2，分级标题一级标题二级标题三级标题3，超链接写法： 行内形式：我的博客 自动链接：我的博客地址https://hongcyu.github.io/ 4,列表无序列表：写法： 无序列表项1 无序列表项2 无序列表项3 有序列表：写法：1.有序列表项12.有序列表项23.有序列表项3 5，插入图片在 Hexo 中插入图片，首先需要将图片放在 source/img/ 文件夹下，然后如下方式进行插入： 6，表格 表头1 表头2 表头3 表头4 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2019%2F07%2F26%2Ftest%2F</url>
-    <content type="text"><![CDATA[这是一个摘要！ 这是一个正文1！213123123123 这是一个正文2！这是一个正文2-1！]]></content>
-      <tags>
-        <tag>test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[hexo的简单命令]]></title>
-    <url>%2F2019%2F07%2F25%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0%2F</url>
-    <content type="text"><![CDATA[介绍了Hexo的一些简单命令。 hexo s启动本地服务器，用于预览主题。默认地址： http://localhost:4000/hexo s 是 hexo server 的缩写，命令效果一致；预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。 hexo new “学习笔记”新建一篇标题为 学习笔记 的文章，因为标题里有空格，所以加上了引号。文章标题可以在对应 md 文件里改，新建时标题可以写的简单些。 hexo d自动生成网站静态文件，并部署到设定的仓库。hexo d 是 hexo deploy 的缩写，命令效果一致。 hexo clean清除缓存文件 db.json 和已生成的静态文件 public 。网站显示异常时可以执行这条命令试试。 hexo g生成网站静态文件到默认设置的 public 文件夹。便于查看网站生成的静态文件或者手动部署网站；如果使用自动部署，不需要先执行该命令；hexo g 是 hexo generate 的缩写，命令效果一致。 hexo new page aboutme新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/标题可以为中文，但一般习惯用英文；页面标题和文章一样可以随意修改；页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。 参考文献https://www.bilibili.com/video/av44544186https://blog.csdn.net/dxxzst/article/details/76135935]]></content>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Post Format</title>
+      <link href="/2019/07/26/Post-Format/"/>
+      <url>/2019/07/26/Post-Format/</url>
+      
+        <content type="html"><![CDATA[<p>一些post的书写格式。</p><a id="more"></a><h1 id="写作介绍"><a href="#写作介绍" class="headerlink" title="写作介绍"></a>写作介绍</h1><h2 id="1，字体介绍"><a href="#1，字体介绍" class="headerlink" title="1，字体介绍"></a>1，字体介绍</h2><p><em>这是斜体</em> 或 <em>这也是斜体</em><br><strong>这是粗体</strong><br><strong><em>这是加粗斜体</em></strong><br><del>这是删除线</del></p><h2 id="2，分级标题"><a href="#2，分级标题" class="headerlink" title="2，分级标题"></a>2，分级标题</h2><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h2 id="3，超链接"><a href="#3，超链接" class="headerlink" title="3，超链接"></a>3，超链接</h2><p>写法：</p><p>行内形式：<a href="https://hongcyu.github.io/" target="_blank" rel="noopener">我的博客</a></p><p>自动链接：我的博客地址<a href="https://hongcyu.github.io/" target="_blank" rel="noopener">https://hongcyu.github.io/</a></p><h2 id="4-列表"><a href="#4-列表" class="headerlink" title="4,列表"></a>4,列表</h2><p>无序列表：<br>写法：</p><ul><li>无序列表项1</li></ul><ul><li>无序列表项2</li></ul><ul><li>无序列表项3</li></ul><p>有序列表：<br>写法：<br>1.有序列表项1<br>2.有序列表项2<br>3.有序列表项3</p><h2 id="5，插入图片"><a href="#5，插入图片" class="headerlink" title="5，插入图片"></a>5，插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/img/ 文件夹下，然后如下方式进行插入：</p><p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564157419510&di=e96d9359d9cba4b936ed55eb804c54bb&imgtype=0&src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg" alt="pikachu"></p><h2 id="6，表格"><a href="#6，表格" class="headerlink" title="6，表格"></a>6，表格</h2><table><thead><tr><th>表头1</th><th align="left">表头2</th><th align="center">表头3</th><th align="right">表头4</th></tr></thead><tbody><tr><td>默认左对齐</td><td align="left">左对齐</td><td align="center">居中对其</td><td align="right">右对齐</td></tr><tr><td>默认左对齐</td><td align="left">左对齐</td><td align="center">居中对其</td><td align="right">右对齐</td></tr><tr><td>默认左对齐</td><td align="left">左对齐</td><td align="center">居中对其</td><td align="right">右对齐</td></tr></tbody></table>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2019/07/26/test/"/>
+      <url>/2019/07/26/test/</url>
+      
+        <content type="html"><![CDATA[<p>这是一个摘要！</p><a id="more"></a><h2 id="这是一个正文1！"><a href="#这是一个正文1！" class="headerlink" title="这是一个正文1！"></a>这是一个正文1！</h2><p>213123123123</p><hr><h2 id="这是一个正文2！"><a href="#这是一个正文2！" class="headerlink" title="这是一个正文2！"></a>这是一个正文2！</h2><h2 id="这是一个正文2-1！"><a href="#这是一个正文2-1！" class="headerlink" title="这是一个正文2-1！ "></a>这是一个正文2-1！ </h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo的简单命令</title>
+      <link href="/2019/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/"/>
+      <url>/2019/07/25/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<p>介绍了Hexo的一些简单命令。</p><a id="more"></a><h2 id="hexo-s"><a href="#hexo-s" class="headerlink" title="hexo s"></a>hexo s</h2><p>启动本地服务器，用于预览主题。默认地址： <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a><br>hexo s 是 hexo server 的缩写，命令效果一致；<br>预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；<br>对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。</p><hr><h2 id="hexo-new-“学习笔记”"><a href="#hexo-new-“学习笔记”" class="headerlink" title="hexo new “学习笔记”"></a>hexo new “学习笔记”</h2><p>新建一篇标题为 学习笔记 的文章，因为标题里有空格，所以加上了引号。<br>文章标题可以在对应 md 文件里改，新建时标题可以写的简单些。</p><hr><h2 id="hexo-d"><a href="#hexo-d" class="headerlink" title="hexo d"></a>hexo d</h2><p>自动生成网站静态文件，并部署到设定的仓库。<br>hexo d 是 hexo deploy 的缩写，命令效果一致。</p><hr><h2 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h2><p>清除缓存文件 db.json 和已生成的静态文件 public 。<br>网站显示异常时可以执行这条命令试试。</p><hr><h2 id="hexo-g"><a href="#hexo-g" class="headerlink" title="hexo g"></a>hexo g</h2><p>生成网站静态文件到默认设置的 public 文件夹。<br>便于查看网站生成的静态文件或者手动部署网站；<br>如果使用自动部署，不需要先执行该命令；<br>hexo g 是 hexo generate 的缩写，命令效果一致。</p><hr><h2 id="hexo-new-page-aboutme"><a href="#hexo-new-page-aboutme" class="headerlink" title="hexo new page aboutme"></a>hexo new page aboutme</h2><p>新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/<br>标题可以为中文，但一般习惯用英文；<br>页面标题和文章一样可以随意修改；<br>页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。</p><hr><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.bilibili.com/video/av44544186" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186</a><br><a href="https://blog.csdn.net/dxxzst/article/details/76135935" target="_blank" rel="noopener">https://blog.csdn.net/dxxzst/article/details/76135935</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
