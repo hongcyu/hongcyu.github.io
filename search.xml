@@ -9,11 +9,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Post Format]]></title>
-    <url>%2F2019%2F07%2F26%2FPost-Format%2F</url>
-    <content type="text"><![CDATA[一些post的书写格式。 写作介绍1，字体介绍这是斜体 或 这也是斜体这是粗体这是加粗斜体这是删除线 2，分级标题一级标题二级标题三级标题3，超链接写法： 行内形式：我的博客 自动链接：我的博客地址https://hongcyu.github.io/ 4,列表无序列表：写法： 无序列表项1 无序列表项2 无序列表项3 有序列表：写法：1.有序列表项12.有序列表项23.有序列表项3 5，插入图片在 Hexo 中插入图片，首先需要将图片放在 source/img/ 文件夹下，然后如下方式进行插入： 6，表格 表头1 表头2 表头3 表头4 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐 默认左对齐 左对齐 居中对其 右对齐]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[hexo的简单命令]]></title>
     <url>%2F2019%2F07%2F25%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0%2F</url>
     <content type="text"><![CDATA[介绍了Hexo的一些简单命令。 hexo s启动本地服务器，用于预览主题。默认地址： http://localhost:4000/hexo s 是 hexo server 的缩写，命令效果一致；预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。 hexo new “学习笔记”新建一篇标题为 学习笔记 的文章，因为标题里有空格，所以加上了引号。文章标题可以在对应 md 文件里改，新建时标题可以写的简单些。 hexo d自动生成网站静态文件，并部署到设定的仓库。hexo d 是 hexo deploy 的缩写，命令效果一致。 hexo clean清除缓存文件 db.json 和已生成的静态文件 public 。网站显示异常时可以执行这条命令试试。 hexo g生成网站静态文件到默认设置的 public 文件夹。便于查看网站生成的静态文件或者手动部署网站；如果使用自动部署，不需要先执行该命令；hexo g 是 hexo generate 的缩写，命令效果一致。 hexo new page aboutme新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/标题可以为中文，但一般习惯用英文；页面标题和文章一样可以随意修改；页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。 参考文献https://www.bilibili.com/video/av44544186https://blog.csdn.net/dxxzst/article/details/76135935]]></content>
