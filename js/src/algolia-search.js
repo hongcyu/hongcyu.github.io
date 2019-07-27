@@ -105,17 +105,10 @@ $(document).ready(function() {
     $('#algolia-search-input').find('input').focus();
   });
 
-  function onPopupClose() {
+  $('.popup-btn-close').click(function() {
     $('.popup').hide();
     $('.algolia-pop-overlay').remove();
     $('body').css('overflow', '');
-  }
-  $('.popup-btn-close').click(onPopupClose);
-
-  $(document).on('keyup', function(event) {
-    var shouldDismissSearchPopup = event.which === 27 && $('.search-popup').is(':visible');
-    if (shouldDismissSearchPopup) {
-      onPopupClose();
-    }
   });
+
 });
