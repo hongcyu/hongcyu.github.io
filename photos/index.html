@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content=".main-inner{         width: 100%;     }     .main {     padding-bottom: 150px;     margin-top: 0px;     background: #121212;     }     .main-inner{         margin-top: unset;     }     .page-post">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T04:47:52.472Z">
+<meta property="og:updated_time" content="2019-12-06T12:59:57.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hongCYu&#39;s Blog">
 <meta name="twitter:description" content=".main-inner{         width: 100%;     }     .main {     padding-bottom: 150px;     margin-top: 0px;     background: #121212;     }     .main-inner{         margin-top: unset;     }     .page-post">
@@ -705,14 +705,7 @@ for (var i = 0; i < content.length; i++) {
         conBox.appendChild(item);
     }
 
-        for (var j = 1; j < content[i].length && j < showNum+1; j++) {
-            var con=content[i][j].url;
-        var item=document.createElement("li");
-        if(con.substring(0,con.length-4) != "surface"){
-            item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
-            conBox.appendChild(item);
-        }
-    }
+
     if(content[i].length > showNum){
         var moreItem=document.createElement("button");
         moreItem.className="btn-more-posts";
