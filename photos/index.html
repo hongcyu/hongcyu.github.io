@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T13:53:28.675Z">
+<meta property="og:updated_time" content="2019-12-06T13:56:14.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="光影流年">
 <meta name="twitter:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
@@ -461,7 +461,6 @@
     /*修改相册页面内容宽度为全屏*/
     .main-inner{
         width: 100%;
-        margin-top: unset;
     }
 
     /*修改主体页面样式*/
@@ -469,6 +468,9 @@
         padding-bottom: 150px;
         margin-top: 0px;
         background: #121212;
+    }
+    .main-inner{
+        margin-top: unset;
     }
 
     /*body体样式*/
@@ -595,7 +597,7 @@
         height: 580px;
         cursor: unset !important;
         -webkit-box-sizing: border-box;
-        /*box-sizing: border-box;*/
+        box-sizing: border-box;
     }
     .btn-more-posts{
         display: inline-block;
@@ -700,7 +702,7 @@ xmlDoc=loadXMLDoc("https://photos-1251459134.cos.ap-guangzhou.myqcloud.com");
 var urls = xmlDoc.getElementsByTagName('Key');
 var date = xmlDoc.getElementsByTagName('LastModified');
 var wid = 350;
-var showNum = 21; //每个相册一次展示多少照片
+var showNum = 12; //每个相册一次展示多少照片
 if ((window.innerWidth) > 1200) { wid = (window.innerWidth * 3) / 18;}
 var box = document.getElementById('box');
 var i = 0;
@@ -728,13 +730,13 @@ for (var i = 0; i < content.length; i++) {
     box.appendChild(conBox);
     var item=document.createElement("div");
     var title=content[i][0].url;
-    item.innerHTML="<button class=title style=background:url(https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + "封面.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
+    item.innerHTML="<button class=title style=background:url(https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + "surface.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
     conBox.appendChild(item);
 
         for (var j = 1; j < content[i].length && j < showNum+1; j++) {
             var con=content[i][j].url;
         var item=document.createElement("li");
-        if(con.substring(0,con.length-4) != "封面"){
+        if(con.substring(0,con.length-4) != "surface"){
             item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
             conBox.appendChild(item);
         }
@@ -773,6 +775,7 @@ function moreClick(obj,cur,cont,title){
     }
 }
 </script>
+
         
       </div>
       
