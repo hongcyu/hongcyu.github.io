@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T13:09:21.521Z">
+<meta property="og:updated_time" content="2019-12-06T13:13:41.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="光影流年">
 <meta name="twitter:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
@@ -728,7 +728,7 @@ for (var i = 0; i < content.length; i++) {
     box.appendChild(conBox);
     var item=document.createElement("div");
     var title=content[i][0].url;
-    item.innerHTML="<button class=title style=background:url(https://photos-1251459134.cos.ap-guangzhou.myqcloud.com" + title + "surface.jpg"+");><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
+    item.innerHTML="<button class=title style=background:url(https://photos-1251459134.cos.ap-guangzhou.myqcloud.com" + title + "surface.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
     conBox.appendChild(item);
 
         for (var j = 1; j < content[i].length && j < showNum+1; j++) {
