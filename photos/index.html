@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-06T13:56:14.706Z">
+<meta property="og:updated_time" content="2019-12-07T10:46:09.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="光影流年">
 <meta name="twitter:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
@@ -697,12 +697,13 @@ function loadXMLDoc(xmlUrl)
     return xmlDoc; 
 }
 
-xmlDoc=loadXMLDoc("https://photos-1251459134.cos.ap-guangzhou.myqcloud.com");
+var xmllink="https://photos-1251459134.cos.ap-guangzhou.myqcloud.com"
+xmlDoc=loadXMLDoc(xmllink);
 
 var urls = xmlDoc.getElementsByTagName('Key');
 var date = xmlDoc.getElementsByTagName('LastModified');
 var wid = 350;
-var showNum = 12; //每个相册一次展示多少照片
+var showNum = 13; //每个相册一次展示多少照片，为4的倍数+1
 if ((window.innerWidth) > 1200) { wid = (window.innerWidth * 3) / 18;}
 var box = document.getElementById('box');
 var i = 0;
@@ -730,14 +731,14 @@ for (var i = 0; i < content.length; i++) {
     box.appendChild(conBox);
     var item=document.createElement("div");
     var title=content[i][0].url;
-    item.innerHTML="<button class=title style=background:url(https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + "surface.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
+    item.innerHTML="<button class=title style=background:url("+xmllink+'/' + title + "surface.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
     conBox.appendChild(item);
 
         for (var j = 1; j < content[i].length && j < showNum+1; j++) {
             var con=content[i][j].url;
         var item=document.createElement("li");
         if(con.substring(0,con.length-4) != "surface"){
-            item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/" + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
+            item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src="+xmllink+'/' + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
             conBox.appendChild(item);
         }
     }
@@ -763,7 +764,7 @@ function moreClick(obj,cur,cont,title){
     for ( ; j < cont.length && j < Number(showNum) + Number(begin); j++) {
         var con=cont[j].url;
         var item=document.createElement("li");
-        item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src=https://photos-1251459134.cos.ap-guangzhou.myqcloud.com/"+title+con+" alt="+con+"></div><span>"+con.substring(0,con.length-4);
+        item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src="+xmllink+'/'+title+con+" alt="+con+"></div><span>"+con.substring(0,con.length-4);
         parent.appendChild(item);
         var v=item.getElementsByTagName('img');
         v[0].id=imgid;
