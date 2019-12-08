@@ -100,20 +100,31 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hongCYu&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/Hexo/Blog/index.html">
+  <meta name="description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
+<meta name="keywords" content="操作系统,调度算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统——几种常见的调度算法">
+<meta property="og:url" content="http://yoursite.com/2019/12/07/操作系统——几种常见的调度算法/index.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
+<meta property="og:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
+<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/SJF_SPF.png">
+<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/HRNN.png">
+<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FB.png">
+<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/summary.png">
+<meta property="og:updated_time" content="2019-12-08T12:42:45.080Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hongCYu&#39;s Blog">
+<meta name="twitter:title" content="操作系统——几种常见的调度算法">
+<meta name="twitter:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
+<meta name="twitter:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/Hexo/Blog/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/07/操作系统——几种常见的调度算法/">
 
 
 
@@ -123,7 +134,7 @@
   };
 </script>
 
-  <title>分类: Blog | hongCYu's Blog</title>
+  <title>操作系统——几种常见的调度算法 | hongCYu's Blog</title>
   
 
 
@@ -172,7 +183,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,7 +276,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -329,31 +340,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -400,57 +386,293 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Blog<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/07/操作系统——几种常见的调度算法/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/12/01/Hexo博客添加相册页面/" itemprop="url">
-            
-              <span itemprop="name">Hexo博客添加相册页面</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">操作系统——几种常见的调度算法
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-01T18:58:44+08:00" content="2019-12-01">
-          12-01
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-07 20:22:20" itemprop="dateCreated datePublished" datetime="2019-12-07T20:22:20+08:00">2019-12-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/操作系统/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。</p>
+<a id="more"></a>
+
+<h2 id="处理机调度相关基本概念"><a href="#处理机调度相关基本概念" class="headerlink" title="处理机调度相关基本概念"></a>处理机调度相关基本概念</h2><h3 id="调度方式和调度算法的若干准则"><a href="#调度方式和调度算法的若干准则" class="headerlink" title="调度方式和调度算法的若干准则"></a>调度方式和调度算法的若干准则</h3><p>1.面向用户的准则：周转时间短（CPU执行用时Ts、周转时间T=Ts+Tw、带权周转时间W= T/Ts）、响应时间快、均衡性、截止时间的保证、优先权准则。</p>
+<p>2.面向系统的准则：系统吞吐量高、处理机利用率好、各类资源的平衡利用</p>
+<p>3.批处理系统为照顾为数众多的短作业，应采用短作业优先的调度算法；分时系统为保证系统具有合理的响应时间，应采用轮转法进行调度</p>
+<h2 id="常用调度算法"><a href="#常用调度算法" class="headerlink" title="常用调度算法"></a>常用调度算法</h2><h3 id="先来先服务调度算法FCFS"><a href="#先来先服务调度算法FCFS" class="headerlink" title="先来先服务调度算法FCFS"></a><strong>先来先服务调度算法FCFS</strong></h3><p>1.按照作业提交，或进程变为就绪状态的先后次序分派CPU。</p>
+<p>2.新作业只有当当前作业或进程执行完或阻塞才获得CPU运行。</p>
+<p>3.被唤醒的作业或进程不立即恢复执行，通常等到当前作业或进程出让CPU（所以，默认即是非抢占方式）。</p>
+<p>4.有利于CPU繁忙型的作业，而不利于I/O繁忙的作业（进程）。</p>
+<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
+
+
+
+<h3 id="短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）"><a href="#短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）" class="headerlink" title="短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）"></a><strong>短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）</strong></h3><p>1.平均周转时间、平均带权周转时间都有明显改善。SJF/SPF调度算法能有效的降低作业的平均等待时间，提高系统吞吐量。</p>
+<p>2.未考虑作业的紧迫程度，因而不能保证紧迫性作业（进程）的及时处理、对长作业的不利、作业（进程）的长短含主观因素，不一定能真正做到短作业优先。</p>
+<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/SJF_SPF.png">
+
+
+
+<h3 id="高优先权优先调度算法HPF"><a href="#高优先权优先调度算法HPF" class="headerlink" title="高优先权优先调度算法HPF"></a>高优先权优先调度算法HPF</h3><p>1.<strong>两种方式</strong>：非抢占式优先权算法、抢占式优先权算法（关键点：新作业产生时）<br>2.<strong>类型</strong>:静态优先权：创建进程时确定，整个运行期间保持不变。动态优先权：创建进程时赋予的优先权可随进程的推进或随其等待时间的增加而改变。</p>
+<p>最具有代表性的就是<strong>高响应比优先调度算法HRRN</strong>：</p>
+<p>HRRN为每个作业引入动态优先权，使作业的优先级随着等待时间的增加而以速率a提高：优先权 =（等待时间+要求服务时间)/要求服务时间= 响应时间 / 要求服务时间。<br>什么时候计算各进程的响应比优先权？（作业完成时、新作业产生时（抢占、非抢占）、时间片完成时、进程阻塞时）</p>
+<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/HRNN.png">
+
+<h3 id="基于时间片的轮转调度算法RR"><a href="#基于时间片的轮转调度算法RR" class="headerlink" title="基于时间片的轮转调度算法RR"></a><strong>基于时间片的轮转调度算法RR</strong></h3><h3 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h3><p>过程：</p>
+<p>1.排成一个队列。</p>
+<p>2.每次调度时将CPU分派给队首进程。</p>
+<p>3.时间片结束时，发生时钟中断。</p>
+<p>4.暂停当前进程的执行，将其送到就绪队列的末尾，并通过上下文切换执行当前就绪的队首进程。<br>说明：</p>
+<p>1.进程阻塞情况发生时，未用完时间片也要出让CPU。</p>
+<p>2.能够及时响应，但没有考虑作业长短等问题。</p>
+<p>3.系统的处理能力和系统的负载状态影响时间片长度。</p>
+<h3 id="多级反馈队列算法FB"><a href="#多级反馈队列算法FB" class="headerlink" title="多级反馈队列算法FB"></a><strong>多级反馈队列算法FB</strong></h3><p>过程：</p>
+<p>1.准备调度：先将它放入第一个队列的末尾，按FCFS原则排队等待调度。</p>
+<p>2.IF时间片内完成，便可准备撤离系统。</p>
+<p>3.IF时间片内未能完成，调度程序便将该进程转入第二队列的末尾等待再次被调度执行。</p>
+<p>4.当第一队列中的进程都执行完，系统再按FCFS原则调度第二队列。在第二队列的稍放长些的时间片内仍未完成，再依次将它放入第三队列。</p>
+<p>5.依次降到第n队列后，在第n队列中便采取按时间片轮转的方式运行。</p>
+ <img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FB.png">
+
+
+
+<p>说明:</p>
+<p>1.设置多个就绪队列，各队列有不同的优先级,优先级从第一个队列依次降低。</p>
+<p>2.赋予各队列进程执行时间片大小不同, 优先权越高，时间片越短。</p>
+<p>3.仅当优先权高的队列（如第一队列）空闲时，调度程序才调度第二队列中的进程运行。</p>
+<p>4.高优先级抢占时，被抢占的进程放回原就绪队列末尾。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/summary.png">
 
 
       
     </div>
 
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+            <a href="/tags/调度算法/" rel="tag"># 调度算法</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/01/Hexo博客添加相册页面/" rel="next" title="Hexo博客添加相册页面">
+                <i class="fa fa-chevron-left"></i> Hexo博客添加相册页面
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/08/操作系统——缺页中断及页面置换算法/" rel="prev" title="操作系统——缺页中断及页面置换算法">
+                操作系统——缺页中断及页面置换算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -471,8 +693,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -661,6 +892,23 @@ show_date_time();
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#处理机调度相关基本概念"><span class="nav-number">1.</span> <span class="nav-text">处理机调度相关基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度方式和调度算法的若干准则"><span class="nav-number">1.1.</span> <span class="nav-text">调度方式和调度算法的若干准则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用调度算法"><span class="nav-number">2.</span> <span class="nav-text">常用调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来先服务调度算法FCFS"><span class="nav-number">2.1.</span> <span class="nav-text">先来先服务调度算法FCFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）"><span class="nav-number">2.2.</span> <span class="nav-text">短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高优先权优先调度算法HPF"><span class="nav-number">2.3.</span> <span class="nav-text">高优先权优先调度算法HPF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于时间片的轮转调度算法RR"><span class="nav-number">2.4.</span> <span class="nav-text">基于时间片的轮转调度算法RR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间片轮转算法"><span class="nav-number">2.5.</span> <span class="nav-text">时间片轮转算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多级反馈队列算法FB"><span class="nav-number">2.6.</span> <span class="nav-text">多级反馈队列算法FB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -789,6 +1037,10 @@ show_date_time();
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -799,6 +1051,8 @@ show_date_time();
 
   
 
+
+  
 
 
   
@@ -1140,6 +1394,25 @@ show_date_time();
   
 
   
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 20011,
+      el: 'wpac-rating',
+      color: 'FF0000'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
 
   
 
@@ -1235,6 +1508,8 @@ show_date_time();
   <script src="/live2d-widget/autoload.js"></script>
   
 
+
+  
 
 
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
