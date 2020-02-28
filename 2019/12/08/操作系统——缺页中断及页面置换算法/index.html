@@ -101,14 +101,14 @@
 
 
   <meta name="description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
-<meta name="keywords" content="操作系统,中断">
+<meta name="keywords" content="操作系统,中断,页面置换算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统——缺页中断及页面置换算法">
 <meta property="og:url" content="http://yoursite.com/2019/12/08/操作系统——缺页中断及页面置换算法/index.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-08T14:34:19.722Z">
+<meta property="og:updated_time" content="2019-12-08T14:38:30.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统——缺页中断及页面置换算法">
 <meta name="twitter:description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
@@ -496,11 +496,18 @@
 <a id="more"></a>
 
 <h2 id="缺页中断"><a href="#缺页中断" class="headerlink" title="缺页中断"></a><strong>缺页中断</strong></h2><p>​        在请求分页系统中，可以通过查询页表中的状态位来确定所要访问的页面是否存在于内存中。每当所要访问的页面不在内存时，会产生一次缺页中断，此时操作系统会根据页表中的外存地址在外存中找到所缺的一页，将其调入内存。<br>　　缺页本身是一种中断，与一般的中断一样，需要经过4个处理步骤： </p>
-<pre><code>1. 保护CPU现场 
-2. 分析中断原因 
-3. 转入缺页中断处理程序进行处理 
-4. 恢复CPU现场，继续执行 
-   但是缺页中断时由于所要访问的页面不存在与内存时，有硬件所产生的一种特殊的中断，因此，</code></pre><p>　　<br>　　<div class="note warning"><p><br>　　    与一般的中断存在<strong>区别</strong>:<br>　　    </p></div></p>
+<ol>
+<li><p>保护CPU现场 </p>
+</li>
+<li><p>分析中断原因 </p>
+</li>
+<li><p>转入缺页中断处理程序进行处理 </p>
+</li>
+<li><p>恢复CPU现场，继续执行</p>
+<p>但是缺页中断时由于所要访问的页面不存在与内存时，有硬件所产生的一种特殊的中断，因此，</p>
+</li>
+</ol>
+<p>　　<div class="note warning">与一般的中断存在<strong>区别</strong>:</div></p>
 <ol start="5">
 <li><p>在指令执行期间产生和处理缺页中断信号 </p>
 </li>
@@ -1024,6 +1031,8 @@
           
             <a href="/tags/中断/" rel="tag"># 中断</a>
           
+            <a href="/tags/页面置换算法/" rel="tag"># 页面置换算法</a>
+          
         </div>
       
 
@@ -1057,6 +1066,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/26/Linux-Fedora系统的安装/" rel="prev" title="Linux-Fedora系统的安装">
+                Linux-Fedora系统的安装 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1128,7 +1141,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1165,7 +1178,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1198,7 +1219,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1339,7 +1366,7 @@ show_date_time();
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
