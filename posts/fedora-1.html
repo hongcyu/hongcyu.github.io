@@ -100,25 +100,25 @@
 
 
 
-  <meta name="description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
-<meta name="keywords" content="操作系统,中断,页面置换算法">
+  <meta name="description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
+<meta name="keywords" content="Fedora,Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="操作系统——缺页中断及页面置换算法">
-<meta property="og:url" content="http://yoursite.com/posts/60330.html">
+<meta property="og:title" content="Linux-Fedora系统的安装">
+<meta property="og:url" content="http://yoursite.com/posts/fedora-1.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
-<meta property="og:description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
+<meta property="og:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-08T14:38:30.239Z">
+<meta property="og:updated_time" content="2020-02-29T03:15:04.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="操作系统——缺页中断及页面置换算法">
-<meta name="twitter:description" content="摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。">
+<meta name="twitter:title" content="Linux-Fedora系统的安装">
+<meta name="twitter:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/posts/60330.html">
+  <link rel="canonical" href="http://yoursite.com/posts/fedora-1.html">
 
 
 
@@ -128,7 +128,7 @@
   };
 </script>
 
-  <title>操作系统——缺页中断及页面置换算法 | hongCYu's Blog</title>
+  <title>Linux-Fedora系统的安装 | hongCYu's Blog</title>
   
 
 
@@ -396,7 +396,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/60330.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/fedora-1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hongCYu">
@@ -413,7 +413,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">操作系统——缺页中断及页面置换算法
+          <h1 class="post-title" itemprop="name headline">Linux-Fedora系统的安装
 
               
             
@@ -439,7 +439,7 @@
                 
               
 
-              <time title="创建时间：2019-12-08 21:40:39" itemprop="dateCreated datePublished" datetime="2019-12-08T21:40:39+08:00">2019-12-08</time>
+              <time title="创建时间：2020-02-26 08:56:22" itemprop="dateCreated datePublished" datetime="2020-02-26T08:56:22+08:00">2020-02-26</time>
             
 
             
@@ -457,7 +457,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/操作系统/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/Fedora/" itemprop="url" rel="index"><span itemprop="name">Fedora</span></a></span>
 
                 
                 
@@ -492,469 +499,47 @@
       
 
       
-        <p>摘要：在这里将缺页中断进行简单的描述和页面置换算法的题目进行分析和记录，以供参考。</p>
+        <p>摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。</p>
 <a id="more"></a>
 
-<h2 id="缺页中断"><a href="#缺页中断" class="headerlink" title="缺页中断"></a><strong>缺页中断</strong></h2><p>​        在请求分页系统中，可以通过查询页表中的状态位来确定所要访问的页面是否存在于内存中。每当所要访问的页面不在内存时，会产生一次缺页中断，此时操作系统会根据页表中的外存地址在外存中找到所缺的一页，将其调入内存。<br>　　缺页本身是一种中断，与一般的中断一样，需要经过4个处理步骤： </p>
-<ol>
-<li><p>保护CPU现场 </p>
+<h2 id="下载镜像文件"><a href="#下载镜像文件" class="headerlink" title="下载镜像文件"></a>下载镜像文件</h2><ol>
+<li><p>首先我们先去<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">mirrors.ustc.edu.cn</a>下载fedora的镜像文件</p>
 </li>
-<li><p>分析中断原因 </p>
+<li><p>点击右侧的<font color="red"><strong>获取安装镜像</strong></font>在发行版的下拉列表中找到到Fedora</p>
 </li>
-<li><p>转入缺页中断处理程序进行处理 </p>
-</li>
-<li><p>恢复CPU现场，继续执行</p>
-<p>但是缺页中断时由于所要访问的页面不存在与内存时，有硬件所产生的一种特殊的中断，因此，</p>
-</li>
-</ol>
-<p>　　<div class="note warning">与一般的中断存在<strong>区别</strong>:</div></p>
-<ol start="5">
-<li><p>在指令执行期间产生和处理缺页中断信号 </p>
-</li>
-<li><p>一条指令在执行期间，可能产生多次缺页中断 </p>
-</li>
-<li><p>缺页中断返回时，执行产生中断的那一条指令，而一般的中断返回时，执行下一条指令</p>
+<li><p>选择发行版本中会列出最新的版本号以及各版本号所对应的不同选项。版本一致的情况下内核和功能都是一样的，区别在于<strong>图形界面</strong>，这里我选择31（×86-64Cinnamon）这个版本。</p>
+<p>①workstation就是标准的图形界面。</p>
+<p>②Xfce是极简界面，一般用于比较老或者性能不佳的机器。</p>
+<p>③KDE更倾向于Windows的界面。</p>
+<p>④Cinnamon则比较流行的图像界面。</p>
 </li>
 </ol>
-<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a><strong>页面置换算法</strong></h2><h3 id="最佳置换算法（Optimal-OPT）"><a href="#最佳置换算法（Optimal-OPT）" class="headerlink" title="最佳置换算法（Optimal,OPT）"></a>最佳置换算法（Optimal,OPT）</h3><ol>
-<li><p>基本思想</p>
-<p>​        置换以后不再访问，或者在将来最迟才会被访问的页面，缺页中断率最低。但是该算法需要依据以后各页的使用情况，而当一个进程还未完成的时候，很难估计哪个页面是以后不再使用或者最长时间以后才会用到的页面。所以该算法是不能实现的。但还算法任然具有意义，作为衡量其他算法优劣的一个标准。</p>
-</li>
-<li><p>算例</p>
-<p>​        采用固定分配局部置换的策略，嘉定系统为某进程在内存中分配了3个物理块，页面访问顺序为2、3、2、1、5、2、4、5、3、2、5、2。假定系统未采用<strong>预调页策略</strong>，即未事先调入任何页面。进程运行时，一次将2、3、1三个页面调入内存，发生3次缺页中断。当第一次访问页面5时，产生第4次缺页中断，根据OPT算法，淘汰页面1，因为它在以后不会在使用了；第5次缺页中断时，淘汰页面2，因为它在5、3、2三个页面中，是在将来最迟才会被页面访问的页面。以此类推：<br>　　注意：第4次中断时将最后不会访问的1剔除，将最后才访问的3放入最下面的内存块中，以后的调度过程中，最后不会访问或最后才被访问的页面总是放在最下面的内存块中。内存块从上到下依次存放最先访问的页面。<br>　　中断次数为6，缺页中断率为6/12*100% = 50%。</p>
-</li>
+<h2 id="VM虚拟机安装Linux系统"><a href="#VM虚拟机安装Linux系统" class="headerlink" title="VM虚拟机安装Linux系统"></a>VM虚拟机安装Linux系统</h2><ol>
+<li>选择新建虚拟机，选择自定义，在硬件兼容性的选项中选择最高版本即可，因为高版本默认是兼容低版本的虚拟机的，但是低版本不能兼容高版本，所以选择较高的即可。</li>
+<li>安装客户机OS时选择稍后安装，我们先把虚拟机配置好再进行系统安装。</li>
+<li>客户机操作系统选择Linux ，根据下载的版本选择Fedora 是32位还是64位即可。（ps：如果你安装的虚拟机版本不在这上面可以使用最下面的内核版本来进行安装）</li>
+<li>选择虚拟机文件存放的安装目录。</li>
+<li>选择2核4线程即可</li>
+<li>指定虚拟机内存，因为是64位虚拟机至少2G内存才不会太卡顿，若内存富裕可以选择4GB内存。</li>
+<li>网络连接方式其中有四个选项，一般情况下我们选择NAT模式或者仅主机模式。其中，NAT模式的特点是虚拟机可以同步使用主机IP地址来访问互联网，但是虚拟机和主机是不可以通信的。反之，在仅主机模式中虚拟机是不能访问互联网的，但是客户机和主机是可以进行通信的，一般在进行虚拟网络测试时选择的是仅主机模式。</li>
+<li>I/O控制器选择默认即可。</li>
+<li>虚拟硬盘类型默认即可。</li>
+<li>在是否创建虚拟磁盘，一般情况下创建虚拟磁盘。</li>
+<li>选择磁盘大小，记得不要超过你的磁盘大小。其中需要注意的是<font color="red">立即分配所以磁盘空间</font>是将磁盘立即划分出来，之后就不能使用你所选择的这部分空间，所以一般不打勾。而将虚拟盘拆分多个文件有利于虚拟机的转移。</li>
+<li>然后一直下一步即可完成。</li>
 </ol>
-<table>
-<thead>
-<tr>
-<th align="center">P:</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">5</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">5</th>
-<th align="center">2</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M=3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">F=6</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<h3 id="先进先出置换算法（First-In-First-Out-FIFO"><a href="#先进先出置换算法（First-In-First-Out-FIFO" class="headerlink" title="先进先出置换算法（First In First Out, FIFO)"></a>先进先出置换算法（First In First Out, FIFO)</h3><ol>
-<li><p>基本思想</p>
-<p>​        置换最先调入内存的页面，即置换在内存中驻留时间最久的页面。按照进入内存的先后次序排列成<strong>队列</strong>，从队尾进入，从队首删除。但是该算法会淘汰经常访问的页面，不适应进程实际运行的规律，目前已经<strong>很少使用</strong>。</p>
-</li>
-<li><p>算例</p>
-<p>​        中断次数为6，缺页中断率为9/12*100% = 75%。</p>
-<table>
-<thead>
-<tr>
-<th align="center">P:</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">5</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">5</th>
-<th align="center">2</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M=3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">5</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">F=9</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>Belady异常</p>
-<p>​        一般来说，分配给进程的物理块越多，运行时的缺页次数应该越少，使用FIFO时，可能存在相反情况，分配4个物理块的缺页竟然比3个物理块的缺页次数还多！<br>​        例如：进程访问顺序为0、2、1、3、0、2、4、0、2、1、3、4。 </p>
-<p>M=3时，缺页中断9次。缺页中断率9/12*100% = 75%。</p>
-</li>
+<h2 id="安装操作系统"><a href="#安装操作系统" class="headerlink" title="安装操作系统"></a>安装操作系统</h2><ol>
+<li>点击虚拟机界面下的<font color="red">编辑此虚拟机设置</font>在其中的CD/DVD中选择使用ISO映像文件，选择你下载的镜像包然后保存。</li>
+<li>启动虚拟机进行安装。</li>
+<li>选择START FEDORA进行下一步，安装的开始会进行一些初始化。</li>
+<li>此时会出现主界面，不过是试用界面，可以点击Install to Hard Drive 进行安装到硬盘中。</li>
+<li>安装的第一就是选择中文。</li>
+<li>安装信息摘要中，凡是带感叹号的都是需要 用户修改的。</li>
+<li>按照步骤安装即可。注意!由于目前的操作系统不允许超级用户登入，所以必须创建用户用于登入。<u>不要</u>选择将用户设置为管理员。</li>
+<li>创建完成后单击开始安装。</li>
+<li>最后重启系统即可完成。</li>
 </ol>
-<table>
-<thead>
-<tr>
-<th align="center">P:</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M=3</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">3</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">F=9</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>​        Ｍ=4时，缺页中断10次。缺页中断率10/12*100% = 83.3%。</p>
-<table>
-<thead>
-<tr>
-<th align="center">P:</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M=4</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">3</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">F=10</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-</tr>
-</tbody></table>
-<h3 id="最近最久未使用置换算法（Least-Recently-Used，-LRU）"><a href="#最近最久未使用置换算法（Least-Recently-Used，-LRU）" class="headerlink" title="最近最久未使用置换算法（Least Recently Used， LRU）"></a>最近最久未使用置换算法（Least Recently Used， LRU）</h3><ol>
-<li><p>基本思想</p>
-<p>​        置换最近一段时间以来最长时间未访问过的页面。根据程序局部性原理，刚被访问的页面，可能马上又要被访问；而较长时间内没有被访问的页面，可能最近不会被访问。<br>　　LRU算法普偏地适用于各种类型的程序，但是系统要时时刻刻对各页的访问历史情况加以记录和更新，开销太大，因此LRU算法必须要有硬件的支持。</p>
-</li>
-<li><p>算例</p>
-<p>​        仍然以OPT算例为例子。<br>　　中断次数为6，缺页中断率为7/12*100% = 58.3%。</p>
-<table>
-<thead>
-<tr>
-<th align="center">P:</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">1</th>
-<th align="center">5</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">5</th>
-<th align="center">2</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">M=3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">4</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">F=7</td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center">Y</td>
-<td align="center">Y</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-</li>
-</ol>
+<p><font color="red">注意：最好将网络断开，避免在未换源的情况下由于下载更新导致安装过慢的问题</font></p>
 
       
     </div>
@@ -1015,11 +600,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+            <a href="/tags/Fedora/" rel="tag"># Fedora</a>
           
-            <a href="/tags/中断/" rel="tag"># 中断</a>
-          
-            <a href="/tags/页面置换算法/" rel="tag"># 页面置换算法</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -1045,8 +628,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/11889.html" rel="next" title="操作系统——几种常见的调度算法">
-                <i class="fa fa-chevron-left"></i> 操作系统——几种常见的调度算法
+              <a href="/posts/picgo.html" rel="next" title="使用PicGo+Github搭建免费图床">
+                <i class="fa fa-chevron-left"></i> 使用PicGo+Github搭建免费图床
               </a>
             
           </div>
@@ -1055,8 +638,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/60218.html" rel="prev" title="使用PicGo+Github搭建免费图床">
-                使用PicGo+Github搭建免费图床 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/fedora-2.html" rel="prev" title="Fedora安装后的配置">
+                Fedora安装后的配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1335,7 +918,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#缺页中断"><span class="nav-number">1.</span> <span class="nav-text">缺页中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面置换算法"><span class="nav-number">2.</span> <span class="nav-text">页面置换算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳置换算法（Optimal-OPT）"><span class="nav-number">2.1.</span> <span class="nav-text">最佳置换算法（Optimal,OPT）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出置换算法（First-In-First-Out-FIFO"><span class="nav-number">2.2.</span> <span class="nav-text">先进先出置换算法（First In First Out, FIFO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用置换算法（Least-Recently-Used，-LRU）"><span class="nav-number">2.3.</span> <span class="nav-text">最近最久未使用置换算法（Least Recently Used， LRU）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载镜像文件"><span class="nav-number">1.</span> <span class="nav-text">下载镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM虚拟机安装Linux系统"><span class="nav-number">2.</span> <span class="nav-text">VM虚拟机安装Linux系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装操作系统"><span class="nav-number">3.</span> <span class="nav-text">安装操作系统</span></a></li></ol></div>
             
 
           </div>

@@ -100,25 +100,32 @@
 
 
 
-  <meta name="description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
-<meta name="keywords" content="Fedora,Linux">
+  <meta name="description" content="摘要：讲解了基于GitHub采用jsdeliver cdn 进行加速的图床搭建，上传工具采用PicGo。">
+<meta name="keywords" content="GitHub,图床">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-Fedora系统的安装">
-<meta property="og:url" content="http://yoursite.com/posts/41958.html">
+<meta property="og:title" content="使用PicGo+Github搭建免费图床">
+<meta property="og:url" content="http://yoursite.com/posts/picgo.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
-<meta property="og:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
+<meta property="og:description" content="摘要：讲解了基于GitHub采用jsdeliver cdn 进行加速的图床搭建，上传工具采用PicGo。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-29T03:02:07.287Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-6.png">
+<meta property="og:updated_time" content="2020-02-29T03:05:07.466Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux-Fedora系统的安装">
-<meta name="twitter:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
+<meta name="twitter:title" content="使用PicGo+Github搭建免费图床">
+<meta name="twitter:description" content="摘要：讲解了基于GitHub采用jsdeliver cdn 进行加速的图床搭建，上传工具采用PicGo。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/posts/41958.html">
+  <link rel="canonical" href="http://yoursite.com/posts/picgo.html">
 
 
 
@@ -128,7 +135,7 @@
   };
 </script>
 
-  <title>Linux-Fedora系统的安装 | hongCYu's Blog</title>
+  <title>使用PicGo+Github搭建免费图床 | hongCYu's Blog</title>
   
 
 
@@ -396,7 +403,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/41958.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/picgo.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hongCYu">
@@ -413,7 +420,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux-Fedora系统的安装
+          <h1 class="post-title" itemprop="name headline">使用PicGo+Github搭建免费图床
 
               
             
@@ -439,7 +446,7 @@
                 
               
 
-              <time title="创建时间：2020-02-26 08:56:22" itemprop="dateCreated datePublished" datetime="2020-02-26T08:56:22+08:00">2020-02-26</time>
+              <time title="创建时间：2020-02-01 09:18:13" itemprop="dateCreated datePublished" datetime="2020-02-01T09:18:13+08:00">2020-02-01</time>
             
 
             
@@ -457,14 +464,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub/" itemprop="url" rel="index"><span itemprop="name">GitHub</span></a></span>
 
                 
                 
                   ，
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/Fedora/" itemprop="url" rel="index"><span itemprop="name">Fedora</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GitHub/图床/" itemprop="url" rel="index"><span itemprop="name">图床</span></a></span>
 
                 
                 
@@ -499,47 +506,41 @@
       
 
       
-        <p>摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。</p>
+        <p>摘要：讲解了基于GitHub采用jsdeliver cdn 进行加速的图床搭建，上传工具采用PicGo。</p>
 <a id="more"></a>
 
-<h2 id="下载镜像文件"><a href="#下载镜像文件" class="headerlink" title="下载镜像文件"></a>下载镜像文件</h2><ol>
-<li><p>首先我们先去<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">mirrors.ustc.edu.cn</a>下载fedora的镜像文件</p>
+<h2 id="GitHub创建仓库"><a href="#GitHub创建仓库" class="headerlink" title="GitHub创建仓库"></a>GitHub创建仓库</h2><ol>
+<li><p>新建一个GitHub仓库，名字自定义</p>
 </li>
-<li><p>点击右侧的<font color="red"><strong>获取安装镜像</strong></font>在发行版的下拉列表中找到到Fedora</p>
-</li>
-<li><p>选择发行版本中会列出最新的版本号以及各版本号所对应的不同选项。版本一致的情况下内核和功能都是一样的，区别在于<strong>图形界面</strong>，这里我选择31（×86-64Cinnamon）这个版本。</p>
-<p>①workstation就是标准的图形界面。</p>
-<p>②Xfce是极简界面，一般用于比较老或者性能不佳的机器。</p>
-<p>③KDE更倾向于Windows的界面。</p>
-<p>④Cinnamon则比较流行的图像界面。</p>
+<li><p>生成token：</p>
+<p>直接看图</p>
 </li>
 </ol>
-<h2 id="VM虚拟机安装Linux系统"><a href="#VM虚拟机安装Linux系统" class="headerlink" title="VM虚拟机安装Linux系统"></a>VM虚拟机安装Linux系统</h2><ol>
-<li>选择新建虚拟机，选择自定义，在硬件兼容性的选项中选择最高版本即可，因为高版本默认是兼容低版本的虚拟机的，但是低版本不能兼容高版本，所以选择较高的即可。</li>
-<li>安装客户机OS时选择稍后安装，我们先把虚拟机配置好再进行系统安装。</li>
-<li>客户机操作系统选择Linux ，根据下载的版本选择Fedora 是32位还是64位即可。（ps：如果你安装的虚拟机版本不在这上面可以使用最下面的内核版本来进行安装）</li>
-<li>选择虚拟机文件存放的安装目录。</li>
-<li>选择2核4线程即可</li>
-<li>指定虚拟机内存，因为是64位虚拟机至少2G内存才不会太卡顿，若内存富裕可以选择4GB内存。</li>
-<li>网络连接方式其中有四个选项，一般情况下我们选择NAT模式或者仅主机模式。其中，NAT模式的特点是虚拟机可以同步使用主机IP地址来访问互联网，但是虚拟机和主机是不可以通信的。反之，在仅主机模式中虚拟机是不能访问互联网的，但是客户机和主机是可以进行通信的，一般在进行虚拟网络测试时选择的是仅主机模式。</li>
-<li>I/O控制器选择默认即可。</li>
-<li>虚拟硬盘类型默认即可。</li>
-<li>在是否创建虚拟磁盘，一般情况下创建虚拟磁盘。</li>
-<li>选择磁盘大小，记得不要超过你的磁盘大小。其中需要注意的是<font color="red">立即分配所以磁盘空间</font>是将磁盘立即划分出来，之后就不能使用你所选择的这部分空间，所以一般不打勾。而将虚拟盘拆分多个文件有利于虚拟机的转移。</li>
-<li>然后一直下一步即可完成。</li>
+<p>   <img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-1.png" alt></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-2.png" alt></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-3.png" alt></p>
+<p>最后点击<code>Generate token</code>即可看到显示的token页面，它只会显示一次，<strong>关闭页面</strong>后再打开这个页面就<strong>不会显示</strong>了。复制token值粘贴到文本文档中，先保存下来，后面配置PicGo要用到。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-4.png" alt></p>
+<h2 id="配置PicGo"><a href="#配置PicGo" class="headerlink" title="配置PicGo"></a>配置PicGo</h2><ol>
+<li><p>首先下载安装PicGo，图片上传工具PicGo下载地址：<a href="https://yafine-blog.cn/go.html?url=aHR0cHM6Ly9naXRodWIuY29tL01vbHVuZXJmaW5uL1BpY0dvL3JlbGVhc2Vz" target="_blank" rel="noopener">https://github.com/Molunerfinn/PicGo/releases</a></p>
+</li>
+<li><p>下载完成后进行安装，安装完毕后开始配置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-5.png" alt></p>
+</li>
 </ol>
-<h2 id="安装操作系统"><a href="#安装操作系统" class="headerlink" title="安装操作系统"></a>安装操作系统</h2><ol>
-<li>点击虚拟机界面下的<font color="red">编辑此虚拟机设置</font>在其中的CD/DVD中选择使用ISO映像文件，选择你下载的镜像包然后保存。</li>
-<li>启动虚拟机进行安装。</li>
-<li>选择START FEDORA进行下一步，安装的开始会进行一些初始化。</li>
-<li>此时会出现主界面，不过是试用界面，可以点击Install to Hard Drive 进行安装到硬盘中。</li>
-<li>安装的第一就是选择中文。</li>
-<li>安装信息摘要中，凡是带感叹号的都是需要 用户修改的。</li>
-<li>按照步骤安装即可。注意!由于目前的操作系统不允许超级用户登入，所以必须创建用户用于登入。<u>不要</u>选择将用户设置为管理员。</li>
-<li>创建完成后单击开始安装。</li>
-<li>最后重启系统即可完成。</li>
+<ul>
+<li>设定仓库名：这个是刚刚第一步所新建仓库的名称，我的为Yafine-imgs，此处填写格式username/repo。</li>
+<li>设定分支名：master，采用默认分支即可</li>
+<li>设定Token：此处填写上一步得到的Token，添加到输入框即可。</li>
+<li>指定存储路径：自定义，例：images/，相当于在刚刚新建的仓库下新建了一个文件夹。</li>
+<li>设定自定义域名：格式：<code>https://cdn.jsdelivr.net/gh/username/repo</code>，<code>username</code>为GitHub用户名，<code>repo</code>为新建的仓库，用于存储图片</li>
+</ul>
+<ol start="3">
+<li>使用方法直接将图片托入上传区即可！</li>
 </ol>
-<p><font color="red">注意：最好将网络断开，避免在未换源的情况下由于下载更新导致安装过慢的问题</font></p>
+<p><strong>注意</strong>：上传前注意选择链接格式，当然也可以不选择，可以去相册选择图片的链接格式，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/tuchuang-6.png" alt></p>
+<p>本文参考：<a href="https://yafine-blog.cn/go.html?url=aHR0cHM6Ly95YWZpbmUtYmxvZy5jbi9wb3N0cy9lYjNhLmh0bWw=" target="_blank" rel="noopener">https://yafine-blog.cn/posts/eb3a.html</a></p>
 
       
     </div>
@@ -600,9 +601,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Fedora/" rel="tag"># Fedora</a>
+            <a href="/tags/GitHub/" rel="tag"># GitHub</a>
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/图床/" rel="tag"># 图床</a>
           
         </div>
       
@@ -628,8 +629,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/60218.html" rel="next" title="使用PicGo+Github搭建免费图床">
-                <i class="fa fa-chevron-left"></i> 使用PicGo+Github搭建免费图床
+              <a href="/posts/os-2.html" rel="next" title="操作系统——缺页中断及页面置换算法">
+                <i class="fa fa-chevron-left"></i> 操作系统——缺页中断及页面置换算法
               </a>
             
           </div>
@@ -638,8 +639,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/fedora-2.html" rel="prev" title="Fedora安装后的配置">
-                Fedora安装后的配置 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/fedora-1.html" rel="prev" title="Linux-Fedora系统的安装">
+                Linux-Fedora系统的安装 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -918,7 +919,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载镜像文件"><span class="nav-number">1.</span> <span class="nav-text">下载镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM虚拟机安装Linux系统"><span class="nav-number">2.</span> <span class="nav-text">VM虚拟机安装Linux系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装操作系统"><span class="nav-number">3.</span> <span class="nav-text">安装操作系统</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub创建仓库"><span class="nav-number">1.</span> <span class="nav-text">GitHub创建仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置PicGo"><span class="nav-number">2.</span> <span class="nav-text">配置PicGo</span></a></li></ol></div>
             
 
           </div>
