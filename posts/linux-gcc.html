@@ -100,20 +100,45 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hongCYu&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/python/index.html">
+  <meta name="description" content="摘要：此为学习Linux课程中关于gcc编译器的一些总结，方便以后查阅。">
+<meta name="keywords" content="Linux,gcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下gcc编译器的使用">
+<meta property="og:url" content="http://yoursite.com/posts/linux-gcc.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
+<meta property="og:description" content="摘要：此为学习Linux课程中关于gcc编译器的一些总结，方便以后查阅。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229155717.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160013.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160338.png">
+<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1582963693916.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163141.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163714.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229164511.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229164751.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229172011.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229165815.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229175435.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229175610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180156.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180217.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180233.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180342.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180528.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229184734.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/asdfaa1213.png">
+<meta property="og:updated_time" content="2020-02-29T11:22:58.623Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hongCYu&#39;s Blog">
+<meta name="twitter:title" content="Linux下gcc编译器的使用">
+<meta name="twitter:description" content="摘要：此为学习Linux课程中关于gcc编译器的一些总结，方便以后查阅。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229155717.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/python/">
+  <link rel="canonical" href="http://yoursite.com/posts/linux-gcc.html">
 
 
 
@@ -123,7 +148,7 @@
   };
 </script>
 
-  <title>标签: python | hongCYu's Blog</title>
+  <title>Linux下gcc编译器的使用 | hongCYu's Blog</title>
   
 
 
@@ -172,7 +197,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,7 +273,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -329,31 +354,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -400,108 +400,386 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>python<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/linux-gcc.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/posts/43462.html" itemprop="url">
-            
-              <span itemprop="name">利用Opencv将视频转换为字符视频</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Linux下gcc编译器的使用
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-17T10:09:23+08:00" content="2019-11-17">
-          11-17
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-29 15:49:57" itemprop="dateCreated datePublished" datetime="2020-02-29T15:49:57+08:00">2020-02-29</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/posts/19315.html" itemprop="url">
-            
-              <span itemprop="name">初入密码学之置换加密与暴力破解</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-21T12:38:14+08:00" content="2019-09-21">
-          09-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>摘要：此为学习Linux课程中关于gcc编译器的一些总结，方便以后查阅。</p>
+<a id="more"></a>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>用集成的编程软件很难了解到程序背后编译器对代码编译过程的具体步骤，所以在这里进行手动编译可以让人更直观的了解到编译器编译代码的过程。</p>
+<p>首先，我们来写一段程序，当然是我们最熟悉的它啦！Hello World：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/posts/14905.html" itemprop="url">
-            
-              <span itemprop="name">创建神经网络并进行训练和查询</span>
-            
-          </a>
-        
-      </h2>
+<p>并保存为test.c</p>
+<h3 id="第一种编译方式"><a href="#第一种编译方式" class="headerlink" title="第一种编译方式"></a>第一种编译方式</h3><p>然后我们到命令行中输入<code>gcc test.c</code> 直接回车后可以发现多了一个a.out的文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229155717.png" alt></p>
+<p>a.out就是刚刚生成的可执行文件，现在我们要执行它。</p>
+<p>输入<code>./a.out</code>即可执行它了，如下图所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160013.png" alt></p>
+<p>可以看到我们很顺利的就打印出了Hello world！</p>
+<p><strong>总结：</strong> </p>
+<p>gcc &lt;filename.c&gt;</p>
+<h3 id="第二种编译方式"><a href="#第二种编译方式" class="headerlink" title="第二种编译方式"></a>第二种编译方式</h3><p>这是一种通过中间代码进行编译</p>
+<p>输入<code>gcc -c test.c</code>按下回车，可以看到多了一个以文件名.o命名的文件：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160338.png" alt></p>
+<p>这是编译器用 -c 这个参数时单一生成的中间代码，但是中间代码是不可以执行的，我们需要进行链接生成可执行文件。</p>
+<p>输入<code>gcc -o test_1 test.o</code>(其中test_1为你自定义的文件名，test.o为上一步生成的中间文件)，我们可以直接执行test_1来看看会得到一样的效果：</p>
+<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1582963693916.png" alt="1582963693916"></p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>gcc -c &lt;filename.c&gt;</li>
+<li>gcc -o <filename_exe> &lt;filename.o&gt;</filename_exe></li>
+<li></li>
+</ol>
+<p>但是我们在编写代码时不能所以都由自己写，需要用到写好的库文件时，该怎么用呢？</p>
+<p>这里我们重新编写代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">100</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">     </span><br><span class="line">    ret = <span class="built_in">sqrt</span>(data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the sqrt = %d\n"</span>,ret);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-03T09:57:15+08:00" content="2019-08-03">
-          08-03
-        </time>
-      </div>
+<p>如果直接运行<code>gcc -c test.c</code>会发现报错：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163141.png" alt></p>
+<p>可以发现，凡是语法错误在编译的时候就会识别出来了，已经说明函数sqrt未被定义。可以看到解决方案，加上头文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">100</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">     </span><br><span class="line">    ret = <span class="built_in">sqrt</span>(data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the sqrt = %d\n"</span>,ret);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<p>然后编译<code>gcc -c test.c</code>  和<code>gcc -o test test.o</code>后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163714.png" alt></p>
+<p>发现调用别人的函数有两个要求，一是知道函数的原型，一般在头文件中就给出。二是函数会编译成库的形式，我需要来调用这个库的形式，需要告诉调用的库的名字是什么，所以这个问题是因为我们在链接的时候没有把库函数链接上。解决办法：</p>
+<p><code>gcc -o test test.o -lm</code>(链接math.h不是-lmath而是-lm)</p>
+<p>这个时候就编译成功了！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229164511.png" alt></p>
+<p>输入 <code>man sqrt</code> 可以查看手册，得到链接的参数。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229164751.png" alt></p>
+<h3 id="第三种编译方式"><a href="#第三种编译方式" class="headerlink" title="第三种编译方式"></a>第三种编译方式</h3><p>测试多个文件怎么进行编译：</p>
+<p>这里test.c为主程序，myfunc.c和myfunc.h为模块代码</p>
+<p><code>test.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myfunc.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">     </span><br><span class="line">    ret = <span class="built_in">sqrt</span>(data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the sqrt = %d\n"</span>,ret);</span><br><span class="line">    </span><br><span class="line">    a = add(<span class="number">100</span>,<span class="number">200</span>);</span><br><span class="line">    b = sub(<span class="number">1000</span>,<span class="number">200</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a = %d , b = %d \n"</span>,a,b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><code>myfunc.c</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span>  y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x+y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub</span> <span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x-y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>myfunc.h</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用<code>gcc -c ***</code>各自生成可执行文件，接下来我们将两个中间文件进行链接：</p>
+<p>使用<code>gcc -o test test.o myfunc.o -lm</code>进行链接，然后成功执行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229172011.png" alt></p>
+<p>tips：</p>
+<p>如果遇到下面这种情况：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229165815.jpg" alt></p>
+<p>是因为本文件夹中查找不到，将头文件中的#include &lt;myfunc.h&gt;改成#include “myfunc.h”即可~</p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>gcc -c &lt;filename1.c&gt;</li>
+<li>gcc -c &lt;filename2.c&gt;   …</li>
+<li>gcc -0 <filename_exe> &lt;filename.o&gt; &lt;filename2.o&gt; ……  -l …..</filename_exe></li>
+</ol>
+<h3 id="第四种编译方式（makefile）"><a href="#第四种编译方式（makefile）" class="headerlink" title="第四种编译方式（makefile）"></a>第四种编译方式（makefile）</h3><p>利用makefile文件来编译程序</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">test:test.o myfunc.o</span></span><br><span class="line">	gcc -o test test.o myfunc.o -lm</span><br><span class="line"><span class="section">test.o:test.c</span></span><br><span class="line">	gcc -c test.c</span><br><span class="line"><span class="section">myfunc.o:myfunc.c</span></span><br><span class="line">	gcc -c myfunc.c</span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm *.o</span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<p><strong>tips:</strong></p>
+<p>采用倒叙的方式书写</p>
+<p><code>gcc,rm</code>等命令前加的是TAB （注意不要用空格代替制表符！）</p>
+<p><strong>makefile文件格式总结：</strong></p>
+<p>&lt;模块名&gt;:&lt;生成所需资源文件&gt;</p>
+<p>​        <tab>&lt;生成方法&gt;</tab></p>
+<h3 id="gdb调试方法"><a href="#gdb调试方法" class="headerlink" title="gdb调试方法"></a>gdb调试方法</h3><p>不能<strong>直接</strong>使用，需要在编译时加入调试方法</p>
+<p>采用的指令是 gcc -g</p>
+<p>例如：输入<code>gcc -g test.c myfunc.c -o test -lm</code>也可以正常生成，但是会发现可执行文件容量比较大。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229175435.png" alt></p>
+<p>输入<code>gdb test</code>进入调试，界面如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229175610.png" alt></p>
+<p>查看代码：</p>
+<ol>
+<li><p>list          （查看10行的内容）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180156.png" alt></p>
+</li>
+<li><p>list 10       (以第10行为中心上下共10行的内容)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180217.png" alt></p>
+</li>
+<li><p>list 6,12    (列出6到12行的内容) </p>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180233.png" alt></p>
+<p>输入<code>run</code>可以使得程序在调试时运行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180342.png" alt></p>
+<p>断点设置：</p>
+<ol>
+<li><p>设置断点 break 行数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180528.png" alt></p>
+</li>
+<li><p>清除断点 </p>
+<p>采用<code>info break</code>查看断点信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229184734.png" alt></p>
+<p>输入 <code>delete breakpoint &lt;Num&gt;</code>即可删除对应编号的断点。</p>
+</li>
+<li><p><code>print  data</code> 即可查看当前赋的值</p>
+</li>
+<li><p>单步运行</p>
+<p>① step进入函数体的单步执行</p>
+<p>② next 不进入函数体的单步执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/asdfaa1213.png" alt></p>
+</li>
+<li><p>多步执行</p>
+<p><code>step &lt;步数&gt;</code></p>
+<p><code>next &lt;步数&gt;</code></p>
+</li>
+</ol>
+<p>gdb总结：</p>
+<ol>
+<li><p>生成： gcc -g &lt;源文件&gt; -o &lt;执行文件&gt; -l&lt;库&gt;</p>
+</li>
+<li><p>进入调试 gdb <filename_exe></filename_exe></p>
+</li>
+<li><p>list              显示十条语句</p>
+<p>list n           以n为中心，显示十条语句</p>
+<p>list m,n      显示从m到n的语句</p>
+</li>
+<li><p>break &lt;行号&gt;    设断点</p>
+</li>
+<li><p>info break   显示断点信息</p>
+</li>
+<li><p>delete breakpoint &lt;编号&gt;</p>
+</li>
+<li><p>enable/disable breakpoint &lt;编号&gt; 启用/禁用 断点</p>
+</li>
+<li><p>run 执行到断点</p>
+</li>
+<li><p>step进入函数体的单步执行</p>
+<p>next 不进入函数体的单步执行</p>
+</li>
+<li><p>print &lt;变量&gt;   查看变量信息</p>
+</li>
+</ol>
 
       
     </div>
 
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/gcc/" rel="tag"># gcc</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Fedora_yum.html" rel="next" title="Fedora下yum命令的学习">
+                <i class="fa fa-chevron-left"></i> Fedora下yum命令的学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -522,8 +800,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -744,6 +1031,23 @@ show_date_time();
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种编译方式"><span class="nav-number">1.</span> <span class="nav-text">第一种编译方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种编译方式"><span class="nav-number">2.</span> <span class="nav-text">第二种编译方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三种编译方式"><span class="nav-number">3.</span> <span class="nav-text">第三种编译方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四种编译方式（makefile）"><span class="nav-number">4.</span> <span class="nav-text">第四种编译方式（makefile）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb调试方法"><span class="nav-number">5.</span> <span class="nav-text">gdb调试方法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -872,6 +1176,10 @@ show_date_time();
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -882,6 +1190,8 @@ show_date_time();
 
   
 
+
+  
 
 
   
@@ -1223,6 +1533,25 @@ show_date_time();
   
 
   
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 20011,
+      el: 'wpac-rating',
+      color: 'FF0000'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
 
   
 
@@ -1318,6 +1647,8 @@ show_date_time();
   <script src="/live2d-widget/autoload.js"></script>
   
 
+
+  
 
 
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
