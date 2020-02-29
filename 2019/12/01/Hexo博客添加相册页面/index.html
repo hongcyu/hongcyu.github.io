@@ -108,17 +108,17 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：Hexo 博客并没有自带的相册功能，所以我们需要自己动手来创建一个相册，其中修改了一些原作者的问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/2.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/3.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/4.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/6.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/1.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/5.png">
-<meta property="og:updated_time" content="2019-12-08T12:42:14.797Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-5.png">
+<meta property="og:updated_time" content="2020-02-29T02:24:54.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo博客添加相册页面">
 <meta name="twitter:description" content="摘要：Hexo 博客并没有自带的相册功能，所以我们需要自己动手来创建一个相册，其中修改了一些原作者的问题。">
-<meta name="twitter:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/2.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-2.png">
 
 
 
@@ -513,32 +513,22 @@
 <h2 id="创建腾讯云存储桶（cos）"><a href="#创建腾讯云存储桶（cos）" class="headerlink" title="创建腾讯云存储桶（cos）"></a>创建腾讯云存储桶（cos）</h2><p>跳转：「<a href="https://cloud.tencent.com/" target="_blank" rel="noopener">腾讯云</a>」–&gt;产品（左上角）–&gt;存储–&gt;对象存储</p>
 <p>我们先新建一个专门存放相册图片的存储桶，在<font color="red">对象存储</font>页面左边点击存储桶列表 -&gt; 新建存储桶</p>
 <p>然后在存储桶页面，名称可以自己任意填写，需要选择下图中标注的<font color="red">公有读私有写</font>，然后点击确定。</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/2.png">
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-2.png" alt></p>
 <hr>
 <p>然后我们点击这个存储桶，选择左侧的基础配置 -&gt; 跨域访问CORS设置 -&gt; 添加规则</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/3.png">
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-3.png" alt></p>
 <p>然后按下图所示进行填写</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/4.png">
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-4.png" alt></p>
 <p><strong>域名以 http://或 https:// 开头，每行一个，一行最多一个通配符 *</strong></p>
 <p><strong>如果填写域名后遇到跨域问题，可以将 origin 这里填写为 * 就可以解决</strong></p>
 <hr>
 <p>点击权限管理–&gt;Policy权限设置–&gt;添加策略</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/6.png">
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-6.png" alt></p>
 <p>按照下面图片进行设置</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/1.png">
-
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-1.png" alt></p>
 <hr>
 <p>然后记住基础配置中的<font color="red">访问域名</font>，这里就是我们动态生成相册，获取链接时需要用到的<font color="red">xml链接</font>，下面要用到。</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/Album%20function/5.png">
-
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-5.png" alt></p>
 <h2 id="新建相册页面"><a href="#新建相册页面" class="headerlink" title="新建相册页面"></a>新建相册页面</h2><p>首先在 hexo 博客本地新建一个页面（菜单栏）：</p>
 <p>hexo博客根站点目录下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;photos&quot;</span><br></pre></td></tr></table></figure>
@@ -734,7 +724,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -779,7 +769,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -818,7 +812,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

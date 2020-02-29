@@ -108,16 +108,16 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/SJF_SPF.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/HRNN.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FB.png">
-<meta property="og:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/summary.png">
-<meta property="og:updated_time" content="2019-12-08T12:42:45.080Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/SJF_SPF.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/HRNN.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FB.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/summary.png">
+<meta property="og:updated_time" content="2020-02-29T02:30:31.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统——几种常见的调度算法">
 <meta name="twitter:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
-<meta name="twitter:image" content="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png">
 
 
 
@@ -508,21 +508,14 @@
 <p>2.新作业只有当当前作业或进程执行完或阻塞才获得CPU运行。</p>
 <p>3.被唤醒的作业或进程不立即恢复执行，通常等到当前作业或进程出让CPU（所以，默认即是非抢占方式）。</p>
 <p>4.有利于CPU繁忙型的作业，而不利于I/O繁忙的作业（进程）。</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FCFS.png">
-
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png" alt></p>
 <h3 id="短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）"><a href="#短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）" class="headerlink" title="短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）"></a><strong>短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）</strong></h3><p>1.平均周转时间、平均带权周转时间都有明显改善。SJF/SPF调度算法能有效的降低作业的平均等待时间，提高系统吞吐量。</p>
 <p>2.未考虑作业的紧迫程度，因而不能保证紧迫性作业（进程）的及时处理、对长作业的不利、作业（进程）的长短含主观因素，不一定能真正做到短作业优先。</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/SJF_SPF.png">
-
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/SJF_SPF.png" alt></p>
 <h3 id="高优先权优先调度算法HPF"><a href="#高优先权优先调度算法HPF" class="headerlink" title="高优先权优先调度算法HPF"></a>高优先权优先调度算法HPF</h3><p>1.<strong>两种方式</strong>：非抢占式优先权算法、抢占式优先权算法（关键点：新作业产生时）<br>2.<strong>类型</strong>:静态优先权：创建进程时确定，整个运行期间保持不变。动态优先权：创建进程时赋予的优先权可随进程的推进或随其等待时间的增加而改变。</p>
 <p>最具有代表性的就是<strong>高响应比优先调度算法HRRN</strong>：</p>
 <p>HRRN为每个作业引入动态优先权，使作业的优先级随着等待时间的增加而以速率a提高：优先权 =（等待时间+要求服务时间)/要求服务时间= 响应时间 / 要求服务时间。<br>什么时候计算各进程的响应比优先权？（作业完成时、新作业产生时（抢占、非抢占）、时间片完成时、进程阻塞时）</p>
-<img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/HRNN.png">
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/HRNN.png" alt></p>
 <h3 id="基于时间片的轮转调度算法RR"><a href="#基于时间片的轮转调度算法RR" class="headerlink" title="基于时间片的轮转调度算法RR"></a><strong>基于时间片的轮转调度算法RR</strong></h3><h3 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h3><p>过程：</p>
 <p>1.排成一个队列。</p>
 <p>2.每次调度时将CPU分派给队首进程。</p>
@@ -537,17 +530,13 @@
 <p>3.IF时间片内未能完成，调度程序便将该进程转入第二队列的末尾等待再次被调度执行。</p>
 <p>4.当第一队列中的进程都执行完，系统再按FCFS原则调度第二队列。在第二队列的稍放长些的时间片内仍未完成，再依次将它放入第三队列。</p>
 <p>5.依次降到第n队列后，在第n队列中便采取按时间片轮转的方式运行。</p>
- <img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/FB.png">
-
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FB.png" alt></p>
 <p>说明:</p>
 <p>1.设置多个就绪队列，各队列有不同的优先级,优先级从第一个队列依次降低。</p>
 <p>2.赋予各队列进程执行时间片大小不同, 优先权越高，时间片越短。</p>
 <p>3.仅当优先权高的队列（如第一队列）空闲时，调度程序才调度第二队列中的进程运行。</p>
 <p>4.高优先级抢占时，被抢占的进程放回原就绪队列末尾。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="https://blog-1251459134.cos.ap-guangzhou.myqcloud.com/operating%20system/summary.png">
-
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/summary.png" alt></p>
 
       
     </div>
@@ -720,7 +709,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -765,7 +754,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -804,7 +797,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
