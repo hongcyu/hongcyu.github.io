@@ -108,10 +108,14 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：在Fedora系统安装后还需要一些配置才能正常使用。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-29T03:01:54.773Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-1.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-2.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-3.jpg">
+<meta property="og:updated_time" content="2020-02-29T06:36:53.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fedora安装后的配置">
 <meta name="twitter:description" content="摘要：在Fedora系统安装后还需要一些配置才能正常使用。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-1.jpg">
 
 
 
@@ -502,7 +506,70 @@
         <p>摘要：在Fedora系统安装后还需要一些配置才能正常使用。</p>
 <a id="more"></a>
 
+<h2 id="添加sudo用户"><a href="#添加sudo用户" class="headerlink" title="添加sudo用户"></a>添加sudo用户</h2><p>现在操作系统里面，我们不允许管理员作为普通用户进行登入。但是有很多操作需要管理员授权，所以Linux给出了一种解决方法就是sudo用户来做。</p>
+<p>sudo: superuser do(超级用户在做)</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[hongcyu@localhost 桌面] $ sudo passwd</span><br></pre></td></tr></table></figure>
 
+<p>这样做的好处就是不要使用管理员的口令，大大增加了系统的安全性。</p>
+<p>在ubantu系统中默认sudo用户是可用的，而fedora却默认是不可用的，一般按下面的操作</p>
+<ol>
+<li>先进入管理员做最初的设置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ su</span><br><span class="line">密码： </span><br><span class="line">[root@localhost 桌面]#</span><br></pre></td></tr></table></figure>
+
+<p>可以看到区别：$  变成了  #</p>
+<p>接着我们执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#visudo</span><br></pre></td></tr></table></figure>
+
+<p>此时会打开一个文件，只能看不能改，但是visudo才能修改</p>
+<p>接着我们找到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<p>下root下方添加自己的用户名</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hongcyu ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<p>按ESC输入   :w  进行保存</p>
+<h2 id="手动修改软件源"><a href="#手动修改软件源" class="headerlink" title="手动修改软件源"></a>手动修改软件源</h2><p>进入/etc 目录</p>
+<p>etc目录一个很重要的目录，许多系统配置是在这个目录下的，找到图中圈出的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-1.jpg" alt></p>
+<p>进入这个目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd yum.repos.d</span><br></pre></td></tr></table></figure>
+
+<p>输入ls -l即可看见配置文件，默认的后缀是repo</p>
+<p>我们先打开一个文件进行查看 可以看到如图所示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi fedora.repo</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-2.jpg" alt></p>
+<p>第三行的baseurl是非常重要的，因为以后下载都会从这个网址进行查找后下载。</p>
+<ol>
+<li>复制以下到<code>/etc/yum.repos.d/fedora.repo</code> 文件：</li>
+</ol>
+<p>​       遇到不可保存的情况可以使用  <strong>$ sudo vi fedora.repo</strong>  来进行编辑，之后类似。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[fedora]</span><br><span class="line">name=Fedora $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-source]</span><br><span class="line">name=Fedora $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>/etc/yum.repos.d/fedora-updates.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[updates]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-source]</span><br><span class="line">name=Fedora $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>/etc/yum.repos.d/fedora-modular.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[fedora-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">#metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>/etc/yum.repos.d/fedora-updates-modular.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[updates-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<p>最后运行 <code>sudo dnf makecache</code> 生成缓存。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-3.jpg" alt></p>
+<h2 id="自动修改软件源"><a href="#自动修改软件源" class="headerlink" title="自动修改软件源"></a>自动修改软件源</h2><p>用以下命令替换 <code>/etc/yum.repos.d</code> 下的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -e &apos;s|^metalink=|#metalink=|g&apos; \</span><br><span class="line">         -e &apos;s|^#baseurl=http://download.fedoraproject.org/pub/fedora/linux|baseurl=https://mirrors.ustc.edu.cn/fedora|g&apos; \</span><br><span class="line">         -i.bak \</span><br><span class="line">         /etc/yum.repos.d/fedora.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-modular.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates-modular.repo</span><br></pre></td></tr></table></figure>
+
+<p>参考网址： <a href="http://mirrors.ustc.edu.cn/help/fedora.html" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/help/fedora.html</a></p>
 
       
     </div>
@@ -648,8 +715,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -666,7 +742,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -762,7 +838,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -865,6 +943,23 @@ show_date_time();
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加sudo用户"><span class="nav-number">1.</span> <span class="nav-text">添加sudo用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动修改软件源"><span class="nav-number">2.</span> <span class="nav-text">手动修改软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动修改软件源"><span class="nav-number">3.</span> <span class="nav-text">自动修改软件源</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
