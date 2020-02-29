@@ -100,25 +100,31 @@
 
 
 
-  <meta name="description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
-<meta name="keywords" content="Fedora,Linux">
+  <meta name="description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
+<meta name="keywords" content="操作系统,调度算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-Fedora系统的安装">
-<meta property="og:url" content="http://yoursite.com/2020/02/26/Linux-Fedora系统的安装/index.html">
+<meta property="og:title" content="操作系统——几种常见的调度算法">
+<meta property="og:url" content="http://yoursite.com/posts/11889.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
-<meta property="og:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
+<meta property="og:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-28T02:08:48.338Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/SJF_SPF.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/HRNN.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FB.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/summary.png">
+<meta property="og:updated_time" content="2020-02-29T02:30:31.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux-Fedora系统的安装">
-<meta name="twitter:description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
+<meta name="twitter:title" content="操作系统——几种常见的调度算法">
+<meta name="twitter:description" content="摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/26/Linux-Fedora系统的安装/">
+  <link rel="canonical" href="http://yoursite.com/posts/11889.html">
 
 
 
@@ -128,7 +134,7 @@
   };
 </script>
 
-  <title>Linux-Fedora系统的安装 | hongCYu's Blog</title>
+  <title>操作系统——几种常见的调度算法 | hongCYu's Blog</title>
   
 
 
@@ -396,7 +402,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/Linux-Fedora系统的安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/11889.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hongCYu">
@@ -413,7 +419,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux-Fedora系统的安装
+          <h1 class="post-title" itemprop="name headline">操作系统——几种常见的调度算法
 
               
             
@@ -439,7 +445,7 @@
                 
               
 
-              <time title="创建时间：2020-02-26 08:56:22" itemprop="dateCreated datePublished" datetime="2020-02-26T08:56:22+08:00">2020-02-26</time>
+              <time title="创建时间：2019-12-07 20:22:20" itemprop="dateCreated datePublished" datetime="2019-12-07T20:22:20+08:00">2019-12-07</time>
             
 
             
@@ -457,14 +463,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/Fedora/" itemprop="url" rel="index"><span itemprop="name">Fedora</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/操作系统/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a></span>
 
                 
                 
@@ -499,47 +498,45 @@
       
 
       
-        <p>摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。</p>
+        <p>摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。</p>
 <a id="more"></a>
 
-<h2 id="下载镜像文件"><a href="#下载镜像文件" class="headerlink" title="下载镜像文件"></a>下载镜像文件</h2><ol>
-<li><p>首先我们先去<a href="http://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">mirrors.ustc.edu.cn</a>下载fedora的镜像文件</p>
-</li>
-<li><p>点击右侧的<font color="red"><strong>获取安装镜像</strong></font>在发行版的下拉列表中找到到Fedora</p>
-</li>
-<li><p>选择发行版本中会列出最新的版本号以及各版本号所对应的不同选项。版本一致的情况下内核和功能都是一样的，区别在于<strong>图形界面</strong>，这里我选择31（×86-64Cinnamon）这个版本。</p>
-<p>①workstation就是标准的图形界面。</p>
-<p>②Xfce是极简界面，一般用于比较老或者性能不佳的机器。</p>
-<p>③KDE更倾向于Windows的界面。</p>
-<p>④Cinnamon则比较流行的图像界面。</p>
-</li>
-</ol>
-<h2 id="VM虚拟机安装Linux系统"><a href="#VM虚拟机安装Linux系统" class="headerlink" title="VM虚拟机安装Linux系统"></a>VM虚拟机安装Linux系统</h2><ol>
-<li>选择新建虚拟机，选择自定义，在硬件兼容性的选项中选择最高版本即可，因为高版本默认是兼容低版本的虚拟机的，但是低版本不能兼容高版本，所以选择较高的即可。</li>
-<li>安装客户机OS时选择稍后安装，我们先把虚拟机配置好再进行系统安装。</li>
-<li>客户机操作系统选择Linux ，根据下载的版本选择Fedora 是32位还是64位即可。（ps：如果你安装的虚拟机版本不在这上面可以使用最下面的内核版本来进行安装）</li>
-<li>选择虚拟机文件存放的安装目录。</li>
-<li>选择2核4线程即可</li>
-<li>指定虚拟机内存，因为是64位虚拟机至少2G内存才不会太卡顿，若内存富裕可以选择4GB内存。</li>
-<li>网络连接方式其中有四个选项，一般情况下我们选择NAT模式或者仅主机模式。其中，NAT模式的特点是虚拟机可以同步使用主机IP地址来访问互联网，但是虚拟机和主机是不可以通信的。反之，在仅主机模式中虚拟机是不能访问互联网的，但是客户机和主机是可以进行通信的，一般在进行虚拟网络测试时选择的是仅主机模式。</li>
-<li>I/O控制器选择默认即可。</li>
-<li>虚拟硬盘类型默认即可。</li>
-<li>在是否创建虚拟磁盘，一般情况下创建虚拟磁盘。</li>
-<li>选择磁盘大小，记得不要超过你的磁盘大小。其中需要注意的是<font color="red">立即分配所以磁盘空间</font>是将磁盘立即划分出来，之后就不能使用你所选择的这部分空间，所以一般不打勾。而将虚拟盘拆分多个文件有利于虚拟机的转移。</li>
-<li>然后一直下一步即可完成。</li>
-</ol>
-<h2 id="安装操作系统"><a href="#安装操作系统" class="headerlink" title="安装操作系统"></a>安装操作系统</h2><ol>
-<li>点击虚拟机界面下的<font color="red">编辑此虚拟机设置</font>在其中的CD/DVD中选择使用ISO映像文件，选择你下载的镜像包然后保存。</li>
-<li>启动虚拟机进行安装。</li>
-<li>选择START FEDORA进行下一步，安装的开始会进行一些初始化。</li>
-<li>此时会出现主界面，不过是试用界面，可以点击Install to Hard Drive 进行安装到硬盘中。</li>
-<li>安装的第一就是选择中文。</li>
-<li>安装信息摘要中，凡是带感叹号的都是需要 用户修改的。</li>
-<li>按照步骤安装即可。注意!由于目前的操作系统不允许超级用户登入，所以必须创建用户用于登入。<u>不要</u>选择将用户设置为管理员。</li>
-<li>创建完成后单击开始安装。</li>
-<li>最后重启系统即可完成。</li>
-</ol>
-<p><font color="red">注意：最好将网络断开，避免在未换源的情况下由于下载更新导致安装过慢的问题</font></p>
+<h2 id="处理机调度相关基本概念"><a href="#处理机调度相关基本概念" class="headerlink" title="处理机调度相关基本概念"></a>处理机调度相关基本概念</h2><h3 id="调度方式和调度算法的若干准则"><a href="#调度方式和调度算法的若干准则" class="headerlink" title="调度方式和调度算法的若干准则"></a>调度方式和调度算法的若干准则</h3><p>1.面向用户的准则：周转时间短（CPU执行用时Ts、周转时间T=Ts+Tw、带权周转时间W= T/Ts）、响应时间快、均衡性、截止时间的保证、优先权准则。</p>
+<p>2.面向系统的准则：系统吞吐量高、处理机利用率好、各类资源的平衡利用</p>
+<p>3.批处理系统为照顾为数众多的短作业，应采用短作业优先的调度算法；分时系统为保证系统具有合理的响应时间，应采用轮转法进行调度</p>
+<h2 id="常用调度算法"><a href="#常用调度算法" class="headerlink" title="常用调度算法"></a>常用调度算法</h2><h3 id="先来先服务调度算法FCFS"><a href="#先来先服务调度算法FCFS" class="headerlink" title="先来先服务调度算法FCFS"></a><strong>先来先服务调度算法FCFS</strong></h3><p>1.按照作业提交，或进程变为就绪状态的先后次序分派CPU。</p>
+<p>2.新作业只有当当前作业或进程执行完或阻塞才获得CPU运行。</p>
+<p>3.被唤醒的作业或进程不立即恢复执行，通常等到当前作业或进程出让CPU（所以，默认即是非抢占方式）。</p>
+<p>4.有利于CPU繁忙型的作业，而不利于I/O繁忙的作业（进程）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FCFS.png" alt></p>
+<h3 id="短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）"><a href="#短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）" class="headerlink" title="短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）"></a><strong>短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）</strong></h3><p>1.平均周转时间、平均带权周转时间都有明显改善。SJF/SPF调度算法能有效的降低作业的平均等待时间，提高系统吞吐量。</p>
+<p>2.未考虑作业的紧迫程度，因而不能保证紧迫性作业（进程）的及时处理、对长作业的不利、作业（进程）的长短含主观因素，不一定能真正做到短作业优先。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/SJF_SPF.png" alt></p>
+<h3 id="高优先权优先调度算法HPF"><a href="#高优先权优先调度算法HPF" class="headerlink" title="高优先权优先调度算法HPF"></a>高优先权优先调度算法HPF</h3><p>1.<strong>两种方式</strong>：非抢占式优先权算法、抢占式优先权算法（关键点：新作业产生时）<br>2.<strong>类型</strong>:静态优先权：创建进程时确定，整个运行期间保持不变。动态优先权：创建进程时赋予的优先权可随进程的推进或随其等待时间的增加而改变。</p>
+<p>最具有代表性的就是<strong>高响应比优先调度算法HRRN</strong>：</p>
+<p>HRRN为每个作业引入动态优先权，使作业的优先级随着等待时间的增加而以速率a提高：优先权 =（等待时间+要求服务时间)/要求服务时间= 响应时间 / 要求服务时间。<br>什么时候计算各进程的响应比优先权？（作业完成时、新作业产生时（抢占、非抢占）、时间片完成时、进程阻塞时）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/HRNN.png" alt></p>
+<h3 id="基于时间片的轮转调度算法RR"><a href="#基于时间片的轮转调度算法RR" class="headerlink" title="基于时间片的轮转调度算法RR"></a><strong>基于时间片的轮转调度算法RR</strong></h3><h3 id="时间片轮转算法"><a href="#时间片轮转算法" class="headerlink" title="时间片轮转算法"></a>时间片轮转算法</h3><p>过程：</p>
+<p>1.排成一个队列。</p>
+<p>2.每次调度时将CPU分派给队首进程。</p>
+<p>3.时间片结束时，发生时钟中断。</p>
+<p>4.暂停当前进程的执行，将其送到就绪队列的末尾，并通过上下文切换执行当前就绪的队首进程。<br>说明：</p>
+<p>1.进程阻塞情况发生时，未用完时间片也要出让CPU。</p>
+<p>2.能够及时响应，但没有考虑作业长短等问题。</p>
+<p>3.系统的处理能力和系统的负载状态影响时间片长度。</p>
+<h3 id="多级反馈队列算法FB"><a href="#多级反馈队列算法FB" class="headerlink" title="多级反馈队列算法FB"></a><strong>多级反馈队列算法FB</strong></h3><p>过程：</p>
+<p>1.准备调度：先将它放入第一个队列的末尾，按FCFS原则排队等待调度。</p>
+<p>2.IF时间片内完成，便可准备撤离系统。</p>
+<p>3.IF时间片内未能完成，调度程序便将该进程转入第二队列的末尾等待再次被调度执行。</p>
+<p>4.当第一队列中的进程都执行完，系统再按FCFS原则调度第二队列。在第二队列的稍放长些的时间片内仍未完成，再依次将它放入第三队列。</p>
+<p>5.依次降到第n队列后，在第n队列中便采取按时间片轮转的方式运行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/FB.png" alt></p>
+<p>说明:</p>
+<p>1.设置多个就绪队列，各队列有不同的优先级,优先级从第一个队列依次降低。</p>
+<p>2.赋予各队列进程执行时间片大小不同, 优先权越高，时间片越短。</p>
+<p>3.仅当优先权高的队列（如第一队列）空闲时，调度程序才调度第二队列中的进程运行。</p>
+<p>4.高优先级抢占时，被抢占的进程放回原就绪队列末尾。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/summary.png" alt></p>
 
       
     </div>
@@ -600,9 +597,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Fedora/" rel="tag"># Fedora</a>
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/调度算法/" rel="tag"># 调度算法</a>
           
         </div>
       
@@ -628,8 +625,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/01/使用PicGo-Github搭建免费图床/" rel="next" title="使用PicGo+Github搭建免费图床">
-                <i class="fa fa-chevron-left"></i> 使用PicGo+Github搭建免费图床
+              <a href="/posts/23551.html" rel="next" title="Hexo博客添加相册页面">
+                <i class="fa fa-chevron-left"></i> Hexo博客添加相册页面
               </a>
             
           </div>
@@ -638,8 +635,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/02/28/Fedora安装后的配置/" rel="prev" title="Fedora安装后的配置">
-                Fedora安装后的配置 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/60330.html" rel="prev" title="操作系统——缺页中断及页面置换算法">
+                操作系统——缺页中断及页面置换算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -918,7 +915,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载镜像文件"><span class="nav-number">1.</span> <span class="nav-text">下载镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM虚拟机安装Linux系统"><span class="nav-number">2.</span> <span class="nav-text">VM虚拟机安装Linux系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装操作系统"><span class="nav-number">3.</span> <span class="nav-text">安装操作系统</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#处理机调度相关基本概念"><span class="nav-number">1.</span> <span class="nav-text">处理机调度相关基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度方式和调度算法的若干准则"><span class="nav-number">1.1.</span> <span class="nav-text">调度方式和调度算法的若干准则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用调度算法"><span class="nav-number">2.</span> <span class="nav-text">常用调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来先服务调度算法FCFS"><span class="nav-number">2.1.</span> <span class="nav-text">先来先服务调度算法FCFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#短作业（进程）优先调度算法SJF（非抢占）-SPF（抢占）"><span class="nav-number">2.2.</span> <span class="nav-text">短作业（进程）优先调度算法SJF（非抢占）/SPF（抢占）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高优先权优先调度算法HPF"><span class="nav-number">2.3.</span> <span class="nav-text">高优先权优先调度算法HPF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于时间片的轮转调度算法RR"><span class="nav-number">2.4.</span> <span class="nav-text">基于时间片的轮转调度算法RR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间片轮转算法"><span class="nav-number">2.5.</span> <span class="nav-text">时间片轮转算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多级反馈队列算法FB"><span class="nav-number">2.6.</span> <span class="nav-text">多级反馈队列算法FB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
