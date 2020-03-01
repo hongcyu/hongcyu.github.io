@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-07T10:46:09.826Z">
+<meta property="og:updated_time" content="2020-03-01T12:01:58.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="光影流年">
 <meta name="twitter:description" content=".posts-expand .post-body img{         padding: 1px;     }      .footer{         display: none !important;     }       /*不展示底部*/      .footer-inner{          display: none !important;      }">
@@ -269,23 +269,6 @@
         
         
           
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-archives">
 
     
@@ -297,6 +280,23 @@
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-fa-user-plus"></i> <br>友链</a>
 
   </li>
         
@@ -656,126 +656,55 @@
 
 <!-- 主体部分 -->
 <div id="box" class="box"></div>
-
 <script type="text/javascript">
 
-function loadXMLDoc(xmlUrl) 
+<p>function loadXMLDoc(xmlUrl)<br>{<br>    try //Internet Explorer<br>    {<br>        xmlDoc=new ActiveXObject(“Microsoft.XMLDOM”);<br>    }<br>    catch(e)<br>    {<br>      try //Firefox, Mozilla, Opera, etc.<br>        {<br>          xmlDoc=document.implementation.createDocument(“”,””,null);<br>        }<br>      catch(e) {alert(e.message)}<br>    }</p>
+<pre><code>try 
 {
-    try //Internet Explorer
-    {
-        xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-    }
-    catch(e)
-    {
-      try //Firefox, Mozilla, Opera, etc.
-        {
-          xmlDoc=document.implementation.createDocument("","",null);
-        }
-      catch(e) {alert(e.message)}
-    }
-
-    try 
-    {
-          xmlDoc.async=false;
-          xmlDoc.load(xmlUrl);
-    }
-    catch(e) {
-        try //Google Chrome  
-          {  
-            var chromeXml = new XMLHttpRequest();
-            chromeXml.open("GET", xmlUrl, false);
-            chromeXml.send(null);
-            xmlDoc = chromeXml.responseXML.documentElement;                 
-            //alert(xmlDoc.childNodes[0].nodeName);
-            //return xmlDoc;    
-          }  
-          catch(e)  
-          {  
-              alert(e.message)  
-          }                
-    }
-    return xmlDoc; 
+      xmlDoc.async=false;
+      xmlDoc.load(xmlUrl);
 }
-
-var xmllink="https://photos-1251459134.cos.ap-guangzhou.myqcloud.com"
-xmlDoc=loadXMLDoc(xmllink);
-
-var urls = xmlDoc.getElementsByTagName('Key');
-var date = xmlDoc.getElementsByTagName('LastModified');
-var wid = 350;
-var showNum = 13; //每个相册一次展示多少照片，为4的倍数+1
-if ((window.innerWidth) > 1200) { wid = (window.innerWidth * 3) / 18;}
-var box = document.getElementById('box');
-var i = 0;
-
-var content = new Array();
-var tmp=0;
-var kkk=-1;
-for (var t = 0; t < urls.length ; t++) {
-    var bucket=urls[t].innerHTML;
-    var length=bucket.indexOf('/');
-    if(length===bucket.length-1){
-        kkk++;
-        content[kkk]=new Array();
-        content[kkk][0]={'url':bucket,'date':date[t].innerHTML.substring(0,10)};
-        tmp=1;
-    }
-    else {
-        content[kkk][tmp++]={'url':bucket.substring(length+1),'date':date[t].innerHTML.substring(0,10)};
+catch(e) {
+    try //Google Chrome  
+      {  
+        var chromeXml = new XMLHttpRequest();
+        chromeXml.open(&quot;GET&quot;, xmlUrl, false);
+        chromeXml.send(null);
+        xmlDoc = chromeXml.responseXML.documentElement;                 
+        //alert(xmlDoc.childNodes[0].nodeName);
+        //return xmlDoc;    
+      }  
+      catch(e)  
+      {  
+          alert(e.message)  
+      }                
+}
+return xmlDoc; </code></pre><p>}</p>
+<p>var xmllink=”<a href="https://photos-1251459134.cos.ap-guangzhou.myqcloud.com&quot;">https://photos-1251459134.cos.ap-guangzhou.myqcloud.com&quot;</a><br>xmlDoc=loadXMLDoc(xmllink);</p>
+<p>var urls = xmlDoc.getElementsByTagName(‘Key’);<br>var date = xmlDoc.getElementsByTagName(‘LastModified’);<br>var wid = 350;<br>var showNum = 13; //每个相册一次展示多少照片，为4的倍数+1<br>if ((window.innerWidth) &gt; 1200) { wid = (window.innerWidth * 3) / 18;}<br>var box = document.getElementById(‘box’);<br>var i = 0;</p>
+<p>var content = new Array();<br>var tmp=0;<br>var kkk=-1;<br>for (var t = 0; t &lt; urls.length ; t++) {<br>    var bucket=urls[t].innerHTML;<br>    var length=bucket.indexOf(‘/‘);<br>    if(length===bucket.length-1){<br>        kkk++;<br>        content[kkk]=new Array();<br>        content[kkk][0]={‘url’:bucket,’date’:date[t].innerHTML.substring(0,10)};<br>        tmp=1;<br>    }<br>    else {<br>        content[kkk][tmp++]={‘url’:bucket.substring(length+1),’date’:date[t].innerHTML.substring(0,10)};<br>    }<br>}</p>
+<p>for (var i = 0; i &lt; content.length; i++) {<br>    var conBox=document.createElement(“div”);<br>    conBox.id=’conBox’+i;<br>    box.appendChild(conBox);<br>    var item=document.createElement(“div”);<br>    var title=content[i][0].url;<br>    item.innerHTML=”&lt;button class=title style=background:url(“+xmllink+’/‘ + title + “surface.jpg”+”);background-repeat:no-repeat;&gt;<span style=display:inline;><strong style=color:#f0f3f6; >“ + title.substring(0,title.length - 1) + “</strong></span></button>“;<br>    conBox.appendChild(item);</p>
+<pre><code>    for (var j = 1; j &lt; content[i].length &amp;&amp; j &lt; showNum+1; j++) {
+        var con=content[i][j].url;
+    var item=document.createElement(&quot;li&quot;);
+    if(con.substring(0,con.length-4) != &quot;surface&quot;){
+        item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=&quot;+xmllink+&apos;/&apos; + title + con +&quot; alt=&quot; + con + &quot;&gt;&lt;/div&gt;&lt;span&gt;&quot; + con.substring(0,con.length-4);
+        conBox.appendChild(item);
     }
 }
-
-for (var i = 0; i < content.length; i++) {
-    var conBox=document.createElement("div");
-    conBox.id='conBox'+i;
-    box.appendChild(conBox);
-    var item=document.createElement("div");
-    var title=content[i][0].url;
-    item.innerHTML="<button class=title style=background:url("+xmllink+'/' + title + "surface.jpg"+");background-repeat:no-repeat;><span style=display:inline;><strong style=color:#f0f3f6; >" + title.substring(0,title.length - 1) + "</strong></span></button>";
-    conBox.appendChild(item);
-
-        for (var j = 1; j < content[i].length && j < showNum+1; j++) {
-            var con=content[i][j].url;
-        var item=document.createElement("li");
-        if(con.substring(0,con.length-4) != "surface"){
-            item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src="+xmllink+'/' + title + con +" alt=" + con + "></div><span>" + con.substring(0,con.length-4);
-            conBox.appendChild(item);
-        }
+if(content[i].length &gt; showNum){
+    var moreItem=document.createElement(&quot;button&quot;);
+    moreItem.className = &quot;btn-more-posts&quot;;
+    moreItem.id = &quot;more&quot; + i;
+    moreItem.value = showNum + 1;
+    let cur = i;
+    moreItem.onclick = function (){
+        moreClick(this,cur,content[cur],content[cur][0].url);
     }
-    if(content[i].length > showNum){
-        var moreItem=document.createElement("button");
-        moreItem.className = "btn-more-posts";
-        moreItem.id = "more" + i;
-        moreItem.value = showNum + 1;
-        let cur = i;
-        moreItem.onclick = function (){
-            moreClick(this,cur,content[cur],content[cur][0].url);
-        }
-        moreItem.innerHTML="<span style=display:inline;><strong style=color:#f0f3f6;>加载更多</strong></span>";
-        conBox.appendChild(moreItem);
-    }
-}
-
-function moreClick(obj,cur,cont,title){
-    var parent = obj.parentNode;
-    parent.removeChild(obj);
-    var j=obj.value;
-    var begin=j;
-    for ( ; j < cont.length && j < Number(showNum) + Number(begin); j++) {
-        var con=cont[j].url;
-        var item=document.createElement("li");
-        item.innerHTML="<div class=imgbox id=imgbox style=height:"+wid+"px;><img class=imgitem src="+xmllink+'/'+title+con+" alt="+con+"></div><span>"+con.substring(0,con.length-4);
-        parent.appendChild(item);
-        var v=item.getElementsByTagName('img');
-        v[0].id=imgid;
-        imgid++;
-    }
-    if(cont.length > j){
-        obj.value=j;
-        parent.appendChild(obj);
-    }
-}
-</script>
+    moreItem.innerHTML=&quot;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6;&gt;加载更多&lt;/strong&gt;&lt;/span&gt;&quot;;
+    conBox.appendChild(moreItem);
+}</code></pre><p>}</p>
+<p>function moreClick(obj,cur,cont,title){<br>    var parent = obj.parentNode;<br>    parent.removeChild(obj);<br>    var j=obj.value;<br>    var begin=j;<br>    for ( ; j &lt; cont.length &amp;&amp; j &lt; Number(showNum) + Number(begin); j++) {<br>        var con=cont[j].url;<br>        var item=document.createElement(“li”);<br>        item.innerHTML=”&lt;div class=imgbox id=imgbox style=height:”+wid+”px;&gt;<img class=imgitem src="+xmllink+'/'+title+con+" alt="+con+"></div><span>“+con.substring(0,con.length-4);<br>        parent.appendChild(item);<br>        var v=item.getElementsByTagName(‘img’);<br>        v[0].id=imgid;<br>        imgid++;<br>    }<br>    if(cont.length &gt; j){<br>        obj.value=j;<br>        parent.appendChild(obj);<br>    }<br>}<br></script><p></p>
 
         
       </div>
@@ -795,14 +724,6 @@ function moreClick(obj,cur,cont,title){
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-    </div>
-
-  
-
-
 
         </div>
         
@@ -1237,8 +1158,6 @@ show_date_time();
 
 
 
-
-  
 
 
   
@@ -1707,8 +1626,6 @@ show_date_time();
 
 
 
-
-  
 
 
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
