@@ -168,7 +168,6 @@
 </noscript>
 
   
-  <link rel="stylesheet" href="/dist/css/share.min.css">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -383,32 +382,124 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/19315.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">初入密码学之置换加密与暴力破解
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>摘要：此为学习现代密码学的一次作业，能进行不是较大文本量的txt文本周期性置换加密，并进行密文的暴力破解。</p>
+          <h1 class="post-title" itemprop="name headline">初入密码学之置换加密与暴力破解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-21 12:38:14" itemprop="dateCreated datePublished" datetime="2019-09-21T12:38:14+08:00">2019-09-21</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/现代密码学/" itemprop="url" rel="index"><span itemprop="name">现代密码学</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/现代密码学/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：此为学习现代密码学的一次作业，能进行不是较大文本量的txt文本周期性置换加密，并进行密文的暴力破解。</p>
 <a id="more"></a>
 
 <h2 id="文件解释"><a href="#文件解释" class="headerlink" title="文件解释"></a>文件解释</h2><p>1.将文件放在同一个python文件夹下使用</p>
@@ -428,19 +519,121 @@
 <h2 id="暴力破解代码"><a href="#暴力破解代码" class="headerlink" title="暴力破解代码"></a>暴力破解代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">def save(word):</span><br><span class="line">    #存储</span><br><span class="line">    file2 = open(&apos;DecryptWoed.txt&apos;,&apos;a&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    for i in word:</span><br><span class="line">        file2.write(i)</span><br><span class="line">    file2.write((&quot;\n&quot;))</span><br><span class="line">    file2.close()</span><br><span class="line"></span><br><span class="line">def decrypt(wordlist,deltalist):</span><br><span class="line">    #进行置换解密</span><br><span class="line">    NewWordlist = []</span><br><span class="line">    for i in wordlist:</span><br><span class="line">        con = &apos;&apos;</span><br><span class="line">        str = i</span><br><span class="line">        for j in deltalist:</span><br><span class="line">            con = con + str[ j -1 ]</span><br><span class="line">        NewWordlist.append(con)</span><br><span class="line">    return NewWordlist</span><br><span class="line"></span><br><span class="line">def DFS(p,delta,token,newdelta,wordlist):</span><br><span class="line">    #深度搜索密钥的所以可能性</span><br><span class="line">    if p == len(delta):</span><br><span class="line">        print(newdelta)</span><br><span class="line">        save(decrypt(wordlist,newdelta))</span><br><span class="line">        return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    for index in range(len(delta)):</span><br><span class="line">        if token[index] == True:</span><br><span class="line">            newdelta[p] = delta[index]</span><br><span class="line">            token[index] = False</span><br><span class="line">            DFS(p+1,delta,token,newdelta,wordlist)</span><br><span class="line">            token[index] = True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    deltasize = int(input(&quot;输入密钥位数：&quot;))</span><br><span class="line">    delta =[]</span><br><span class="line">    for i in range(1, deltasize + 1):</span><br><span class="line">        delta.append(i)</span><br><span class="line">    token = [True for i in range(len(delta))]   #用来深度搜索判断</span><br><span class="line">    newdelta = [&apos;&apos; for i in range(0, len(delta))]  #引用来存储一次深度优先后的结果</span><br><span class="line">    file = open(&apos;cipher.txt&apos;,&apos;r&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    word = file.read()</span><br><span class="line">    #将word存入wordlist列表中</span><br><span class="line">    wordlist = []</span><br><span class="line">    j = 0</span><br><span class="line">    str = &apos;&apos;</span><br><span class="line">    for i in word :</span><br><span class="line">        if(j &lt; deltasize):</span><br><span class="line">            str = str +i</span><br><span class="line">            j=j+1</span><br><span class="line">        if(j == deltasize ):</span><br><span class="line">            wordlist.append(str)</span><br><span class="line">            j = 0</span><br><span class="line">            str = &apos;&apos;</span><br><span class="line"></span><br><span class="line">    DFS(0,delta,token,newdelta,wordlist)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
 
 
-        
-      </div>
-      
-      
       
     </div>
-    
-
-
 
     
+      
+
+
+    
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/现代密码学/" rel="tag"># 现代密码学</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/14905.html" rel="next" title="创建神经网络并进行训练和查询">
+                <i class="fa fa-chevron-left"></i> 创建神经网络并进行训练和查询
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/43462.html" rel="prev" title="利用Opencv将视频转换为字符视频">
+                利用Opencv将视频转换为字符视频 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -1341,7 +1534,7 @@ show_date_time();
 
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
 
-  <script src="/dist/js/social-share.min.js"></script>
+
 
 </body>
 </html>
