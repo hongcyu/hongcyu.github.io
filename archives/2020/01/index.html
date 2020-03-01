@@ -905,32 +905,21 @@ show_date_time();
 
   
   
-
-<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
-
-
-
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-
-<script>
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail';
-  guest = guest.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
+        appKey: 'd2CXUwazDsDgIDljKISICUmj',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","暗地观察.png"],
+        placeholder: '留下邮箱，有回复时你将收到提醒，邮箱不会被公开。',
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
-    appKey: 'd2CXUwazDsDgIDljKISICUmj',
-    placeholder: '留下邮箱，有回复时你将收到提醒，邮箱不会被公开。',
-    avatar: 'wavatar',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-</script>
+  </script>
 
 
 
@@ -1370,32 +1359,21 @@ show_date_time();
   <script src="/live2d-widget/autoload.js"></script>
   
   
-
-<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
-
-
-
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-
-<script>
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail';
-  guest = guest.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: '填写博主邮箱',
+        el: '#comments' ,
+        appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
+        appKey: 'd2CXUwazDsDgIDljKISICUmj',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","暗地观察.png"],
+        placeholder: '留下邮箱，有回复时你将收到提醒，邮箱不会被公开。',
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
-    appKey: 'd2CXUwazDsDgIDljKISICUmj',
-    placeholder: '留下邮箱，有回复时你将收到提醒，邮箱不会被公开。',
-    avatar: 'wavatar',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-</script>
+  </script>
 
 
 
