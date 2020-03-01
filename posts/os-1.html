@@ -174,6 +174,7 @@
 </noscript>
 
   
+  <link rel="stylesheet" href="/dist/css/share.min.css">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -388,117 +389,32 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/os-1.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hongCYu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hongCYu's Blog">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">操作系统——几种常见的调度算法
+<h1 class="post-title" itemprop="name headline">操作系统——几种常见的调度算法
 
-              
-            
-          </h1>
-        
+</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
+<div class="post-meta">
+  
+  
 
-            
-            
-            
 
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
 
-              
-                
-              
+</div>
 
-              <time title="创建时间：2019-12-07 20:22:20" itemprop="dateCreated datePublished" datetime="2019-12-07T20:22:20+08:00">2019-12-07</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/操作系统/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <p>摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。</p>
+      <div class="post-body">
+        
+        
+          <p>摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。</p>
 <a id="more"></a>
 
 <h2 id="处理机调度相关基本概念"><a href="#处理机调度相关基本概念" class="headerlink" title="处理机调度相关基本概念"></a>处理机调度相关基本概念</h2><h3 id="调度方式和调度算法的若干准则"><a href="#调度方式和调度算法的若干准则" class="headerlink" title="调度方式和调度算法的若干准则"></a>调度方式和调度算法的若干准则</h3><p>1.面向用户的准则：周转时间短（CPU执行用时Ts、周转时间T=Ts+Tw、带权周转时间W= T/Ts）、响应时间快、均衡性、截止时间的保证、优先权准则。</p>
@@ -538,121 +454,19 @@
 <p>4.高优先级抢占时，被抢占的进程放回原就绪队列末尾。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/operating_system/summary.png" alt></p>
 
+        
+      </div>
+      
+      
       
     </div>
-
     
-      
 
 
-    
 
     
     
     
-
-    
-
-    
-      
-    
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
-        <p>微信支付</p>
-      </div>
-    
-
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-  <div>
-    
-    <div>
-    
-        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
-    
-</div>
-    
-   </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
-          
-            <a href="/tags/调度算法/" rel="tag"># 调度算法</a>
-          
-        </div>
-      
-
-      
-      
-        <div class="post-widgets">
-        
-          <div class="wp_rating">
-              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
-            <div id="wpac-rating"></div>
-          </div>
-        
-
-        
-
-        
-        </div>
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/posts/23551.html" rel="next" title="Hexo博客添加相册页面">
-                <i class="fa fa-chevron-left"></i> Hexo博客添加相册页面
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/os-2.html" rel="prev" title="操作系统——缺页中断及页面置换算法">
-                操作系统——缺页中断及页面置换算法 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
   </div>
 
 
@@ -1553,7 +1367,7 @@ show_date_time();
 
   <script type="text/javascript" src="/js/src/clicklove.js"></script>
 
-
+  <script src="/dist/js/social-share.min.js"></script>
 
 </body>
 </html>
