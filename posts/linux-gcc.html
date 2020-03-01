@@ -111,7 +111,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229155717.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160013.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160338.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1582963693916.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/1582963693916.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163141.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163714.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229164511.png">
@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229180528.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229184734.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/asdfaa1213.png">
-<meta property="og:updated_time" content="2020-02-29T11:22:58.623Z">
+<meta property="og:updated_time" content="2020-03-01T01:03:10.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下gcc编译器的使用">
 <meta name="twitter:description" content="摘要：此为学习Linux课程中关于gcc编译器的一些总结，方便以后查阅。">
@@ -533,12 +533,11 @@
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229160338.png" alt></p>
 <p>这是编译器用 -c 这个参数时单一生成的中间代码，但是中间代码是不可以执行的，我们需要进行链接生成可执行文件。</p>
 <p>输入<code>gcc -o test_1 test.o</code>(其中test_1为你自定义的文件名，test.o为上一步生成的中间文件)，我们可以直接执行test_1来看看会得到一样的效果：</p>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1582963693916.png" alt="1582963693916"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/1582963693916.png" alt></p>
 <p><strong>总结：</strong></p>
 <ol>
 <li>gcc -c &lt;filename.c&gt;</li>
 <li>gcc -o <filename_exe> &lt;filename.o&gt;</filename_exe></li>
-<li></li>
 </ol>
 <p>但是我们在编写代码时不能所以都由自己写，需要用到写好的库文件时，该怎么用呢？</p>
 <p>这里我们重新编写代码：</p>
@@ -547,7 +546,7 @@
 <p>如果直接运行<code>gcc -c test.c</code>会发现报错：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163141.png" alt></p>
 <p>可以发现，凡是语法错误在编译的时候就会识别出来了，已经说明函数sqrt未被定义。可以看到解决方案，加上头文件。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">100</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">     </span><br><span class="line">    ret = <span class="built_in">sqrt</span>(data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the sqrt = %d\n"</span>,ret);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">100</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world!\n"</span>);</span><br><span class="line">     </span><br><span class="line">    ret = <span class="built_in">sqrt</span>(data);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"the sqrt = %d\n"</span>,ret);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后编译<code>gcc -c test.c</code>  和<code>gcc -o test test.o</code>后</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229163714.png" alt></p>
@@ -571,7 +570,7 @@
 <p>然后使用<code>gcc -c ***</code>各自生成可执行文件，接下来我们将两个中间文件进行链接：</p>
 <p>使用<code>gcc -o test test.o myfunc.o -lm</code>进行链接，然后成功执行：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229172011.png" alt></p>
-<p>tips：</p>
+<p><strong>tips：</strong></p>
 <p>如果遇到下面这种情况：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229165815.jpg" alt></p>
 <p>是因为本文件夹中查找不到，将头文件中的#include &lt;myfunc.h&gt;改成#include “myfunc.h”即可~</p>
@@ -633,7 +632,8 @@
 <p><code>next &lt;步数&gt;</code></p>
 </li>
 </ol>
-<p>gdb总结：</p>
+<hr>
+<p>gdb总结：**</p>
 <ol>
 <li><p>生成： gcc -g &lt;源文件&gt; -o &lt;执行文件&gt; -l&lt;库&gt;</p>
 </li>
@@ -876,9 +876,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -925,9 +923,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
