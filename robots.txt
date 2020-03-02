@@ -1,0 +1,7 @@
+User-agent: *
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /lib/
+
+Sitemap: https://hongcyu.cn/sitemap.xml
