@@ -145,7 +145,7 @@
 
 
   <meta name="description" content="摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。">
-<meta name="keywords" content="Fedora,Linux">
+<meta name="keywords" content="Linux,Fedora">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux-Fedora系统的安装">
 <meta property="og:url" content="https://hongcyu.cn/posts/fedora-1.html">
@@ -656,9 +656,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Fedora/" rel="tag"># Fedora</a>
-          
             <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Fedora/" rel="tag"># Fedora</a>
           
         </div>
       
@@ -1153,14 +1153,15 @@ show_date_time();
 
   
   
-
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="/js/src/Valine.min.js"></script>
-  
+
+  <!--<script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
+  <!-- https://deserts.io/diy-a-comment-system/ -->
   <script type="text/javascript">
     new Valine({
         lang: 'zh-cn',
-        admin_email: 'hongcyu@qq.com',
+        admin_email: 'hongcyu@qq.com', //博主邮箱
         el: '#comments' ,
         appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
         appKey: 'd2CXUwazDsDgIDljKISICUmj',
@@ -1169,7 +1170,7 @@ show_date_time();
         placeholder: '点击此处就可以留言啦 q(≧▽≦q)',
   });
 
-    <!--点击邮件中的链接跳转至相应评论-->
+  <!--点击邮件中的链接跳转至相应评论-->
   if(window.location.hash){
       var checkExist = setInterval(function() {
          if ($(window.location.hash).length) {
@@ -1180,6 +1181,7 @@ show_date_time();
    }
 
   </script>
+
 
 
 

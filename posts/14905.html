@@ -145,7 +145,7 @@
 
 
   <meta name="description" content="摘要：通过对神经网络编程这本书的内容，模仿其中的代码，对初次学习神经网络进行熟悉，并逐步完成神经网络的搭建，完成对手写数字的识别。">
-<meta name="keywords" content="神经网络,python">
+<meta name="keywords" content="python,神经网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="创建神经网络并进行训练和查询">
 <meta property="og:url" content="https://hongcyu.cn/posts/14905.html">
@@ -685,9 +685,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
-          
             <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
           
         </div>
       
@@ -1182,14 +1182,15 @@ show_date_time();
 
   
   
-
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="/js/src/Valine.min.js"></script>
-  
+
+  <!--<script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
+  <!-- https://deserts.io/diy-a-comment-system/ -->
   <script type="text/javascript">
     new Valine({
         lang: 'zh-cn',
-        admin_email: 'hongcyu@qq.com',
+        admin_email: 'hongcyu@qq.com', //博主邮箱
         el: '#comments' ,
         appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
         appKey: 'd2CXUwazDsDgIDljKISICUmj',
@@ -1198,7 +1199,7 @@ show_date_time();
         placeholder: '点击此处就可以留言啦 q(≧▽≦q)',
   });
 
-    <!--点击邮件中的链接跳转至相应评论-->
+  <!--点击邮件中的链接跳转至相应评论-->
   if(window.location.hash){
       var checkExist = setInterval(function() {
          if ($(window.location.hash).length) {
@@ -1209,6 +1210,7 @@ show_date_time();
    }
 
   </script>
+
 
 
 
