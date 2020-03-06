@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #620886;
+  background: #3d5bed;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2817,6 +2817,9 @@ hr {
 }
 .use-motion .logo-line-after i {
   right: -100%;
+}
+.site-subtitle {
+  display: none;
 }
 .site-nav-toggle {
   position: static;
