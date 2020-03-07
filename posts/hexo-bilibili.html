@@ -145,7 +145,7 @@
 
 
   <meta name="description" content="摘要：此次研究的是hexo博客next主题下的B站视频适配问题，其他主题的博客也可参考此教程进行操作。">
-<meta name="keywords" content="Blog hongCYu">
+<meta name="keywords" content="Hexo,bilibili">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo博客引用B站视频自动适配">
 <meta property="og:url" content="https://hongcyu.cn/posts/hexo-bilibili.html">
@@ -153,7 +153,7 @@
 <meta property="og:description" content="摘要：此次研究的是hexo博客next主题下的B站视频适配问题，其他主题的博客也可参考此教程进行操作。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200307095024.png">
-<meta property="og:updated_time" content="2020-03-07T03:46:13.161Z">
+<meta property="og:updated_time" content="2020-03-07T03:49:26.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo博客引用B站视频自动适配">
 <meta name="twitter:description" content="摘要：此次研究的是hexo博客next主题下的B站视频适配问题，其他主题的博客也可参考此教程进行操作。">
@@ -492,6 +492,24 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -538,8 +556,8 @@
 <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在进行引用B站用iframe方式引入视频时发现，通过默认的方式导入会使得屏幕很小</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200307095024.png" alt></p>
 <iframe src="//player.bilibili.com/player.html?aid=81148317&cid=138878361&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+一般我们都是自己改width和height来修改大小，但是换成不同的设备就无法正常的显示了。如下
 
-<p>一般我们都是自己改width和height来修改大小，但是换成不同的设备就无法正常的显示了。如下</p>
 <p>默认：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src="//player.bilibili.com/player.html?aid=81148317&amp;cid=138878361&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"&gt; &lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
 
@@ -555,8 +573,11 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bilibili"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"//player.bilibili.com/player.html?aid=81148317&amp;cid=138878361&amp;page=1"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span> <span class="attr">allowfullscreen</span>=<span class="string">"true"</span>&gt;</span> <span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>效果如下：</p>
-<div class="video" <iframe src="//player.bilibili.com/player.html?aid=81148317&cid=138878361&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> 
+<div class="video">
+<iframe src="//player.bilibili.com/player.html?aid=81148317&cid=138878361&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 </div>
+
+
 
 <h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>使用@media属性，对不同屏幕大小的设备，设置宽度和高度。</p>
 <p>@media可以查询到设备的一下属性</p>
@@ -574,7 +595,6 @@
 
 <p>效果如下：</p>
 <iframe class="bilibili" src="//player.bilibili.com/player.html?aid=81148317&cid=138878361&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
 
 
 <h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><h3 id="B站链接的参数"><a href="#B站链接的参数" class="headerlink" title="B站链接的参数"></a>B站链接的参数</h3><p>player.bilibili.com/player.html?aid=81148317&amp;cid=138878361&amp;page=1</p>
@@ -674,6 +694,14 @@
    </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/bilibili/" rel="tag"># bilibili</a>
+          
+        </div>
       
 
       
@@ -889,7 +917,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
