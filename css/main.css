@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a20866;
+  background: #4dd7ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -4444,7 +4444,6 @@ a.at {
 .bilibili {
   position: relative;
   width: 100%;
-  height: auto;
 }
 @media (max-width: 767px) {
   .bilibili {
