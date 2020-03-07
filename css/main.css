@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff8a01;
+  background: #26b9ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -4445,23 +4445,36 @@ a.at {
   position: relative;
   width: 100%;
 }
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
   .bilibili {
-    height: 450px;
+    height: 15em;
   }
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
   .bilibili {
-    height: 900px;
+    height: 20em;
   }
 }
-@media (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
   .bilibili {
-    height: 960px;
+    height: 30em;
   }
 }
-@media (max-width: 1200px) {
+@media only screen and (max-width: 1200px) {
   .bilibili {
-    height: 1100px;
+    height: 40em;
   }
+}
+.video {
+  position: relative;
+  width: 100%;
+  height: 0; /*高度设置这里无效，设置为0，用padding撑开div*/
+  padding-bottom: 75%; /*68%到80%都可以*/
+}
+.video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
