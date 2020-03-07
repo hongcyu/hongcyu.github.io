@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #0950e4;
+  background: #e3ff98;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -4440,4 +4440,28 @@ a.at {
   margin-left: 40% !important;
   background-color: #971212 !important;
   color: #fff !important;
+}
+.bilibili {
+  position: relative;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .bilibili {
+    height: 15em;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .bilibili {
+    height: 20em;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .bilibili {
+    height: 30em;
+  }
+}
+@media (max-width: 1200px) {
+  .bilibili {
+    height: 40em;
+  }
 }
