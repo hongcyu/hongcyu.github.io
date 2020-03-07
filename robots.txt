@@ -3,5 +3,6 @@ User-agent: *
 Disallow: /js/
 Disallow: /css/
 Disallow: /lib/
+Disallow: /links/
 
 Sitemap: https://hongcyu.cn/sitemap.xml
