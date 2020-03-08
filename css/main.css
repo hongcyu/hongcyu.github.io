@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #66771b;
+  background: #ffe573;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3884,7 +3884,7 @@ span.site-title {
 .sidebar {
   display: block;
   width: 320px;
-  background-size: 320px 659px;
+  background-size: 320px 2048px;
   background-repeat: no-repeat;
   box-shadow: inset 2px 2px 40px #bdb2b2;
   background-image: url("/images/bk.jpg");
