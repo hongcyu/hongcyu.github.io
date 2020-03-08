@@ -2069,7 +2069,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #34a3fe;
+  background: #583baf;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3107,6 +3107,7 @@ hr {
   }
 }
 .post-spread {
+  margin-top: -40px;
   margin-bottom: 20px;
 }
 .post-toc ol a {
@@ -3142,9 +3143,18 @@ a:hover {
 }
 .post {
   margin-top: 0px;
-  margin-bottom: 30px;
-  border-bottom: 1px dashed #4d9fe5;
-  background: #fff;
+  margin-bottom: 60px;
+  padding: 25px;
+  border: 1px solid #fff;
+/*-webkit-border-radius: 8px;*/
+/*-moz-border-radius: 8px;*/
+  border-radius: 3px;
+  -webkit-box-shadow: #666 0px 0px 10px;
+  -moz-box-shadow: #666 0px 0px 10px;
+  box-shadow: #666 0px 0px 10px;
+  background: #f3f2ee;
+/*background: #fff;*/
+  behavior: url("/images/PIE.htc");
 }
 .post-block {
   margin-bottom: 28px;
