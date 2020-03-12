@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.jpg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要：这为学习Linux系统管理与开发课程中对于用户管理的一些使用和总结。">
+<meta name="keywords" content="Linux,Fadora">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下的用户管理与操作">
+<meta property="og:url" content="https://hongcyu.cn/posts/linux-user-management.html">
+<meta property="og:site_name" content="hongCYu&#39;s Blog">
+<meta property="og:description" content="摘要：这为学习Linux系统管理与开发课程中对于用户管理的一些使用和总结。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311210157.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311210020.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212507.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212745.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212915.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311213248.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311214850.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311220950.png">
+<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1583936557257.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311223253.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084223.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084301.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084459.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084805.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312090337.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312090541.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/2133134134.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312093512.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312104602.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312104912.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312105332.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193020.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193624.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193916.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193935.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312195042.png">
+<meta property="og:updated_time" content="2020-03-12T11:57:49.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux下的用户管理与操作">
+<meta name="twitter:description" content="摘要：这为学习Linux系统管理与开发课程中对于用户管理的一些使用和总结。">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311210157.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hongcyu.cn/posts/linux-user-management.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux下的用户管理与操作 | hongCYu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        
+        <span class="site-title">hongCYu's Blog</span>
+        
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往可以快乐地写代码~</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-user-plus"></i> <br>友链</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-photos">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/photos/" rel="section"><i class="menu-item-icon fa fa-fw fa-image"></i> <br>相册</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hongcyu.cn/posts/linux-user-management.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content="欢迎你和我进行交流。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux下的用户管理与操作
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-12 10:40:05" itemprop="dateCreated datePublished" datetime="2020-03-12T10:40:05+08:00">2020-03-12</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/posts/linux-user-management.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/posts/linux-user-management.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：这为学习Linux系统管理与开发课程中对于用户管理的一些使用和总结。</p>
+<a id="more"></a>
+
+<h2 id="用户操作基本命令"><a href="#用户操作基本命令" class="headerlink" title="用户操作基本命令"></a>用户操作基本命令</h2><blockquote>
+<p> who:    显示当前实际用户</p>
+<p>whoami:    当前使用的用户</p>
+<p>users：    同who</p>
+<p>w:    显示详细信息</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311210157.png" alt></p>
+<p>id:显示用户身份</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311210020.png" alt></p>
+<h2 id="时间相关"><a href="#时间相关" class="headerlink" title="时间相关"></a>时间相关</h2><blockquote>
+<p>date:     显示当前系统时间</p>
+<p>time：    显示系统运行时间，系统时间片的分配</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212507.png" alt></p>
+<blockquote>
+<p>cal:    显示当前月份的日历</p>
+<p>cal &lt;年份&gt;：    显示一整年的日历</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212745.png" alt></p>
+<p>特殊的：1752年的日历和其他的不一样，历法上修订新历会导致九月份不一样。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311212915.png" alt></p>
+<p>以下可以显示离1970-01-01 后99999天的日期。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[hongcyu@localhost etc]$ date -d &quot;1970-01-01 99999days&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="目录相关"><a href="#目录相关" class="headerlink" title="目录相关"></a>目录相关</h2><blockquote>
+<p>pwd:    显示当前目录路径</p>
+<p>cd &lt;路径&gt; :    更改当前路径</p>
+<p>cd    :回到初始目录</p>
+<p>./    :当前目录</p>
+<p>../    :上一个目录（父目录）</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311213248.png" alt></p>
+<blockquote>
+<p>ls    ：显示当前目录下的文件</p>
+<p>ls -l    :显示文件并包含详细信息</p>
+<p>ls | more    :以翻页的方式查看目录文件</p>
+<p>mv <filename1>  <filename2>     ：将文件进行备份</filename2></filename1></p>
+<p>rm <filename>：      删除文件</filename></p>
+<p>rm -r     :删除目录</p>
+<p>cat <filename>    :查看文件内容</filename></p>
+<p>head/tail <filename>    :从头/尾查看文件（每次10行）</filename></p>
+</blockquote>
+<h2 id="用户配置文件"><a href="#用户配置文件" class="headerlink" title="用户配置文件"></a>用户配置文件</h2><ol>
+<li>用户信息文件     /etc/passwd</li>
+<li>影子文件     /etc/shadow</li>
+<li>组信息文件     /etc/group</li>
+<li>组影子文件     /etc/gshadow</li>
+</ol>
+<p>用户管理中安全等级越高，月需要用户分级管理</p>
+<h3 id="口令文件"><a href="#口令文件" class="headerlink" title="口令文件"></a>口令文件</h3><p>打开 /etc/passwd查看用户基本信息，每一行代表一个用户</p>
+<blockquote>
+<p>· 用户名称</p>
+<p>· 用户密码标识</p>
+<p>· 用户ID</p>
+<p>· 组编号</p>
+<p>· 用户说明</p>
+<p>· 家目录</p>
+<p>· 用户对应的ash</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311214850.png" alt></p>
+<p>一共分成7个部分，其中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root   :          x         :   0   :   0   :   root   : /root:  /bin/bash</span><br><span class="line">用户名称： 口令(X标识符表示存在) : 用户ID : 组编号： 用户说明  ：家目录： 用户对应的ash</span><br></pre></td></tr></table></figure>
+
+<p>tips：</p>
+<ol>
+<li>只要你的用户ID为0即为超级用户</li>
+<li>后期创建的用户由于系统保留从1000开始。可以再/etc/login.defs查看。</li>
+<li>/sbin/nologin表示不可以登入</li>
+</ol>
+<h3 id="影子文件"><a href="#影子文件" class="headerlink" title="影子文件"></a>影子文件</h3><p>分别代表：</p>
+<blockquote>
+<p>· 用户名称</p>
+<p>· 加密密码（SHA512)</p>
+<p>· 最后修改密码时间（时间戳模式，1970-1-1）</p>
+<p>· 两次密码的修改间隔时间（0 表示可以不修改）</p>
+<p>· 密码有效期</p>
+<p>· 密码到期提醒时间（提前提醒）</p>
+<p>· 到期后宽限时间（0：立即失效 ；-1永不失效）</p>
+<p>· 账户失效时间</p>
+<p>· 保留</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311220950.png" alt></p>
+<h3 id="组信息文件"><a href="#组信息文件" class="headerlink" title="组信息文件"></a>组信息文件</h3><blockquote>
+<p>· 组名称</p>
+<p>· 组密码标识</p>
+<p>· GID</p>
+<p>· 组中附加用户</p>
+</blockquote>
+<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1583936557257.png" alt="1583936557257"></p>
+<h3 id="组影子文件"><a href="#组影子文件" class="headerlink" title="组影子文件"></a>组影子文件</h3><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311223253.png" alt></p>
+<h2 id="用户与组的添加"><a href="#用户与组的添加" class="headerlink" title="用户与组的添加"></a>用户与组的添加</h2><p>tips：用户和组的添加需要管理员权限！</p>
+<h3 id="添加一个全新的用户"><a href="#添加一个全新的用户" class="headerlink" title="添加一个全新的用户"></a>添加一个全新的用户</h3><blockquote>
+<p>用户添加    useradd <username></username></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hongcyu@localhost etc]$ su</span><br><span class="line">密码：</span><br><span class="line">[root@localhost etc]# useradd bob</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+
+<p>只要不报错即为添加成功。</p>
+<blockquote>
+<p>tips:</p>
+<p>可以使用管道来强制修改密码，在超级用户下使用：</p>
+<p>echo 123456 | passwd <username></username></p>
+</blockquote>
+<p>接着到passwd文件中可以看的出来bob这个用户已经添加成功了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084223.png" alt></p>
+<p>到口令文件（shadow）下查看也添加成功了，不过会发现一个问题，bob没有密码！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084301.png" alt></p>
+<p>再看一下组信息文件发现也添加成功了，名称与用户名一致。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084459.png" alt></p>
+<p>组影子文件就不看了。</p>
+<p>接着退出管理员用户，尝试用su切换用户发现，bob登录不了，因为没有口令！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# exit</span><br><span class="line">exit</span><br><span class="line">[hongcyu@localhost etc]$ su bob</span><br><span class="line">密码：</span><br><span class="line">su: 鉴定故障</span><br><span class="line">[hongcyu@localhost etc]$</span><br></pre></td></tr></table></figure>
+
+<p>接着到bob的目录去看一下发现进入不了，原因是现在我是hongcyu这个用户，没有权限访问bob的目录，可以用<code>ls -l</code>查看权限。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084805.png" alt></p>
+<p>解决这个问题的办法就是给用户设置口令。</p>
+<blockquote>
+<p>passwd 表示修改当前用户的口令</p>
+</blockquote>
+<blockquote>
+<p>passwd <username>     修改其他用户的口令</username></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[hongcyu@localhost home]$ su</span><br><span class="line">密码：</span><br><span class="line">[root@localhost home]# passwd bob</span><br><span class="line">更改用户 bob 的密码 。</span><br><span class="line">新的 密码：</span><br><span class="line">重新输入新的 密码：</span><br><span class="line">passwd：所有的身份验证令牌已经成功更新。</span><br></pre></td></tr></table></figure>
+
+<p>接着回到hongcyu用户使用<code>su bob</code>切换用户。这个时候会发现（bob@localhost hongcyu）是由hongcyu切换到了bob用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[hongcyu@localhost ~]$ su bob</span><br><span class="line">密码：</span><br><span class="line">[bob@localhost hongcyu]$</span><br></pre></td></tr></table></figure>
+
+<p>这个时候查看bob的目录下会发现啥也没干就存在着文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312090337.png" alt></p>
+<p>其实是每个用户在创建时会自动生成一些配置文件，而这些文件在每个用户最先配置时都是一样的。其实进入<code>/etc/skel</code>会发现存在的一样的文件，很好的解释了是在用户创建的最后把skel下的文件复制了过去。所以作为一个管理员，如果你想向新用户发送一个信息，就可以在skel下创建文件，这样每当创建新用户时就会将skel下的文件全部的复制过去。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312090541.png" alt></p>
+<h3 id="将新用户添加到已有的目录"><a href="#将新用户添加到已有的目录" class="headerlink" title="将新用户添加到已有的目录"></a>将新用户添加到已有的目录</h3><blockquote>
+<p>user add -d <route> <username></username></route></p>
+</blockquote>
+<p>首先进入管理员用户，到/home下自己用<code>mkdir</code>创建一个新的文件夹</p>
+<p>接着使用<code>useradd -d /home/tomtom tom</code>来指定新用户的家目录，会产生一个警告，是因为如果没有刚刚创建的<code>tomtom</code>文件夹的话，系统会自己创建并复制初始配置文件，但是由于我们是自己先前已经创建的目录，可以看到提示说不从 skel 目录里向其中复制任何文件。如果想有的话可以手动从skel复制过去。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/2133134134.png" alt></p>
+<h3 id="创建新的组"><a href="#创建新的组" class="headerlink" title="创建新的组"></a>创建新的组</h3><blockquote>
+<p>useradd -g <groupname> <username></username></groupname></p>
+</blockquote>
+<p>需要注意的是，在创建用户时如果未指定组的话会自带创建一个名字和用户名一样的组。</p>
+<p>接着我们使用命令去创建用户时会发现提示错误，那么到底是添加成功还是添加不成功呢。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# useradd -g mygroup alice</span><br><span class="line">useradd：“mygroup”组不存在</span><br></pre></td></tr></table></figure>
+
+<p>我们到passwd文件里发现并没有Alice用户的存在，说明了不能指定用户添加入不存在的组。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312093512.png" alt></p>
+<p>所以想将新用户指定到固定的组时需要先添加组。</p>
+<blockquote>
+<p>groupadd  <groupname></groupname></p>
+</blockquote>
+<p>创建组成功后接着运行之前创建用户的命令即可创建新用户成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# groupadd mygroup</span><br><span class="line">[root@localhost etc]# useradd -g mygroup alice</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312104602.png" alt></p>
+<h3 id="将新用户加入多个组"><a href="#将新用户加入多个组" class="headerlink" title="将新用户加入多个组"></a>将新用户加入多个组</h3><blockquote>
+<p>useradd -G <groupname1>,<groupname2>， …  <username></username></groupname2></groupname1></p>
+</blockquote>
+<p>我们执行<code>useradd -G mygroup,bob sonya</code>后到group中看一下，可以发现bob和mygroup中都有了sonya这个用户。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312104912.png" alt></p>
+<h3 id="将用户添加到组"><a href="#将用户添加到组" class="headerlink" title="将用户添加到组"></a>将用户添加到组</h3><blockquote>
+<p>gpasswd -a <username> <groupname></groupname></username></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# gpasswd -a sonya bob</span><br><span class="line">正在将用户“sonya”加入到“bob”组中</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义用户号和组号"><a href="#自定义用户号和组号" class="headerlink" title="自定义用户号和组号"></a>自定义用户号和组号</h3><blockquote>
+<p>useradd -u<number> <username></username></number></p>
+</blockquote>
+<p>我们执行<code>useradd -u8888 testuser</code>后到passwd下查看可以看到详细信息</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312105332.png" alt></p>
+<h2 id="用户与组的删除"><a href="#用户与组的删除" class="headerlink" title="用户与组的删除"></a>用户与组的删除</h2><h3 id="删除所在组的成员"><a href="#删除所在组的成员" class="headerlink" title="删除所在组的成员"></a>删除所在组的成员</h3><blockquote>
+<p>gpasswd -d <username> <groupname></groupname></username></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# gpasswd -d sonya bob</span><br><span class="line">正在将用户“sonya”从“bob”组中删除</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><blockquote>
+<p>userdel <username></username></p>
+</blockquote>
+<p>虽然删除成功了但是你会发现它的家目录却并没有被删除。然后你会发现文件夹被超级用户接管了。这样的好处是不会因为勿删导致文件无法找回。</p>
+<p>tips：若是删除用户时它的组中有其他成员则组并不会被一起删除。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193020.png" alt></p>
+<blockquote>
+<p>userdel -r <username>   带家目录一起删除</username></p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193624.png" alt></p>
+<h3 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h3><blockquote>
+<p>groupdel <groupname></groupname></p>
+</blockquote>
+<p>运行之后发现mygroup 的组被删除了。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193916.png" alt></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193935.png" alt></p>
+<h2 id="普通用户的分权"><a href="#普通用户的分权" class="headerlink" title="普通用户的分权"></a>普通用户的分权</h2><p>最经典的当然是在命令前加上<code>sudo</code>啦，以超级用户的权限来执行命令。</p>
+<p>那么如何修改权限呢，可以在<code>etc/sudoers</code>下修改。(这个文件不能在vi编辑器下直接编辑，这里提供一个命令<code>visudo</code>来修改。)</p>
+<p>这里可以看到<code>root   ALL=(ALL)   ALL</code>是代表着root用户在任何机器任何域可以执行任何命令。</p>
+<p>按照如图所示的方法可以将修改口令的权限分配给bob,而后面的<code>/bin/passwd</code>命令可以去/bin目录或者/sbin下查看~</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312195042.png" alt></p>
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-file-management.html" rel="bookmark">Linux下文件系统的管理</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-user-program.html" rel="bookmark">Linux下用户管理的程序设计</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　-------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Fadora/" rel="tag"># Fadora</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/FTP.html" rel="next" title="使用Windows server搭建FTP">
+                <i class="fa fa-chevron-left"></i> 使用Windows server搭建FTP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/linux-user-program.html" rel="prev" title="Linux下用户管理的程序设计">
+                Linux下用户管理的程序设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="hongCYu">
+            
+              <p class="site-author-name" itemprop="name">hongCYu</p>
+              <p class="site-description motion-element" itemprop="description">欢迎你和我进行交流。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/hongcyu" title="GitHub &rarr; https://github.com/hongcyu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:hongcyu@qq.com" title="E-Mail &rarr; mailto:hongcyu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com" title="https://www.baidu.com" rel="noopener" target="_blank">Baidu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com" title="https://github.com" rel="noopener" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com" title="https://www.google.com" rel="noopener" target="_blank">Google</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bilibili.com" title="https://www.bilibili.com" rel="noopener" target="_blank">Bilibili</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("07/25/2019 00:00:00");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户操作基本命令"><span class="nav-number">1.</span> <span class="nav-text">用户操作基本命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间相关"><span class="nav-number">2.</span> <span class="nav-text">时间相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录相关"><span class="nav-number">3.</span> <span class="nav-text">目录相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户配置文件"><span class="nav-number">4.</span> <span class="nav-text">用户配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#口令文件"><span class="nav-number">4.1.</span> <span class="nav-text">口令文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影子文件"><span class="nav-number">4.2.</span> <span class="nav-text">影子文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组信息文件"><span class="nav-number">4.3.</span> <span class="nav-text">组信息文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组影子文件"><span class="nav-number">4.4.</span> <span class="nav-text">组影子文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户与组的添加"><span class="nav-number">5.</span> <span class="nav-text">用户与组的添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加一个全新的用户"><span class="nav-number">5.1.</span> <span class="nav-text">添加一个全新的用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将新用户添加到已有的目录"><span class="nav-number">5.2.</span> <span class="nav-text">将新用户添加到已有的目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新的组"><span class="nav-number">5.3.</span> <span class="nav-text">创建新的组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将新用户加入多个组"><span class="nav-number">5.4.</span> <span class="nav-text">将新用户加入多个组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将用户添加到组"><span class="nav-number">5.5.</span> <span class="nav-text">将用户添加到组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义用户号和组号"><span class="nav-number">5.6.</span> <span class="nav-text">自定义用户号和组号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户与组的删除"><span class="nav-number">6.</span> <span class="nav-text">用户与组的删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除所在组的成员"><span class="nav-number">6.1.</span> <span class="nav-text">删除所在组的成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除用户"><span class="nav-number">6.2.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除组"><span class="nav-number">6.3.</span> <span class="nav-text">删除组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通用户的分权"><span class="nav-number">7.</span> <span class="nav-text">普通用户的分权</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hongCYu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <!-- <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script async src="/js/src/busuanzi.pure.mini.js"></script>
+  
+    <span class="site-uv">
+      你是来访的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+  
+    <span class="site-pv">
+      访问次数：
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+
+  <!--<script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
+  <!-- https://deserts.io/diy-a-comment-system/ -->
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: 'hongcyu@qq.com', //博主邮箱
+        el: '#comments' ,
+        appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
+        appKey: 'd2CXUwazDsDgIDljKISICUmj',
+        emoticon_url: 'https://cloud.panjunwen.com/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '点击此处就可以留言啦 q(≧▽≦q)',
+  });
+
+  <!--点击邮件中的链接跳转至相应评论-->
+  if(window.location.hash){
+      var checkExist = setInterval(function() {
+         if ($(window.location.hash).length) {
+            $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+            clearInterval(checkExist);
+         }
+      }, 100);
+   }
+
+  </script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 20011,
+      el: 'wpac-rating',
+      color: 'FF0000'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+  
+  <script src="/live2d-widget/autoload.js"></script>
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+
+
+
+</body>
+</html>
