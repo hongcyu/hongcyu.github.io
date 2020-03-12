@@ -153,12 +153,12 @@
 <meta property="og:description" content="摘要：我们都听过一句话，Linux/Unix中一切都是文件，所以在这里介绍一下Linux下文件系统的管理。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312213005.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584020537514.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/1584020537514.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312214725.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312220104.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584021741262.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584021980785.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584022309191.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/1584021741262.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/1584021980785.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/1584022309191.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312221304.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312223307.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312223420.png">
@@ -168,7 +168,7 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312224917.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312225033.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312225449.png">
-<meta property="og:updated_time" content="2020-03-12T14:56:21.563Z">
+<meta property="og:updated_time" content="2020-03-12T15:08:45.275Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下文件系统的管理">
 <meta name="twitter:description" content="摘要：我们都听过一句话，Linux/Unix中一切都是文件，所以在这里介绍一下Linux下文件系统的管理。">
@@ -590,7 +590,7 @@
 </blockquote>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312213005.png" alt></p>
 <p>我们可以进入<code>/dev</code>目录查看下里面的文件，我们可以找到磁盘设备，stdin,stdout,stderr等。</p>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584020537514.png" alt="1584020537514"></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/1584020537514.png" alt></p>
 <p>通常情况下我们添加一块磁盘会进行 分区–&gt; 格式化 接着我们就可以在文件系统中进行文件操作。</p>
 <p>sda1,sda2代表磁盘已经加入了，还需要进行磁盘的分区和格式化才可以进行使用。</p>
 <blockquote>
@@ -605,12 +605,12 @@
 <h3 id="识别硬盘"><a href="#识别硬盘" class="headerlink" title="识别硬盘"></a>识别硬盘</h3><p>我们先在虚拟机上添加一块硬盘</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312220104.png" alt></p>
 <p>接着按下面的方法选择，并创建新的磁盘并选择磁盘大小一直下一步。</p>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584021741262.png" alt="1584021741262"></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/1584021741262.png" alt></p>
 <h3 id="启动虚拟机"><a href="#启动虚拟机" class="headerlink" title="启动虚拟机"></a>启动虚拟机</h3><p>我们可以看见添加了新的硬盘，相对于向物理机添加了硬盘。接着启动虚拟机</p>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584021980785.png" alt="1584021980785"></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/1584021980785.png" alt></p>
 <h3 id="硬盘位置"><a href="#硬盘位置" class="headerlink" title="硬盘位置"></a>硬盘位置</h3><p>Linux中会将硬件放入/dev下，我们可以到该目录下找到我们刚刚添加的硬盘。</p>
 <p>用超级用户进入/dev目录，我们可以发现和上面的图比较多了一个sdb文件。</p>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1584022309191.png" alt="1584022309191"></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/1584022309191.png" alt></p>
 <p>接着我们用<code>fdisk</code>命令来查看磁盘信息，发现多了一块sdb但是并没有进行分区和格式化</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312221304.png" alt></p>
 <h3 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h3><blockquote>
@@ -681,14 +681,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
   
