@@ -152,7 +152,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：Linux系统管理与开发课程中对于文件的读写操作的认识并且运用C语言进行模拟读、写和复制操作。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-16T08:10:00.661Z">
+<meta property="og:updated_time" content="2020-03-16T08:15:56.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下文件读写的操作">
 <meta name="twitter:description" content="摘要：Linux系统管理与开发课程中对于文件的读写操作的认识并且运用C语言进行模拟读、写和复制操作。">
@@ -551,12 +551,10 @@
         <p>摘要：Linux系统管理与开发课程中对于文件的读写操作的认识并且运用C语言进行模拟读、写和复制操作。</p>
 <a id="more"></a>
 
-<h2 id="文件开关以及读写说明"><a href="#文件开关以及读写说明" class="headerlink" title="文件开关以及读写说明"></a>文件开关以及读写说明</h2><ol>
-<li><p>读操作<code>read()</code></p>
-<blockquote>
+<h2 id="文件开关以及读写说明"><a href="#文件开关以及读写说明" class="headerlink" title="文件开关以及读写说明"></a>文件开关以及读写说明</h2><h3 id="读操作read"><a href="#读操作read" class="headerlink" title="读操作read()"></a>读操作read()</h3><blockquote>
 <p> read(int fd,  void *buf,  size_t count);</p>
 </blockquote>
-<p>len:期望读取的字写数目</p>
+<p>len: 请求读取的字节数</p>
 <p>返回值：</p>
 <p>​        -1 ：读取失败</p>
 <p>​        0：没有读取到数据</p>
@@ -565,21 +563,13 @@
 <p>​        &lt; 0 : 失败</p>
 <p>​        = len: 正常读取</p>
 <p>​        = 0~len-1: 读取完毕</p>
-</li>
-</ol>
-<ol start="2">
-<li><p>写操作<code>write()</code></p>
-<blockquote>
+<h3 id="写操作write"><a href="#写操作write" class="headerlink" title="写操作write()"></a>写操作write()</h3><blockquote>
 <p> write(int fd, const void *buf, size_t count);</p>
 </blockquote>
 <p>返回值：</p>
 <p>​        -1 ：读取失败</p>
 <p>​        n：写入字符个数（n:1~len)</p>
-</li>
-</ol>
-<ol start="3">
-<li><p>打开文件<code>open()/creat()</code></p>
-<blockquote>
+<h3 id="打开文件open-creat"><a href="#打开文件open-creat" class="headerlink" title="打开文件open()/creat()"></a>打开文件open()/creat()</h3><blockquote>
 <p> creat(文件名称,权限模式)；   =     open(文件名称,O_CREAT,权限模式)</p>
 </blockquote>
 <p>类型：</p>
@@ -614,15 +604,9 @@
 <p>权限位：3个八进制数</p>
 <p>764</p>
 <p>creat(“test”,010764);</p>
-</li>
-</ol>
-<ol start="4">
-<li><p>关闭文件<code>close()</code></p>
-<blockquote>
+<h3 id="关闭文件close"><a href="#关闭文件close" class="headerlink" title="关闭文件close()"></a>关闭文件close()</h3><blockquote>
 <p>close(句柄);</p>
 </blockquote>
-</li>
-</ol>
 <h2 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	</span><br><span class="line">	read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	<span class="keyword">while</span>(read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s"</span>,buf);</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (read_return &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"read file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY);   //以只写的方式写入</span></span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY | O_APPEND);	//以只写＋尾部追加的方式写入</span></span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IRGRP | S_IROTH);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>) </span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">	gets(buf);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">strcmp</span>(buf, <span class="string">"quit"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(fd, buf, <span class="built_in">strlen</span>(buf));</span><br><span class="line">		<span class="keyword">if</span>(write_return &lt;<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"Write file error."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf , <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">		gets(buf);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -658,14 +642,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
       
     </li>
   
@@ -1090,7 +1074,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件开关以及读写说明"><span class="nav-number">1.</span> <span class="nav-text">文件开关以及读写说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读操作"><span class="nav-number">2.</span> <span class="nav-text">读操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写操作"><span class="nav-number">3.</span> <span class="nav-text">写操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制功能的实现"><span class="nav-number">4.</span> <span class="nav-text">复制功能的实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件开关以及读写说明"><span class="nav-number">1.</span> <span class="nav-text">文件开关以及读写说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读操作read"><span class="nav-number">1.1.</span> <span class="nav-text">读操作read()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写操作write"><span class="nav-number">1.2.</span> <span class="nav-text">写操作write()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开文件open-creat"><span class="nav-number">1.3.</span> <span class="nav-text">打开文件open()/creat()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭文件close"><span class="nav-number">1.4.</span> <span class="nav-text">关闭文件close()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读操作"><span class="nav-number">2.</span> <span class="nav-text">读操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写操作"><span class="nav-number">3.</span> <span class="nav-text">写操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制功能的实现"><span class="nav-number">4.</span> <span class="nav-text">复制功能的实现</span></a></li></ol></div>
             
 
           </div>
