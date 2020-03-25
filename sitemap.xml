@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/Linux-process.html</loc>
+    
+    <lastmod>2020-03-25T03:40:16.452Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/linux-catalog.html</loc>
+    
+    <lastmod>2020-03-25T00:56:31.968Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/Linux-file-readandwrite.html</loc>
+    
+    <lastmod>2020-03-23T06:30:55.805Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/c-file-copy.html</loc>
     
     <lastmod>2020-03-18T14:19:14.703Z</lastmod>
@@ -9,23 +30,9 @@
   </url>
   
   <url>
-    <loc>https://hongcyu.cn/posts/linux-catalog.html</loc>
-    
-    <lastmod>2020-03-18T07:16:38.228Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hongcyu.cn/posts/Linux-file-competence.html</loc>
     
     <lastmod>2020-03-18T06:58:03.001Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/Linux-file-readandwrite.html</loc>
-    
-    <lastmod>2020-03-18T06:48:46.364Z</lastmod>
     
   </url>
   

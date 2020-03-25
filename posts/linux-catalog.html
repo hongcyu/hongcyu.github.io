@@ -144,19 +144,19 @@
 
 
 
-  <meta name="description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步链接程序的编写。">
+  <meta name="description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。">
 <meta name="keywords" content="Linux,目录操作">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下关于目录的操作">
+<meta property="og:title" content="Linux下关于目录的操作及其程序设计">
 <meta property="og:url" content="https://hongcyu.cn/posts/linux-catalog.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
-<meta property="og:description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步链接程序的编写。">
+<meta property="og:description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200318115207.png">
-<meta property="og:updated_time" content="2020-03-18T07:16:38.228Z">
+<meta property="og:updated_time" content="2020-03-25T00:56:31.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下关于目录的操作">
-<meta name="twitter:description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步链接程序的编写。">
+<meta name="twitter:title" content="Linux下关于目录的操作及其程序设计">
+<meta name="twitter:description" content="摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。">
 <meta name="twitter:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200318115207.png">
 
 
@@ -174,7 +174,7 @@
   };
 </script>
 
-  <title>Linux下关于目录的操作 | hongCYu's Blog</title>
+  <title>Linux下关于目录的操作及其程序设计 | hongCYu's Blog</title>
   
 
 
@@ -459,7 +459,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux下关于目录的操作
+          <h1 class="post-title" itemprop="name headline">Linux下关于目录的操作及其程序设计
 
               
             
@@ -550,10 +550,10 @@
       
 
       
-        <p>摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步链接程序的编写。</p>
+        <p>摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。</p>
 <a id="more"></a>
 
-<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><ol>
+<h2 id="读取目录"><a href="#读取目录" class="headerlink" title="读取目录"></a>读取目录</h2><ol>
 <li>打开目录</li>
 <li>读取目录信息</li>
 <li>关闭目录</li>
@@ -585,6 +585,44 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span> (dp == <span class="literal">NULL</span>)</span><br><span class="line">		bail(<span class="string">"open dir error."</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp))!= <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt;d_name[<span class="number">0</span>] ==<span class="string">'.'</span>) </span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_REG)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Regular file: %s \n"</span>,dir-&gt;d_name);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_DIR)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Dir file: %s\n"</span>,dir-&gt;d_name);</span><br><span class="line">	&#125;</span><br><span class="line">	closedir(dp);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318115207.png" alt></p>
+<h2 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h2><p>在Linux中可以使用命令 <code>mkdir</code> 进行创建目录，也可以在程序设计中使用mkdir进行创建。</p>
+<blockquote>
+<p> 创建目录函数</p>
+<p><code>mkdir (目录名称，权限参数)</code></p>
+<p>成功返回： 0</p>
+<p>失败返回： -1</p>
+</blockquote>
+<blockquote>
+<p>切换目录函数</p>
+<p><code>chdir(新目录名称)</code></p>
+<p>成功返回： 0</p>
+<p>失败返回： -1</p>
+</blockquote>
+<p>例如：</p>
+<ol>
+<li>给定源目录</li>
+<li>遍历目录</li>
+<li>创建一个新目录</li>
+<li>将源目录加入到新目录中</li>
+</ol>
+<p>假定：</p>
+<ol>
+<li>一级目录，不进入子目录</li>
+<li>只创建，不复制</li>
+</ol>
+<p>可行性：</p>
+<p>cpdir（ source,dest)中</p>
+<ol>
+<li>source 要存在，可读</li>
+<li>dest 要不存在，可写</li>
+<li>读取source状态，作为dest状态</li>
+<li>创建目标目录</li>
+<li>source:     readdir;chdir(dest)</li>
+<li>dest:     mkdir/create;chdir(source)</li>
+<li>关闭两个目录指针</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> sdir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> ddir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> sname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> dname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> create_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">sb</span>;</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">1</span>],F_OK) &lt; <span class="number">0</span>) <span class="comment">//判断源文件是否存在，不存在则报错</span></span><br><span class="line">		bail(<span class="string">"Source directory not exist!"</span>);</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">2</span>],F_OK) == <span class="number">0</span>) <span class="comment">//判断目标文件是否存在，存在则报错</span></span><br><span class="line">		bail(<span class="string">"Dest directory exist!"</span>);</span><br><span class="line">	getcwd(sdir,<span class="keyword">sizeof</span>(sdir)); <span class="comment">//获取源文件路径，存入sdir</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb)); <span class="comment">//清空sb</span></span><br><span class="line">	stat(argv[<span class="number">1</span>],&amp;sb);	<span class="comment">//	获取权限存入sb块中</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((mkdir(argv[<span class="number">2</span>],sb.st_mode)) &lt; <span class="number">0</span>)		<span class="comment">//创建目标目录,并判断是否创建成功</span></span><br><span class="line">		bail(<span class="string">"Create dest directory error!"</span>);</span><br><span class="line">	chdir(argv[<span class="number">2</span>]);	<span class="comment">//进入目标路径</span></span><br><span class="line">	getcwd(ddir,<span class="keyword">sizeof</span>(ddir));	<span class="comment">//获取目标路径，存入ddir</span></span><br><span class="line">	chdir(sdir);	<span class="comment">//回到源目录进行读写操作</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp)) != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//假定只有普通文件和目录文件</span></span><br><span class="line">		<span class="keyword">if</span> (dir-&gt;d_name[<span class="number">0</span>] == <span class="string">'.'</span>)	<span class="comment">//如果读取文件第一位为“.”，则跳过</span></span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (dir-&gt;d_type == DT_DIR) <span class="comment">//如果读取类型是文件夹</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name ,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			mkdir(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			create_fd = creat(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			<span class="comment">// 写入内容，调用复制，自行填写</span></span><br><span class="line">			close(create_fd);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">closedir(dp);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -605,13 +643,6 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
@@ -619,14 +650,21 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\Linux-file-readandwrite.html" rel="bookmark">Linux下文件读写的操作</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\Linux-file-readandwrite.html" rel="bookmark">Linux下文件读写的操作</a></div>
       
     </li>
   
@@ -801,7 +839,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -860,7 +898,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -935,7 +975,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1049,7 +1091,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录操作"><span class="nav-number">1.</span> <span class="nav-text">目录操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开目录"><span class="nav-number">1.1.</span> <span class="nav-text">打开目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭目录"><span class="nav-number">1.2.</span> <span class="nav-text">关闭目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取目录信息"><span class="nav-number">1.3.</span> <span class="nav-text">读取目录信息</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取目录"><span class="nav-number">1.</span> <span class="nav-text">读取目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开目录"><span class="nav-number">1.1.</span> <span class="nav-text">打开目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭目录"><span class="nav-number">1.2.</span> <span class="nav-text">关闭目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取目录信息"><span class="nav-number">1.3.</span> <span class="nav-text">读取目录信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建目录"><span class="nav-number">2.</span> <span class="nav-text">创建目录</span></a></li></ol></div>
             
 
           </div>

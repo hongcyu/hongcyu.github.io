@@ -144,24 +144,36 @@
 
 
 
-  <meta name="description" content="欢迎你和我进行交流。">
-<meta name="keywords" content="Blog hongCYu">
-<meta property="og:type" content="website">
-<meta property="og:title" content="hongCYu&#39;s Blog">
-<meta property="og:url" content="https://hongcyu.cn/categories/命令格式/Hexo/index.html">
+  <meta name="description" content="摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。">
+<meta name="keywords" content="Linux,process">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程与状态管理及其程序设计">
+<meta property="og:url" content="https://hongcyu.cn/posts/Linux-process.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
-<meta property="og:description" content="欢迎你和我进行交流。">
+<meta property="og:description" content="摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323150521091.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323151818068.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323152023941.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323152214907.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323153148107.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325103953336.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325110123256.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325111625439.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112651718.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112942475.png">
+<meta property="og:updated_time" content="2020-03-25T03:40:16.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hongCYu&#39;s Blog">
-<meta name="twitter:description" content="欢迎你和我进行交流。">
+<meta name="twitter:title" content="Linux进程与状态管理及其程序设计">
+<meta name="twitter:description" content="摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。">
+<meta name="twitter:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200323150521091.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hongcyu.cn/categories/命令格式/Hexo/">
+  <link rel="canonical" href="https://hongcyu.cn/posts/Linux-process.html">
 
 
 
@@ -171,7 +183,7 @@
   };
 </script>
 
-  <title>分类: Hexo | hongCYu's Blog</title>
+  <title>Linux进程与状态管理及其程序设计 | hongCYu's Blog</title>
   
 
 
@@ -220,7 +232,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -377,31 +389,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -448,57 +435,405 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Hexo<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hongcyu.cn/posts/Linux-process.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content="欢迎你和我进行交流。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/posts/34490.html" itemprop="url">
-            
-              <span itemprop="name">Hexo的简单命令</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Linux进程与状态管理及其程序设计
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T22:50:06+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-23 14:02:37" itemprop="dateCreated datePublished" datetime="2020-03-23T14:02:37+08:00">2020-03-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/inux/" itemprop="url" rel="index"><span itemprop="name">inux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/posts/Linux-process.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/posts/Linux-process.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。</p>
+<a id="more"></a>
+
+<p>Linux 进程与状态管理：</p>
+<p>状态查看命令</p>
+<p>进程控制命令</p>
+<p>进程与子进程</p>
+<p>信号</p>
+<h2 id="常见状态管理命令"><a href="#常见状态管理命令" class="headerlink" title="常见状态管理命令"></a>常见状态管理命令</h2><blockquote>
+<p>w:    查看负载  </p>
+<p>主要查看1分钟内的负载，需要小于CPU个数或核心数。</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200323150521091.png" alt="image-20200323150521091"></p>
+<blockquote>
+<p>vmstat:    查看负载具体位置</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200323151818068.png" alt="image-20200323151818068"></p>
+<blockquote>
+<p>free:    查看内存负载</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200323152023941.png" alt="image-20200323152023941"></p>
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><blockquote>
+<p>ps:查看静态进程状态</p>
+<p>常见参数： -ef  、 -aux</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200323152214907.png" alt="image-20200323152214907"></p>
+<blockquote>
+<p>ps -aux | grep 3149 :查看所以与3149有关的进程（过滤）</p>
+</blockquote>
+<blockquote>
+<p>top: 查看准动态信息</p>
+</blockquote>
+<p>stat: S， sleep,终端的进程，绝大多数进程都是S</p>
+<p>stat: R ，run，运行中的进程</p>
+<p>stat: T， terminate， 停止或者终止的进程</p>
+<p>stat: s， 主进程</p>
+<p>stat: l，多线程进程</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200323153148107.png" alt="image-20200323153148107"></p>
+<h2 id="进程创建方式"><a href="#进程创建方式" class="headerlink" title="进程创建方式"></a>进程创建方式</h2><p>多进程：唯一创建标志 –&gt;进程号</p>
+<p>​                特殊进程号：1（一切进程的父进程）</p>
+<p>父进程：把子进程创建的进程</p>
+<p>子进程：被父进程创建的进程</p>
+<p>生成关系： 1:n</p>
+<blockquote>
+<p>创建进程的函数</p>
+<p>ret = fork()</p>
+<p>同时返回多于一个的返回值。</p>
+<p>ret =  -1    失败</p>
+<p>ret != -1 返回两个返回值，分别为<code>0</code>和<code>大于0的数</code> ，其中大于零的返回值为子进程的进程号，所以大于零的返回值给父进程，等于零的返回值给子进程。（相对于一个给父进程，一个给子进程）</p>
+</blockquote>
+<blockquote>
+<p>获取进程号函数</p>
+<p>getpid():获得当前进程的进程号</p>
+<p>getppid():获得当前进程的父进程的进程号</p>
+</blockquote>
+<p>问题：当前进程与父进程来确定进程父子关系（✔）/当前进程与子进程来确定进程父子关系（X）</p>
+<p>答：因为一个父进程有的多个子进程，而一个子进程只有一个父进程，获得父进程编号比较容易。</p>
+<h3 id="创建子进程"><a href="#创建子进程" class="headerlink" title="创建子进程"></a>创建子进程</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *err)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	perror(err);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pid_t</span> pid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ppid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ret = <span class="number">-1</span>;</span><br><span class="line">	ret = fork();</span><br><span class="line">	<span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"fork error!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return = 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());	</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return &gt; 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325103953336.png" alt="image-20200325103953336"></p>
+<p>可以看出来fork()函数的返回值中 <code>大于零的返回值给：父进程</code> <code>等于零的返回值给：子进程</code></p>
+<p>如果生成三个子进程，下面这段代码中使用for循环会发现出错了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for(i=0;i&lt;3;i++)</span><br><span class="line">&#123;</span><br><span class="line">    ret = fork();</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">            bail(&quot;fork error!\n&quot;);</span><br><span class="line">        else if(ret == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;pid =%d,ppid=%d.\n&quot;,getpid(),getppid());	</span><br><span class="line">        &#125;	</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;pid =%d,ppid=%d.\n&quot;,getpid(),getppid());</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>:warning: 主要在于fork()函数创建子进程时，不但生成一个进程，子进程的结构、数据段来自于父进程。</p>
+<p>正确方法如下，调整子进程的部分即可：</p>
+<p>子进程要返回：return</p>
+<p>父进程要等待：wait</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;error.h&gt;</span><br><span class="line">void bail(const char *err)</span><br><span class="line">&#123;</span><br><span class="line">	perror(err);</span><br><span class="line">	exit(-1);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pid_t pid = -1;</span><br><span class="line">	pid_t ppid = -1;</span><br><span class="line">	pid_t ret = -1;</span><br><span class="line">	int i = 0;</span><br><span class="line">	for(i = 0;i&lt;3;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		ret = fork();</span><br><span class="line">		if(ret &lt; 0)</span><br><span class="line">			bail("fork error!\n");</span><br><span class="line">		else if(ret == 0)</span><br><span class="line">		&#123;</span><br><span class="line">			printf("pid =%d,ppid=%d.\n",getpid(),getppid());	</span><br><span class="line"><span class="addition">+			return 0;</span></span><br><span class="line">		&#125;	</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line"><span class="deletion">-            printf("pid =%d,ppid=%d.\n",getpid(),getppid());</span></span><br><span class="line"><span class="addition">+			 wait(pid,NULL,0);</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325110123256.png" alt="image-20200325110123256"></p>
+<h3 id="子进程调用函数（替换）"><a href="#子进程调用函数（替换）" class="headerlink" title="子进程调用函数（替换）"></a>子进程调用函数（替换）</h3><p>目标：执行用户指定的程序。</p>
+<p>开始：子进程代码段数据段都来自父进程。</p>
+<p>调用后：子进程的代码段数据段来自于被调用程序。</p>
+<blockquote>
+<p>execl()函数</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325111625439.png" alt="image-20200325111625439"></p>
+<p>使用子程序实现： <code>ls -l &gt; aaa</code></p>
+<p>调用要点：调用的程序位置、名称、path+file</p>
+<p>调用参数：不定长的字符串，字符串的个数不一定,当最后一个有效参数给定后用NULL来表示结束</p>
+<p>例如：execl(“/bin/ls” , “ls” , “-l” , “&gt;” , “aaa” , NULL)</p>
+<p>先获取ls路径</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112651718.png" alt="image-20200325112651718"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *err)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	perror(err);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pid_t</span> pid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ppid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ret = <span class="number">-1</span>;</span><br><span class="line">	ret = fork();</span><br><span class="line">	<span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"fork error!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return = 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());	</span><br><span class="line">		execl(<span class="string">"/usr/bin/ls"</span>,<span class="string">"ls"</span>,<span class="string">"-l"</span>);</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return &gt; 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());</span><br><span class="line">		wait(pid,<span class="literal">NULL</span>,<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行就可以看到如下图所示：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112942475.png" alt="image-20200325112942475"></p>
+<p>:arrow_forward: 小结：</p>
+<blockquote>
+<p>execl()函数</p>
+<p>execl(“/bin/ls” , “ls” , “-l” , “&gt;” , “aaa” , NULL)</p>
+</blockquote>
+<blockquote>
+<p>execlp()函数</p>
+<p>例如：execlp(“ls”,”ls”,”-l”,NULL)</p>
+<p>写的时候只要给出调用程序的名称，不要给出路径，系统会在默认路径中查找</p>
+</blockquote>
+<blockquote>
+<p>execv()函数(v:vector向量)</p>
+<p>例如：</p>
+<p>const char* args[] = {“ls”,”-l”,”&gt;”,”aaa”,NULL}</p>
+<p>execv(“/bin/ls”,args)</p>
+</blockquote>
+<blockquote>
+<p>execvp()函数</p>
+<p>例如：</p>
+<p>const char* args[] = {“ls”,”-l”,”&gt;”,”aaa”,NULL}</p>
+<p>execvp(“ls”,args)</p>
+</blockquote>
 
       
     </div>
 
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\c-file-copy.html" rel="bookmark">C语言模拟实现文件复制的操作</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　-------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/process/" rel="tag"># process</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/c-file-copy.html" rel="next" title="C语言模拟实现文件复制的操作">
+                <i class="fa fa-chevron-left"></i> C语言模拟实现文件复制的操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -519,8 +854,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -779,6 +1123,23 @@ show_date_time();
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见状态管理命令"><span class="nav-number">1.</span> <span class="nav-text">常见状态管理命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程管理"><span class="nav-number">2.</span> <span class="nav-text">进程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程创建方式"><span class="nav-number">3.</span> <span class="nav-text">进程创建方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建子进程"><span class="nav-number">3.1.</span> <span class="nav-text">创建子进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子进程调用函数（替换）"><span class="nav-number">3.2.</span> <span class="nav-text">子进程调用函数（替换）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -926,6 +1287,10 @@ show_date_time();
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -968,6 +1333,8 @@ show_date_time();
 
 
 
+
+  
 
 
   
@@ -1324,6 +1691,25 @@ show_date_time();
   
 
   
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 20011,
+      el: 'wpac-rating',
+      color: 'FF0000'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
 
   
 
