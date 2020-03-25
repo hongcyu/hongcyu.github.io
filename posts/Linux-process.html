@@ -162,7 +162,7 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325111625439.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112651718.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112942475.png">
-<meta property="og:updated_time" content="2020-03-25T04:04:27.705Z">
+<meta property="og:updated_time" content="2020-03-25T04:12:30.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux进程与状态管理及其程序设计">
 <meta name="twitter:description" content="摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。">
@@ -612,7 +612,7 @@
 <p>getpid():获得当前进程的进程号</p>
 <p>getppid():获得当前进程的父进程的进程号</p>
 </blockquote>
-<p>问题：当前进程与父进程来确定进程父子关系（✔）/当前进程与子进程来确定进程父子关系（X）</p>
+<p>问题：当前进程与父进程来确定进程父子关系（√）/当前进程与子进程来确定进程父子关系（X）</p>
 <p>答：因为一个父进程有的多个子进程，而一个子进程只有一个父进程，获得父进程编号比较容易。</p>
 <h3 id="创建子进程"><a href="#创建子进程" class="headerlink" title="创建子进程"></a>创建子进程</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *err)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	perror(err);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pid_t</span> pid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ppid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">pid_t</span> ret = <span class="number">-1</span>;</span><br><span class="line">	ret = fork();</span><br><span class="line">	<span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"fork error!\n"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return = 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());	</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"return &gt; 0:pid =%d,ppid=%d.\n"</span>,getpid(),getppid());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -621,7 +621,7 @@
 <p>如果生成三个子进程，下面这段代码中使用for循环会发现出错了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for(i=0;i&lt;3;i++)</span><br><span class="line">&#123;</span><br><span class="line">    ret = fork();</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">            bail(&quot;fork error!\n&quot;);</span><br><span class="line">        else if(ret == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;pid =%d,ppid=%d.\n&quot;,getpid(),getppid());	</span><br><span class="line">        &#125;	</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            printf(&quot;pid =%d,ppid=%d.\n&quot;,getpid(),getppid());</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
-<p>:warning: 主要在于fork()函数创建子进程时，不但生成一个进程，子进程的结构、数据段来自于父进程。</p>
+<p>主要在于fork()函数创建子进程时，不但生成一个进程，子进程的结构、数据段来自于父进程。</p>
 <p>正确方法如下，调整子进程的部分即可：</p>
 <p>子进程要返回：return</p>
 <p>父进程要等待：wait</p>
@@ -645,7 +645,7 @@
 
 <p>执行就可以看到如下图所示：</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200325112942475.png" alt="image-20200325112942475"></p>
-<p>:arrow_forward: 小结：</p>
+<p>小结：</p>
 <blockquote>
 <p>execl()函数</p>
 <p>execl(“/bin/ls” , “ls” , “-l” , “&gt;” , “aaa” , NULL)</p>
