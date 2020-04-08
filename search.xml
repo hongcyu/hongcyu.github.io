@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C语言模拟实现文件复制的操作</title>
+    <url>/posts/c-file-copy.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux中采取程序设计来模拟实现系统中文件复制的操作，进一步了解Linux系统中的操作。</p>
+<a id="more"></a>
+
+<p>编写要求：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318215453.png" alt></p>
+<p>接着我们直接上代码吧！直接在里面解释</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//以下为创建所需要使用的变量，fd为句柄，return为返回值，buf为缓冲区，tips用来存储输入。</span></span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> tips[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> access_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> stat_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span>	<span class="comment">//创建stat结构体</span></span><br><span class="line">	</span><br><span class="line">	access_return = access(argv[<span class="number">1</span>],F_OK | R_OK);  <span class="comment">//使用access函数来获取文件权限和存在状态。</span></span><br><span class="line">	<span class="keyword">if</span>(access_return == <span class="number">0</span>)</span><br><span class="line">		read_fd = open(argv[<span class="number">1</span>],O_RDONLY);   <span class="comment">//当返回值为0时执行读文件</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Open file error.\n"</span>);	<span class="comment">//否则提示错误并退出</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs, <span class="number">0</span> , <span class="keyword">sizeof</span>(bs));	<span class="comment">//清空结构体</span></span><br><span class="line">	</span><br><span class="line">	stat_return = stat(argv[<span class="number">1</span>],&amp;bs);	<span class="comment">//利用stat获取文件信息</span></span><br><span class="line">	access_return = access(argv[<span class="number">2</span>],F_OK);	<span class="comment">//利用access获取第二个文件是否存在</span></span><br><span class="line">	<span class="keyword">if</span>(access_return &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;	<span class="comment">//不存在则创建新文件</span></span><br><span class="line">		write_fd = open(argv[<span class="number">2</span>],O_CREAT |O_RDWR,bs.st_mode);	</span><br><span class="line">		<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">		&#123;	<span class="comment">//如果创建失败则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Create file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;	<span class="comment">//如果存在则询问是否重写</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Warning!Overwrite this file? yes/no?\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" &gt; "</span>);</span><br><span class="line">		gets(tips);</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">strcmp</span>(tips,<span class="string">"yes"</span>) == <span class="number">0</span>)	<span class="comment">//输入存入tips，如果为tips则重新</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"reading...\n"</span>);</span><br><span class="line">			write_fd = open(argv[<span class="number">2</span>],O_RDWR);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;	<span class="comment">//如果输入不为tips则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Good bye!See you next time.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//使用read读取文件内容</span></span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf, read_return);	<span class="comment">//使用write写入文件</span></span><br><span class="line">		<span class="keyword">if</span> (write_return &lt; read_return)		<span class="comment">//判断写入的字节是否小于读取的字节，小于则退出并提示写入失败</span></span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Write file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span> ,<span class="keyword">sizeof</span>(buf));	<span class="comment">//清空buf缓冲区</span></span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//再一次读取文件</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//输出文件的大小</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"It has been copied.This file size is %lld bytes.\n"</span>,bs.st_size);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//关闭各个句柄</span></span><br><span class="line">	close(access_return);</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>大家可以参考<a href="https://hongcyu.cn/posts/Linux-file-readandwrite.html">Linux下文件读写的操作</a>里面的函数解释~</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C语言</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C语言</tag>
+        <tag>程序设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fedora下yum命令的学习</title>
     <url>/posts/Fedora_yum.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在这里介绍一下yum命令的使用，并进行基本的操作。</p>
@@ -30,28 +55,75 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言模拟实现文件复制的操作</title>
-    <url>/posts/c-file-copy.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux中采取程序设计来模拟实现系统中文件复制的操作，进一步了解Linux系统中的操作。</p>
+    <title>Hexo博客文章链接优化</title>
+    <url>/posts/hexo-link.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：将Hexo博客的文章链接进行优化，使其不再是日期+标题，而改成随机数字或自定义。</p>
 <a id="more"></a>
 
-<p>编写要求：</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318215453.png" alt></p>
-<p>接着我们直接上代码吧！直接在里面解释</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//以下为创建所需要使用的变量，fd为句柄，return为返回值，buf为缓冲区，tips用来存储输入。</span></span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> tips[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> access_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> stat_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span>	<span class="comment">//创建stat结构体</span></span><br><span class="line">	</span><br><span class="line">	access_return = access(argv[<span class="number">1</span>],F_OK | R_OK);  <span class="comment">//使用access函数来获取文件权限和存在状态。</span></span><br><span class="line">	<span class="keyword">if</span>(access_return == <span class="number">0</span>)</span><br><span class="line">		read_fd = open(argv[<span class="number">1</span>],O_RDONLY);   <span class="comment">//当返回值为0时执行读文件</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Open file error.\n"</span>);	<span class="comment">//否则提示错误并退出</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs, <span class="number">0</span> , <span class="keyword">sizeof</span>(bs));	<span class="comment">//清空结构体</span></span><br><span class="line">	</span><br><span class="line">	stat_return = stat(argv[<span class="number">1</span>],&amp;bs);	<span class="comment">//利用stat获取文件信息</span></span><br><span class="line">	access_return = access(argv[<span class="number">2</span>],F_OK);	<span class="comment">//利用access获取第二个文件是否存在</span></span><br><span class="line">	<span class="keyword">if</span>(access_return &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;	<span class="comment">//不存在则创建新文件</span></span><br><span class="line">		write_fd = open(argv[<span class="number">2</span>],O_CREAT |O_RDWR,bs.st_mode);	</span><br><span class="line">		<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">		&#123;	<span class="comment">//如果创建失败则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Create file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;	<span class="comment">//如果存在则询问是否重写</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Warning!Overwrite this file? yes/no?\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" &gt; "</span>);</span><br><span class="line">		gets(tips);</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">strcmp</span>(tips,<span class="string">"yes"</span>) == <span class="number">0</span>)	<span class="comment">//输入存入tips，如果为tips则重新</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"reading...\n"</span>);</span><br><span class="line">			write_fd = open(argv[<span class="number">2</span>],O_RDWR);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;	<span class="comment">//如果输入不为tips则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Good bye!See you next time.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//使用read读取文件内容</span></span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf, read_return);	<span class="comment">//使用write写入文件</span></span><br><span class="line">		<span class="keyword">if</span> (write_return &lt; read_return)		<span class="comment">//判断写入的字节是否小于读取的字节，小于则退出并提示写入失败</span></span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Write file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span> ,<span class="keyword">sizeof</span>(buf));	<span class="comment">//清空buf缓冲区</span></span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//再一次读取文件</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//输出文件的大小</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"It has been copied.This file size is %lld bytes.\n"</span>,bs.st_size);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//关闭各个句柄</span></span><br><span class="line">	close(access_return);</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>URL 地址对于 SEO 中挺重要的，那么如何对链接进行个性化，并在后面加上 <code>.html</code> 显得更加正式呢。</p>
+<p>Hexo 版本：3.x</p>
+<h2 id="博客网址链接-URL-唯一且永久化"><a href="#博客网址链接-URL-唯一且永久化" class="headerlink" title="博客网址链接 URL 唯一且永久化"></a>博客网址链接 URL 唯一且永久化</h2><p>使用插件  <a href="https://github.com/rozbo/hexo-abbrlink" target="_blank" rel="noopener">https://github.com/rozbo/hexo-abbrlink</a>  可以做到自定义文章链接，安装：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>大家可以参考<a href="https://hongcyu.cn/posts/Linux-file-readandwrite.html">Linux下文件读写的操作</a>里面的函数解释~</p>
-</blockquote>
-]]></content>
+<p>然后在 Hexo 的<strong>根目录</strong>的配置文件<code>_config.yml</code> 中修改：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#我的配置，post为固定链接后面带&quot;:&quot;的为变量</span><br><span class="line">permalink: posts/:abbrlink.html</span><br><span class="line"></span><br><span class="line">#abbrlinks</span><br><span class="line">abbrink:</span><br><span class="line">  alg: crc32</span><br><span class="line">  rep: dec</span><br></pre></td></tr></table></figure>
+
+<p>之后再在 md 文件开头中加入以下信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">abbrlink: seourl</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>如果文章中未指定 <code>abbrlink: xxx</code>，将会根据算法随机生成数字</p>
+<p>tips：可以将scaffolds目录下的post.md中修改为我这样就可以每次打开默认模板：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">abbrlink: </span><br><span class="line">tags: &#123;&#123; tags &#125;&#125;</span><br><span class="line">categories:&#123;&#123; categories &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="官方配置信息"><a href="#官方配置信息" class="headerlink" title="官方配置信息"></a>官方配置信息</h2><p>最后附上官方配置</p>
+<p>除了下列变量外，您还可使用 Front-matter 中的所有属性。</p>
+<table>
+<thead>
+<tr>
+<th align="left">变量</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>:year</code></td>
+<td align="left">文章的发表年份（4 位数）</td>
+</tr>
+<tr>
+<td align="left"><code>:month</code></td>
+<td align="left">文章的发表月份（2 位数）</td>
+</tr>
+<tr>
+<td align="left"><code>:i_month</code></td>
+<td align="left">文章的发表月份（去掉开头的零）</td>
+</tr>
+<tr>
+<td align="left"><code>:day</code></td>
+<td align="left">文章的发表日期 (2 位数)</td>
+</tr>
+<tr>
+<td align="left"><code>:i_day</code></td>
+<td align="left">文章的发表日期（去掉开头的零）</td>
+</tr>
+<tr>
+<td align="left"><code>:title</code></td>
+<td align="left">文件名称</td>
+</tr>
+<tr>
+<td align="left"><code>:id</code></td>
+<td align="left">文章 ID</td>
+</tr>
+<tr>
+<td align="left"><code>:category</code></td>
+<td align="left">分类。如果文章没有分类，则是 <code>default_category</code> 配置信息。</td>
+</tr>
+</tbody></table>
+<p>您可在 <code>permalink_defaults</code> 参数下调整永久链接中各变量的默认值：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">permalink_defaults:  lang: en</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>C语言</category>
-        <category>Linux</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
-        <tag>C语言</tag>
-        <tag>程序设计</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -128,8 +200,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Fedora</tag>
         <tag>Linux</tag>
+        <tag>Fedora</tag>
       </tags>
   </entry>
   <entry>
@@ -232,78 +304,6 @@
       <tags>
         <tag>Hexo</tag>
         <tag>bilibili</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客文章链接优化</title>
-    <url>/posts/hexo-link.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：将Hexo博客的文章链接进行优化，使其不再是日期+标题，而改成随机数字或自定义。</p>
-<a id="more"></a>
-
-<p>URL 地址对于 SEO 中挺重要的，那么如何对链接进行个性化，并在后面加上 <code>.html</code> 显得更加正式呢。</p>
-<p>Hexo 版本：3.x</p>
-<h2 id="博客网址链接-URL-唯一且永久化"><a href="#博客网址链接-URL-唯一且永久化" class="headerlink" title="博客网址链接 URL 唯一且永久化"></a>博客网址链接 URL 唯一且永久化</h2><p>使用插件  <a href="https://github.com/rozbo/hexo-abbrlink" target="_blank" rel="noopener">https://github.com/rozbo/hexo-abbrlink</a>  可以做到自定义文章链接，安装：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
-
-<p>然后在 Hexo 的<strong>根目录</strong>的配置文件<code>_config.yml</code> 中修改：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#我的配置，post为固定链接后面带&quot;:&quot;的为变量</span><br><span class="line">permalink: posts/:abbrlink.html</span><br><span class="line"></span><br><span class="line">#abbrlinks</span><br><span class="line">abbrink:</span><br><span class="line">  alg: crc32</span><br><span class="line">  rep: dec</span><br></pre></td></tr></table></figure>
-
-<p>之后再在 md 文件开头中加入以下信息：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">abbrlink: seourl</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>如果文章中未指定 <code>abbrlink: xxx</code>，将会根据算法随机生成数字</p>
-<p>tips：可以将scaffolds目录下的post.md中修改为我这样就可以每次打开默认模板：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">abbrlink: </span><br><span class="line">tags: &#123;&#123; tags &#125;&#125;</span><br><span class="line">categories:&#123;&#123; categories &#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="官方配置信息"><a href="#官方配置信息" class="headerlink" title="官方配置信息"></a>官方配置信息</h2><p>最后附上官方配置</p>
-<p>除了下列变量外，您还可使用 Front-matter 中的所有属性。</p>
-<table>
-<thead>
-<tr>
-<th align="left">变量</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>:year</code></td>
-<td align="left">文章的发表年份（4 位数）</td>
-</tr>
-<tr>
-<td align="left"><code>:month</code></td>
-<td align="left">文章的发表月份（2 位数）</td>
-</tr>
-<tr>
-<td align="left"><code>:i_month</code></td>
-<td align="left">文章的发表月份（去掉开头的零）</td>
-</tr>
-<tr>
-<td align="left"><code>:day</code></td>
-<td align="left">文章的发表日期 (2 位数)</td>
-</tr>
-<tr>
-<td align="left"><code>:i_day</code></td>
-<td align="left">文章的发表日期（去掉开头的零）</td>
-</tr>
-<tr>
-<td align="left"><code>:title</code></td>
-<td align="left">文件名称</td>
-</tr>
-<tr>
-<td align="left"><code>:id</code></td>
-<td align="left">文章 ID</td>
-</tr>
-<tr>
-<td align="left"><code>:category</code></td>
-<td align="left">分类。如果文章没有分类，则是 <code>default_category</code> 配置信息。</td>
-</tr>
-</tbody></table>
-<p>您可在 <code>permalink_defaults</code> 参数下调整永久链接中各变量的默认值：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">permalink_defaults:  lang: en</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -442,8 +442,8 @@
         <category>Fedora</category>
       </categories>
       <tags>
-        <tag>Fedora</tag>
         <tag>Linux</tag>
+        <tag>Fedora</tag>
       </tags>
   </entry>
   <entry>
@@ -605,6 +605,30 @@
       <tags>
         <tag>Linux</tag>
         <tag>gcc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下用户管理的程序设计</title>
+    <url>/posts/linux-user-program.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux下的用户管理中运用C语言程序设计来获得用户信息。</p>
+<a id="more"></a>
+
+<p>代码很简单，uid是当前用户的ID号，euid是当前用户的有效用户ID号。</p>
+<p>其中：</p>
+<p>#include &lt;unistd.h&gt;是Unix的标准库函数，以后会很经常用到。</p>
+<p>#include &lt;sys/types.h&gt;是Uni/Linux系统的基本系统数据类型的头文件。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">uid_t</span> uid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">uid_t</span> euid = <span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	uid = getuid();</span><br><span class="line">	euid = geteuid();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"uid = %d, euid = %d \n"</span>,uid,euid);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接来执行一下就可以看到uid和euid了~</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312204341.png" alt></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C语言</tag>
+        <tag>程序设计</tag>
       </tags>
   </entry>
   <entry>
@@ -798,162 +822,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>文件管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下文件读写的操作</title>
-    <url>/posts/Linux-file-readandwrite.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：Linux系统管理与开发课程中对于文件的读写操作的认识并且运用C语言进行模拟读、写和复制操作。</p>
-<a id="more"></a>
-
-<h2 id="文件开关以及读写说明"><a href="#文件开关以及读写说明" class="headerlink" title="文件开关以及读写说明"></a>文件开关以及读写说明</h2><h3 id="读操作read"><a href="#读操作read" class="headerlink" title="读操作read()"></a>读操作read()</h3><blockquote>
-<p> read(int fd,  void *buf,  size_t count);</p>
-</blockquote>
-<p>len: 请求读取的字节数</p>
-<p>返回值：</p>
-<p>​        -1 ：读取失败</p>
-<p>​        0：没有读取到数据</p>
-<p>​        n：读取到的字节数（n:1~len)</p>
-<p>实际情况下：</p>
-<p>​        &lt; 0 : 失败</p>
-<p>​        = len: 正常读取</p>
-<p>​        = 0~len-1: 读取完毕</p>
-<h3 id="写操作write"><a href="#写操作write" class="headerlink" title="写操作write()"></a>写操作write()</h3><blockquote>
-<p> write(int fd, const void *buf, size_t count);</p>
-</blockquote>
-<p>返回值：</p>
-<p>​        -1 ：读取失败</p>
-<p>​        n：写入字符个数（n:1~len)</p>
-<h3 id="打开文件open-creat"><a href="#打开文件open-creat" class="headerlink" title="打开文件open()/creat()"></a>打开文件open()/creat()</h3><blockquote>
-<p> creat(文件名称,权限模式)；   =     open(文件名称,O_CREAT,权限模式)；</p>
-</blockquote>
-<p>类型：</p>
-<table>
-<thead>
-<tr>
-<th align="center">O_RDONLY</th>
-<th align="center">O_WRONLY</th>
-<th align="center">O_RDWR</th>
-<th align="center">O_APPEND</th>
-<th align="center">O_CREAT</th>
-<th align="center">O_TRUNC</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">只读</td>
-<td align="center">只写</td>
-<td align="center">读写</td>
-<td align="center">末尾追加</td>
-<td align="center">若文件存在，此标志无用；若不存在，建新文件</td>
-<td align="center">若文件存在，则长度被截为0，属性不变</td>
-</tr>
-</tbody></table>
-<p>权限模式：</p>
-<p>S_I &lt;权限&gt;&lt;对象&gt;</p>
-<p>​    权限：R, W, X, RWX</p>
-<p>​    对象：USR, GRP, OTH, U, G, O</p>
-<p>​    举个栗子：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usr:rwx;	group:rw;	other:r;</span><br><span class="line">creat(&quot;test&quot;, S_IRWXU | S_IRGRP |S_IROTH);</span><br><span class="line">=</span><br><span class="line">open(&quot;test&quot;,O_CREAT, S_IRWXU | S_IRGRP |S_IROTH)</span><br></pre></td></tr></table></figure>
-
-<p>tips:</p>
-<p>权限位：3个八进制数</p>
-<p>764</p>
-<p>creat(“test”,010764);</p>
-<h3 id="关闭文件close"><a href="#关闭文件close" class="headerlink" title="关闭文件close()"></a>关闭文件close()</h3><blockquote>
-<p>close(句柄);</p>
-</blockquote>
-<h2 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h2><p>解释一下<code>int main(int argc, char** argv)</code>的意思:</p>
-<p>例如一条指令：cp abc.txt xyz.log</p>
-<p>则 <code>argc = 3</code> （指令的三个部分）        <code>argv[0] = cp</code>    <code>argv[1]=abc.txt</code>    <code>argv[2]= xyz.log</code></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	</span><br><span class="line">	read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	<span class="keyword">while</span>(read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s"</span>,buf);</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (read_return &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"read file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY);   //以只写的方式写入</span></span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY | O_APPEND);	//以只写＋尾部追加的方式写入</span></span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IRGRP | S_IROTH);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>) </span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">	gets(buf);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">strcmp</span>(buf, <span class="string">"quit"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(fd, buf, <span class="built_in">strlen</span>(buf));</span><br><span class="line">		<span class="keyword">if</span>(write_return &lt;<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"Write file error."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf , <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">		gets(buf);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="复制功能的实现"><a href="#复制功能的实现" class="headerlink" title="复制功能的实现"></a>复制功能的实现</h2><ol>
-<li>打开源文件</li>
-<li>创建目标文件</li>
-<li>读取源文件</li>
-<li>写入目标文件</li>
-<li>关闭句柄退出</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	read_fd = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	write_fd = open(argv[<span class="number">2</span>],O_CREAT | O_RDWR , <span class="number">010755</span>);</span><br><span class="line">	<span class="keyword">if</span>(read_fd &lt; <span class="number">0</span>) </span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		close(read_fd);</span><br><span class="line">		bail(<span class="string">"Create file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf , read_return);</span><br><span class="line">		<span class="keyword">if</span>(write_return &lt; read_return)</span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			bail(<span class="string">"Write file error."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(read_fd &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		close(read_fd);</span><br><span class="line">		close(write_fd);</span><br><span class="line">		bail(<span class="string">"Read file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>tips:</p>
-<p>复制操作中关于文件权限判断和使用的问题未能成功实现，留待下次更新。</p>
-<p>—3.18更新—</p>
-<h2 id="访问文件（判断权限）"><a href="#访问文件（判断权限）" class="headerlink" title="访问文件（判断权限）"></a>访问文件（判断权限）</h2><p>access函数使用方法：</p>
-<blockquote>
-<p>access(“文件名称”,测试权限)</p>
-<p>测试权限：</p>
-<p>​    R_OK:读可以</p>
-<p>​    W_OK:写可以</p>
-<p>​    X_OK:执行可以</p>
-<p>​    F_OK:文件存在</p>
-<p>返回值：</p>
-<p>​    0：测试成功</p>
-<p>​    -1：测试失败</p>
-</blockquote>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318101428.png" alt></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	ret = access(argv[<span class="number">1</span>],F_OK);</span><br><span class="line">    <span class="comment">//ret = access(argv[1],F_OK | X_OK);     //同时检测满足文件是否同时存在和可执行</span></span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"File not exist.\n"</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"File exist.\n"</span>);</span><br><span class="line">	close(ret);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这就很好的解释了在读写前可以使用access函数判断权限。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">读操作：</span><br><span class="line"></span><br><span class="line">ret = access(argv[<span class="number">1</span>],F_OK | R_OK);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (ret ==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	fd = open();</span><br><span class="line"></span><br><span class="line">写操作：</span><br><span class="line"></span><br><span class="line">ret = access(argv[<span class="number">1</span>],F_OK );</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(ret &lt;<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	fd = creat();</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overwrite?"</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="获取状态信息"><a href="#获取状态信息" class="headerlink" title="获取状态信息"></a>获取状态信息</h2><p>stat函数：</p>
-<blockquote>
-<p>struct stat st;</p>
-<p>stat(“文件名”，&amp;st);</p>
-<p>返回值：</p>
-<p>​    -1：失败</p>
-<p>st返回值：</p>
-<p>​    st.st_size：文件大小</p>
-<p>​    st.st_mode：文件类型、权限</p>
-<p>​    st.st_xtim：时间相关参数（秒为单位，用ctime转换）</p>
-<p>​    st.mode：</p>
-<p>​                    ①st.mode&amp;S_IFMT</p>
-<p>​                    ②宏函数：S_ISDIR、S_ISREG、S_ISLNK、S_ISFIFO、S_ISCHR、S_ISSOCK</p>
-</blockquote>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318102758.png" alt></p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318103031.png" alt></p>
-<h4 id="获取文件信息"><a href="#获取文件信息" class="headerlink" title="获取文件信息"></a>获取文件信息</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs,<span class="number">0</span>,<span class="keyword">sizeof</span>(bs));</span><br><span class="line">	ret = stat(argv[<span class="number">1</span>],&amp;bs);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"Stat error.\n"</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (S_ISDIR(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"D"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (S_ISREG(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"-"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (S_ISLNK(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"l"</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"u"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\t"</span>,bs.st_size);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%o\t"</span>,bs.st_mode);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s\t"</span>,ctime(&amp;bs.st_atime));</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一下为运行截图</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200318144324692.png" alt="image-20200318144324692"></p>
-<h4 id="获取权限信息并复制到另一文件"><a href="#获取权限信息并复制到另一文件" class="headerlink" title="获取权限信息并复制到另一文件"></a>获取权限信息并复制到另一文件</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> dfd = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs , <span class="number">0</span>, <span class="keyword">sizeof</span>(bs));</span><br><span class="line">	ret = stat(argv[<span class="number">1</span>],&amp;bs);</span><br><span class="line">	dfd = creat(argv[<span class="number">2</span>],bs.st_mode);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如下图所示</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200318144820783.png" alt="image-20200318144820783"></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>文件读写</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下用户管理的程序设计</title>
-    <url>/posts/linux-user-program.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux下的用户管理中运用C语言程序设计来获得用户信息。</p>
-<a id="more"></a>
-
-<p>代码很简单，uid是当前用户的ID号，euid是当前用户的有效用户ID号。</p>
-<p>其中：</p>
-<p>#include &lt;unistd.h&gt;是Unix的标准库函数，以后会很经常用到。</p>
-<p>#include &lt;sys/types.h&gt;是Uni/Linux系统的基本系统数据类型的头文件。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">uid_t</span> uid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">uid_t</span> euid = <span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	uid = getuid();</span><br><span class="line">	euid = geteuid();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"uid = %d, euid = %d \n"</span>,uid,euid);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>直接来执行一下就可以看到uid和euid了~</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312204341.png" alt></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C语言</tag>
-        <tag>程序设计</tag>
       </tags>
   </entry>
   <entry>
@@ -1168,6 +1036,138 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux下文件读写的操作</title>
+    <url>/posts/Linux-file-readandwrite.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：Linux系统管理与开发课程中对于文件的读写操作的认识并且运用C语言进行模拟读、写和复制操作。</p>
+<a id="more"></a>
+
+<h2 id="文件开关以及读写说明"><a href="#文件开关以及读写说明" class="headerlink" title="文件开关以及读写说明"></a>文件开关以及读写说明</h2><h3 id="读操作read"><a href="#读操作read" class="headerlink" title="读操作read()"></a>读操作read()</h3><blockquote>
+<p> read(int fd,  void *buf,  size_t count);</p>
+</blockquote>
+<p>len: 请求读取的字节数</p>
+<p>返回值：</p>
+<p>​        -1 ：读取失败</p>
+<p>​        0：没有读取到数据</p>
+<p>​        n：读取到的字节数（n:1~len)</p>
+<p>实际情况下：</p>
+<p>​        &lt; 0 : 失败</p>
+<p>​        = len: 正常读取</p>
+<p>​        = 0~len-1: 读取完毕</p>
+<h3 id="写操作write"><a href="#写操作write" class="headerlink" title="写操作write()"></a>写操作write()</h3><blockquote>
+<p> write(int fd, const void *buf, size_t count);</p>
+</blockquote>
+<p>返回值：</p>
+<p>​        -1 ：读取失败</p>
+<p>​        n：写入字符个数（n:1~len)</p>
+<h3 id="打开文件open-creat"><a href="#打开文件open-creat" class="headerlink" title="打开文件open()/creat()"></a>打开文件open()/creat()</h3><blockquote>
+<p> creat(文件名称,权限模式)；   =     open(文件名称,O_CREAT,权限模式)；</p>
+</blockquote>
+<p>类型：</p>
+<table>
+<thead>
+<tr>
+<th align="center">O_RDONLY</th>
+<th align="center">O_WRONLY</th>
+<th align="center">O_RDWR</th>
+<th align="center">O_APPEND</th>
+<th align="center">O_CREAT</th>
+<th align="center">O_TRUNC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">只读</td>
+<td align="center">只写</td>
+<td align="center">读写</td>
+<td align="center">末尾追加</td>
+<td align="center">若文件存在，此标志无用；若不存在，建新文件</td>
+<td align="center">若文件存在，则长度被截为0，属性不变</td>
+</tr>
+</tbody></table>
+<p>权限模式：</p>
+<p>S_I &lt;权限&gt;&lt;对象&gt;</p>
+<p>​    权限：R, W, X, RWX</p>
+<p>​    对象：USR, GRP, OTH, U, G, O</p>
+<p>​    举个栗子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">usr:rwx;	group:rw;	other:r;</span><br><span class="line">creat(&quot;test&quot;, S_IRWXU | S_IRGRP |S_IROTH);</span><br><span class="line">=</span><br><span class="line">open(&quot;test&quot;,O_CREAT, S_IRWXU | S_IRGRP |S_IROTH)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<p>权限位：3个八进制数</p>
+<p>764</p>
+<p>creat(“test”,010764);</p>
+<h3 id="关闭文件close"><a href="#关闭文件close" class="headerlink" title="关闭文件close()"></a>关闭文件close()</h3><blockquote>
+<p>close(句柄);</p>
+</blockquote>
+<h2 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h2><p>解释一下<code>int main(int argc, char** argv)</code>的意思:</p>
+<p>例如一条指令：cp abc.txt xyz.log</p>
+<p>则 <code>argc = 3</code> （指令的三个部分）        <code>argv[0] = cp</code>    <code>argv[1]=abc.txt</code>    <code>argv[2]= xyz.log</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	</span><br><span class="line">	read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	<span class="keyword">while</span>(read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s"</span>,buf);</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		read_return = read(fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (read_return &lt; <span class="number">0</span>)&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"read file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY);   //以只写的方式写入</span></span><br><span class="line">	<span class="comment">//fd = open(argv[1],O_WRONLY | O_APPEND);	//以只写＋尾部追加的方式写入</span></span><br><span class="line">	fd = open(argv[<span class="number">1</span>],O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IRGRP | S_IROTH);</span><br><span class="line">	<span class="keyword">if</span>(fd &lt; <span class="number">0</span>) </span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"fd = %d \n"</span>,fd);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">	gets(buf);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">strcmp</span>(buf, <span class="string">"quit"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(fd, buf, <span class="built_in">strlen</span>(buf));</span><br><span class="line">		<span class="keyword">if</span>(write_return &lt;<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">		close(fd);</span><br><span class="line">		bail(<span class="string">"Write file error."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf , <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"&gt;"</span>);</span><br><span class="line">		gets(buf);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	close(fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="复制功能的实现"><a href="#复制功能的实现" class="headerlink" title="复制功能的实现"></a>复制功能的实现</h2><ol>
+<li>打开源文件</li>
+<li>创建目标文件</li>
+<li>读取源文件</li>
+<li>写入目标文件</li>
+<li>关闭句柄退出</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">	read_fd = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">	write_fd = open(argv[<span class="number">2</span>],O_CREAT | O_RDWR , <span class="number">010755</span>);</span><br><span class="line">	<span class="keyword">if</span>(read_fd &lt; <span class="number">0</span>) </span><br><span class="line">		bail(<span class="string">"open file error."</span>);</span><br><span class="line">	<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		close(read_fd);</span><br><span class="line">		bail(<span class="string">"Create file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf , read_return);</span><br><span class="line">		<span class="keyword">if</span>(write_return &lt; read_return)</span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			bail(<span class="string">"Write file error."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(read_fd &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		close(read_fd);</span><br><span class="line">		close(write_fd);</span><br><span class="line">		bail(<span class="string">"Read file error."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<p>复制操作中关于文件权限判断和使用的问题未能成功实现，留待下次更新。</p>
+<p>—3.18更新—</p>
+<h2 id="访问文件（判断权限）"><a href="#访问文件（判断权限）" class="headerlink" title="访问文件（判断权限）"></a>访问文件（判断权限）</h2><p>access函数使用方法：</p>
+<blockquote>
+<p>access(“文件名称”,测试权限)</p>
+<p>测试权限：</p>
+<p>​    R_OK:读可以</p>
+<p>​    W_OK:写可以</p>
+<p>​    X_OK:执行可以</p>
+<p>​    F_OK:文件存在</p>
+<p>返回值：</p>
+<p>​    0：测试成功</p>
+<p>​    -1：测试失败</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318101428.png" alt></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	ret = access(argv[<span class="number">1</span>],F_OK);</span><br><span class="line">    <span class="comment">//ret = access(argv[1],F_OK | X_OK);     //同时检测满足文件是否同时存在和可执行</span></span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"File not exist.\n"</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"File exist.\n"</span>);</span><br><span class="line">	close(ret);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就很好的解释了在读写前可以使用access函数判断权限。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">读操作：</span><br><span class="line"></span><br><span class="line">ret = access(argv[<span class="number">1</span>],F_OK | R_OK);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (ret ==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	fd = open();</span><br><span class="line"></span><br><span class="line">写操作：</span><br><span class="line"></span><br><span class="line">ret = access(argv[<span class="number">1</span>],F_OK );</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(ret &lt;<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	fd = creat();</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overwrite?"</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取状态信息"><a href="#获取状态信息" class="headerlink" title="获取状态信息"></a>获取状态信息</h2><p>stat函数：</p>
+<blockquote>
+<p>struct stat st;</p>
+<p>stat(“文件名”，&amp;st);</p>
+<p>返回值：</p>
+<p>​    -1：失败</p>
+<p>st返回值：</p>
+<p>​    st.st_size：文件大小</p>
+<p>​    st.st_mode：文件类型、权限</p>
+<p>​    st.st_xtim：时间相关参数（秒为单位，用ctime转换）</p>
+<p>​    st.mode：</p>
+<p>​                    ①st.mode&amp;S_IFMT</p>
+<p>​                    ②宏函数：S_ISDIR、S_ISREG、S_ISLNK、S_ISFIFO、S_ISCHR、S_ISSOCK</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318102758.png" alt></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318103031.png" alt></p>
+<h4 id="获取文件信息"><a href="#获取文件信息" class="headerlink" title="获取文件信息"></a>获取文件信息</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs,<span class="number">0</span>,<span class="keyword">sizeof</span>(bs));</span><br><span class="line">	ret = stat(argv[<span class="number">1</span>],&amp;bs);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		bail(<span class="string">"Stat error.\n"</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (S_ISDIR(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"D"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (S_ISREG(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"-"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (S_ISLNK(bs.st_mode))</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"l"</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %s \t"</span>,<span class="string">"u"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\t"</span>,bs.st_size);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%o\t"</span>,bs.st_mode);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s\t"</span>,ctime(&amp;bs.st_atime));</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一下为运行截图</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200318144324692.png" alt="image-20200318144324692"></p>
+<h4 id="获取权限信息并复制到另一文件"><a href="#获取权限信息并复制到另一文件" class="headerlink" title="获取权限信息并复制到另一文件"></a>获取权限信息并复制到另一文件</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> dfd = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs , <span class="number">0</span>, <span class="keyword">sizeof</span>(bs));</span><br><span class="line">	ret = stat(argv[<span class="number">1</span>],&amp;bs);</span><br><span class="line">	dfd = creat(argv[<span class="number">2</span>],bs.st_mode);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200318144820783.png" alt="image-20200318144820783"></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>文件读写</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux文件权限位的介绍</title>
     <url>/posts/Linux-file-competence.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在这里介绍一下Linux中比较重要的文件权限位的属性和使用方法，方便大家查阅，此文仅供参考。</p>
@@ -1230,6 +1230,180 @@
       <tags>
         <tag>Linux</tag>
         <tag>文件系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Typora极简教程</title>
+    <url>/posts/56339.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要： <strong>Markdown</strong> 是一种<strong>轻量级</strong>标记语言，创始人是<strong>约翰·格鲁伯</strong>（John Gruber）。它允许人们 “使用易读易写的纯文本格式编写文档，然后转换成有效的 HTML 文档。”</p>
+<a id="more"></a>
+
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>Typora官方下载：<a href="https://www.typora.io/#download" target="_blank" rel="noopener">https://www.typora.io/#download</a></p>
+<hr>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
+<li>加粗： <code>Ctrl/Cmd + B</code></li>
+<li>标题： <code>Ctrl/Cmd + H</code></li>
+<li>插入链接： <code>Ctrl/Cmd + K</code></li>
+<li>插入代码： <code>Ctrl/Cmd + Shift + C</code></li>
+<li>行内代码： <code>Ctrl/Cmd + Shift + K</code></li>
+<li>插入图片： <code>Ctrl/Cmd + Shift + I</code></li>
+<li>无序列表： <code>Ctrl/Cmd + Shift + L</code></li>
+<li>撤销： <code>Ctrl/Cmd + Z</code></li>
+<li>一级标题：快捷键为<code>Ctrl + 1</code>，以此类推</li>
+</ul>
+<hr>
+<h2 id="引用文字"><a href="#引用文字" class="headerlink" title="引用文字"></a>引用文字</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="quote">&gt; + 空格 + 引用文字</span></span><br><span class="line"><span class="quote">&gt; 引用内容1</span></span><br><span class="line"><span class="quote">&gt; 引用内容2</span></span><br><span class="line">&gt;&gt; 引用内容3</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>引用内容1<br>引用内容2</p>
+<blockquote>
+<p>引用内容3</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>输入  <em>列表内容 将创建一个无序列表，该</em>符号可以替换为+或-。</p>
+<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>无序列表1</span><br><span class="line"><span class="bullet">+ </span>无序列表2</span><br><span class="line"><span class="bullet">- </span>无序列表3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>无序列表1</li>
+</ul>
+<ul>
+<li>无序列表2</li>
+</ul>
+<ul>
+<li>无序列表3</li>
+</ul>
+<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1. </span>有序列表1</span><br><span class="line"><span class="bullet">2. </span>有序列表2</span><br><span class="line"><span class="bullet">3. </span>有序列表3</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>有序列表1</li>
+<li>有序列表2</li>
+<li>有序列表3</li>
+</ol>
+<h3 id="多行无序列表"><a href="#多行无序列表" class="headerlink" title="多行无序列表"></a>多行无序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>多行无序列表1</span><br><span class="line">TAB * 多行无序列表2</span><br><span class="line">TAB TAB * 多行无序列表3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多行无序列表1<ul>
+<li>多行无序列表2<ul>
+<li>多行无序列表3</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">-[ ] 不抽烟</span><br><span class="line">-[x] 不喝酒</span><br><span class="line">-[ ] 不烫头</span><br></pre></td></tr></table></figure>
+
+<p>-[ ] 不抽烟<br>-[x] 不喝酒<br>-[ ] 不烫头</p>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">|姓名|性别|年龄|手机号|</span><br><span class="line">|:---|:--:|:--:|---:|</span><br><span class="line">|居左|居中|居中|居右|</span><br><span class="line">|张三|男|21|18975346876|</span><br><span class="line">|李四|女|23|17789548964|</span><br><span class="line">|王五|男|25|15876513546|</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">姓名</th>
+<th align="center">性别</th>
+<th align="center">年龄</th>
+<th align="right">手机号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">居左</td>
+<td align="center">居中</td>
+<td align="center">居中</td>
+<td align="right">居右</td>
+</tr>
+<tr>
+<td align="left">张三</td>
+<td align="center">男</td>
+<td align="center">21</td>
+<td align="right">18975346876</td>
+</tr>
+<tr>
+<td align="left">李四</td>
+<td align="center">女</td>
+<td align="center">23</td>
+<td align="right">17789548964</td>
+</tr>
+<tr>
+<td align="left">王五</td>
+<td align="center">男</td>
+<td align="center">25</td>
+<td align="right">15876513546</td>
+</tr>
+</tbody></table>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><h4 id="本地图片"><a href="#本地图片" class="headerlink" title="本地图片"></a>本地图片</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[图片上传失败...(image-61fd19-1520850984854)]</span><br></pre></td></tr></table></figure>
+
+<h4 id="网络图片"><a href="#网络图片" class="headerlink" title="网络图片"></a>网络图片</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">pikachu.jpg</span>](<span class="link">https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1564157419510&amp;di=e96d9359d9cba4b936ed55eb804c54bb&amp;imgtype=0&amp;src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564157419510&di=e96d9359d9cba4b936ed55eb804c54bb&imgtype=0&src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg" alt="pikachu.jpg"></p>
+<h3 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h3><h4 id="行内式链接"><a href="#行内式链接" class="headerlink" title="行内式链接"></a>行内式链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="string">我的博客</span>][<span class="symbol">https://hongcyu.github.io</span>]</span><br></pre></td></tr></table></figure>
+
+<p>[我的博客][<a href="https://hongcyu.github.io]" target="_blank" rel="noopener">https://hongcyu.github.io]</a></p>
+<h4 id="参考式链接"><a href="#参考式链接" class="headerlink" title="参考式链接"></a>参考式链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="string">CSDN</span>][<span class="symbol">CSDN网址</span>]</span><br><span class="line">[<span class="symbol">CSDN网址</span>]:<span class="link">https://www.csdn.net/</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.csdn.net/" target="_blank" rel="noopener">CSDN</a></p>
+<h4 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">https:</span>//<span class="attr">www.github.com</span>&gt;</span></span></span><br><span class="line">或</span><br><span class="line">https://www.github.com</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.github.com" target="_blank" rel="noopener">https://www.github.com</a></p>
+<p><a href="https://www.github.com" target="_blank" rel="noopener">https://www.github.com</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="emphasis">*斜体*</span></span><br><span class="line"><span class="emphasis">_斜体_</span></span><br></pre></td></tr></table></figure>
+
+<p><em>斜体</em><br><em>斜体</em></p>
+<h3 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="strong">**加粗**</span></span><br><span class="line"><span class="strong">__加粗__</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加粗</strong><br><strong>加粗</strong></p>
+<h3 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">u</span>&gt;</span></span>下划线<span class="xml"><span class="tag">&lt;/<span class="name">u</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><u>下划线</u></p>
+<h3 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~删除线~~</span><br></pre></td></tr></table></figure>
+
+<p><del>删除线</del></p>
+<h3 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<hr>
+<h3 id="注脚"><a href="#注脚" class="headerlink" title="注脚"></a>注脚</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Typora[^1]</span><br><span class="line">[^1]A markdown editor</span><br></pre></td></tr></table></figure>
+
+<p>Typora[^1]<br>[^1]A markdown editor</p>
+<h3 id="符号的输入"><a href="#符号的输入" class="headerlink" title="符号的输入"></a>符号的输入</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\\   反斜线</span><br><span class="line">\`   反引号</span><br><span class="line">\*   星号</span><br><span class="line">\_   底线</span><br><span class="line">\&#123; \&#125;  花括号</span><br><span class="line">\[ \]  方括号</span><br><span class="line">\( \)  括弧</span><br><span class="line">\#   井字号</span><br><span class="line">\+   加号</span><br><span class="line">\-   减号</span><br><span class="line">\.   英文句点</span><br><span class="line">\!   惊叹号</span><br></pre></td></tr></table></figure>
+
+<p>\   反斜线<br>`   反引号<br>*   星号<br>_   底线<br>{ }  花括号<br>[ ]  方括号<br>( )  括弧<br>#   井字号<br>+   加号<br>-   减号<br>.   英文句点<br>!   惊叹号</p>
+<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&amp;copy;      版权      </span><br><span class="line">&amp;reg;       注册商标</span><br><span class="line">&amp;trade;     商标</span><br><span class="line">&amp;nbsp;      空格</span><br><span class="line">&amp;amp;       和号</span><br><span class="line">&amp;quot;      引号</span><br><span class="line">&amp;apos;      撇号</span><br><span class="line">&amp;lt;        小于号</span><br><span class="line">&amp;gt;        大于号</span><br><span class="line">&amp;ne;        不等号</span><br><span class="line">&amp;le;        小于等于</span><br><span class="line">&amp;ge;        大于等于</span><br><span class="line">&amp;cent;      分</span><br><span class="line">&amp;pound;     磅</span><br><span class="line">&amp;euro;      欧元</span><br><span class="line">&amp;yen;       元</span><br><span class="line">&amp;sect;      节</span><br><span class="line">&amp;times;     乘号</span><br><span class="line">&amp;divide;    除号</span><br><span class="line">&amp;plusmn;    正负号</span><br></pre></td></tr></table></figure>
+
+<p>&copy;      版权<br>&reg;       注册商标<br>&trade;     商标<br>&nbsp;      空格<br>&amp;       和号<br>&quot;      引号<br>&apos;      撇号<br>&lt;        小于号<br>&gt;        大于号<br>&ne;        不等号<br>&le;        小于等于<br>&ge;        大于等于<br>&cent;      分<br>&pound;     磅<br>&euro;      欧元<br>&yen;       元<br>&sect;      节<br>&times;     乘号<br>&divide;    除号<br>&plusmn;    正负号</p>
+<p>附件：[HTML特殊字符编码对照表][<a href="https://www.jb51.net/onlineread/htmlchar.htm]" target="_blank" rel="noopener">https://www.jb51.net/onlineread/htmlchar.htm]</a></p>
+<h2 id="插入音乐和视频"><a href="#插入音乐和视频" class="headerlink" title="插入音乐和视频"></a>插入音乐和视频</h2><h3 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h3><p>1）直接用 HTML 的标签，写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;audio src=&quot;https://什么什么什么.mp3&quot; style=&quot;max-height :100%; max-width: 100%; display: block; margin-left: auto; margin-right: auto;&quot; controls=&quot;controls&quot; loop=&quot;loop&quot; preload=&quot;meta&quot;&gt;Your browser does not support the audio tag.&lt;/audio&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2）用插件，有显示歌词功能，也美观。首先在<strong>站点</strong>文件夹根目录安装插件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-tag-aplayer --save</span><br></pre></td></tr></table></figure>
+
+<p>然后文章中的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% aplayer &quot;歌曲名&quot; &quot;歌手名&quot; &quot;https://什么什么什么.mp3&quot; &quot;https://封面图.jpg&quot; &quot;lrc:https://歌词.lrc&quot; %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外可以支持歌单：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;autoplay&quot;: false,</span><br><span class="line">    &quot;showlrc&quot;: 3,</span><br><span class="line">    &quot;mutex&quot;: true,</span><br><span class="line">    &quot;music&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;title&quot;: &quot;歌曲名&quot;,</span><br><span class="line">            &quot;author&quot;: &quot;歌手名&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;https://什么什么什么.mp3&quot;,</span><br><span class="line">            &quot;pic&quot;: &quot;https://封面图.jpg&quot;,</span><br><span class="line">            &quot;lrc&quot;: &quot;https://歌词.lrc&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;title&quot;: &quot;歌曲名&quot;,</span><br><span class="line">            &quot;author&quot;: &quot;歌手名&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;https://什么什么什么.mp3&quot;,</span><br><span class="line">            &quot;pic&quot;: &quot;https://封面图.jpg&quot;,</span><br><span class="line">            &quot;lrc&quot;: &quot;https://歌词.lrc&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>里面的详细参数见 <a href="https://github.com/MoePlayer/hexo-tag-aplayer" target="_blank" rel="noopener">README</a> 和这插件的「母亲」Aplayer 的<a href="https://aplayer.js.org/" target="_blank" rel="noopener">官方文档</a>。关于 <a href="https://baike.baidu.com/item/lrc/46935" target="_blank" rel="noopener">LRC</a>歌词，可以用<a href="https://www.zhihu.com/question/27638171" target="_blank" rel="noopener">工具</a>下载网易云音乐的歌词，另发现暂时不支持<code>offset</code>参数。当然，如果那歌词很操蛋，有错误（比如字母大小写和标点符号乱加）或者时间完全对不上，然后你也和我一样是个完美主义者，那接下来就是令人窒息的操作了，一句一句自己查看修改……</p>
+<p>什么，你想把网易云的几百首歌手动同步到博客？慢慢慢，有一种<a href="https://github.com/MoePlayer/hexo-tag-aplayer#meingjs-support-new-in-30" target="_blank" rel="noopener">非常简单的方法</a>，此这种方法也支持单曲，将参数里的<code>playlist</code>更改为<code>song</code>即可，非常建议食用！更多功能请仔细阅读 README。</p>
+<h3 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h3><p>1）直接用 HTML 的标签，写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;video poster=&quot;https://封面图.jpg&quot; src=&quot;https://什么什么什么.mp4&quot; style=&quot;max-height :100%; max-width: 100%; display: block; margin-left: auto; margin-right: auto;&quot; controls=&quot;controls&quot; loop=&quot;loop&quot; preload=&quot;meta&quot;&gt;Your browser does not support the video tag.&lt;/video&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2）用插件，可支持弹幕，首先在站点文件夹根目录安装插件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-tag-dplayer --save</span><br></pre></td></tr></table></figure>
+
+<p>然后文章中的写法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% dplayer &quot;url=https://什么什么什么.mp4&quot; &quot;https://封面图.jpg&quot; &quot;api=https://api.prprpr.me/dplayer/&quot; &quot;id=&quot; &quot;loop=false&quot; %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要使用弹幕，必须有<code>api</code>和<code>id</code>两项，并且若使用的是官方的 api 地址（即上面的），id 的值不能与<a href="https://api.prprpr.me/dplayer/list" target="_blank" rel="noopener">这个列表</a>的值一样。id 的值自己随便取，唯一要求就是前面这点。如果唯一要求难倒了你，可以使用<a href="http://tool.oschina.net/encrypt?type=2" target="_blank" rel="noopener">这个工具</a>将一段与众不同的文字生成一段看起来毫无意义的哈希值，这样看起来是不是好多了。</p>
+<p>当然，这个插件的功能还有很多，可以去 <a href="https://github.com/MoePlayer/hexo-tag-dplayer" target="_blank" rel="noopener">README</a> 和这插件的「母亲」Dplayer 的<a href="https://dplayer.js.org/" target="_blank" rel="noopener">官方文档</a>看看。</p>
+]]></content>
+      <categories>
+        <category>书写格式</category>
+        <category>Typora</category>
+      </categories>
+      <tags>
+        <tag>Typora</tag>
       </tags>
   </entry>
   <entry>
@@ -1453,180 +1627,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>process</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Typora极简教程</title>
-    <url>/posts/56339.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要： <strong>Markdown</strong> 是一种<strong>轻量级</strong>标记语言，创始人是<strong>约翰·格鲁伯</strong>（John Gruber）。它允许人们 “使用易读易写的纯文本格式编写文档，然后转换成有效的 HTML 文档。”</p>
-<a id="more"></a>
-
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>Typora官方下载：<a href="https://www.typora.io/#download" target="_blank" rel="noopener">https://www.typora.io/#download</a></p>
-<hr>
-<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
-<li>加粗： <code>Ctrl/Cmd + B</code></li>
-<li>标题： <code>Ctrl/Cmd + H</code></li>
-<li>插入链接： <code>Ctrl/Cmd + K</code></li>
-<li>插入代码： <code>Ctrl/Cmd + Shift + C</code></li>
-<li>行内代码： <code>Ctrl/Cmd + Shift + K</code></li>
-<li>插入图片： <code>Ctrl/Cmd + Shift + I</code></li>
-<li>无序列表： <code>Ctrl/Cmd + Shift + L</code></li>
-<li>撤销： <code>Ctrl/Cmd + Z</code></li>
-<li>一级标题：快捷键为<code>Ctrl + 1</code>，以此类推</li>
-</ul>
-<hr>
-<h2 id="引用文字"><a href="#引用文字" class="headerlink" title="引用文字"></a>引用文字</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="quote">&gt; + 空格 + 引用文字</span></span><br><span class="line"><span class="quote">&gt; 引用内容1</span></span><br><span class="line"><span class="quote">&gt; 引用内容2</span></span><br><span class="line">&gt;&gt; 引用内容3</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>引用内容1<br>引用内容2</p>
-<blockquote>
-<p>引用内容3</p>
-</blockquote>
-</blockquote>
-<hr>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>输入  <em>列表内容 将创建一个无序列表，该</em>符号可以替换为+或-。</p>
-<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>无序列表1</span><br><span class="line"><span class="bullet">+ </span>无序列表2</span><br><span class="line"><span class="bullet">- </span>无序列表3</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>无序列表1</li>
-</ul>
-<ul>
-<li>无序列表2</li>
-</ul>
-<ul>
-<li>无序列表3</li>
-</ul>
-<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1. </span>有序列表1</span><br><span class="line"><span class="bullet">2. </span>有序列表2</span><br><span class="line"><span class="bullet">3. </span>有序列表3</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>有序列表1</li>
-<li>有序列表2</li>
-<li>有序列表3</li>
-</ol>
-<h3 id="多行无序列表"><a href="#多行无序列表" class="headerlink" title="多行无序列表"></a>多行无序列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>多行无序列表1</span><br><span class="line">TAB * 多行无序列表2</span><br><span class="line">TAB TAB * 多行无序列表3</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>多行无序列表1<ul>
-<li>多行无序列表2<ul>
-<li>多行无序列表3</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">-[ ] 不抽烟</span><br><span class="line">-[x] 不喝酒</span><br><span class="line">-[ ] 不烫头</span><br></pre></td></tr></table></figure>
-
-<p>-[ ] 不抽烟<br>-[x] 不喝酒<br>-[ ] 不烫头</p>
-<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">|姓名|性别|年龄|手机号|</span><br><span class="line">|:---|:--:|:--:|---:|</span><br><span class="line">|居左|居中|居中|居右|</span><br><span class="line">|张三|男|21|18975346876|</span><br><span class="line">|李四|女|23|17789548964|</span><br><span class="line">|王五|男|25|15876513546|</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">姓名</th>
-<th align="center">性别</th>
-<th align="center">年龄</th>
-<th align="right">手机号</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">居左</td>
-<td align="center">居中</td>
-<td align="center">居中</td>
-<td align="right">居右</td>
-</tr>
-<tr>
-<td align="left">张三</td>
-<td align="center">男</td>
-<td align="center">21</td>
-<td align="right">18975346876</td>
-</tr>
-<tr>
-<td align="left">李四</td>
-<td align="center">女</td>
-<td align="center">23</td>
-<td align="right">17789548964</td>
-</tr>
-<tr>
-<td align="left">王五</td>
-<td align="center">男</td>
-<td align="center">25</td>
-<td align="right">15876513546</td>
-</tr>
-</tbody></table>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><h4 id="本地图片"><a href="#本地图片" class="headerlink" title="本地图片"></a>本地图片</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[图片上传失败...(image-61fd19-1520850984854)]</span><br></pre></td></tr></table></figure>
-
-<h4 id="网络图片"><a href="#网络图片" class="headerlink" title="网络图片"></a>网络图片</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">pikachu.jpg</span>](<span class="link">https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1564157419510&amp;di=e96d9359d9cba4b936ed55eb804c54bb&amp;imgtype=0&amp;src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg</span>)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564157419510&di=e96d9359d9cba4b936ed55eb804c54bb&imgtype=0&src=http%3A%2F%2Fdata.whicdn.com%2Fimages%2F3045613%2Flarge.jpg" alt="pikachu.jpg"></p>
-<h3 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h3><h4 id="行内式链接"><a href="#行内式链接" class="headerlink" title="行内式链接"></a>行内式链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="string">我的博客</span>][<span class="symbol">https://hongcyu.github.io</span>]</span><br></pre></td></tr></table></figure>
-
-<p>[我的博客][<a href="https://hongcyu.github.io]" target="_blank" rel="noopener">https://hongcyu.github.io]</a></p>
-<h4 id="参考式链接"><a href="#参考式链接" class="headerlink" title="参考式链接"></a>参考式链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="string">CSDN</span>][<span class="symbol">CSDN网址</span>]</span><br><span class="line">[<span class="symbol">CSDN网址</span>]:<span class="link">https://www.csdn.net/</span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.csdn.net/" target="_blank" rel="noopener">CSDN</a></p>
-<h4 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h4><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">https:</span>//<span class="attr">www.github.com</span>&gt;</span></span></span><br><span class="line">或</span><br><span class="line">https://www.github.com</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.github.com" target="_blank" rel="noopener">https://www.github.com</a></p>
-<p><a href="https://www.github.com" target="_blank" rel="noopener">https://www.github.com</a></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="emphasis">*斜体*</span></span><br><span class="line"><span class="emphasis">_斜体_</span></span><br></pre></td></tr></table></figure>
-
-<p><em>斜体</em><br><em>斜体</em></p>
-<h3 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="strong">**加粗**</span></span><br><span class="line"><span class="strong">__加粗__</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>加粗</strong><br><strong>加粗</strong></p>
-<h3 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h3><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">u</span>&gt;</span></span>下划线<span class="xml"><span class="tag">&lt;/<span class="name">u</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<p><u>下划线</u></p>
-<h3 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~~删除线~~</span><br></pre></td></tr></table></figure>
-
-<p><del>删除线</del></p>
-<h3 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">***</span><br><span class="line">---</span><br><span class="line">___</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<hr>
-<h3 id="注脚"><a href="#注脚" class="headerlink" title="注脚"></a>注脚</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Typora[^1]</span><br><span class="line">[^1]A markdown editor</span><br></pre></td></tr></table></figure>
-
-<p>Typora[^1]<br>[^1]A markdown editor</p>
-<h3 id="符号的输入"><a href="#符号的输入" class="headerlink" title="符号的输入"></a>符号的输入</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\\   反斜线</span><br><span class="line">\`   反引号</span><br><span class="line">\*   星号</span><br><span class="line">\_   底线</span><br><span class="line">\&#123; \&#125;  花括号</span><br><span class="line">\[ \]  方括号</span><br><span class="line">\( \)  括弧</span><br><span class="line">\#   井字号</span><br><span class="line">\+   加号</span><br><span class="line">\-   减号</span><br><span class="line">\.   英文句点</span><br><span class="line">\!   惊叹号</span><br></pre></td></tr></table></figure>
-
-<p>\   反斜线<br>`   反引号<br>*   星号<br>_   底线<br>{ }  花括号<br>[ ]  方括号<br>( )  括弧<br>#   井字号<br>+   加号<br>-   减号<br>.   英文句点<br>!   惊叹号</p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&amp;copy;      版权      </span><br><span class="line">&amp;reg;       注册商标</span><br><span class="line">&amp;trade;     商标</span><br><span class="line">&amp;nbsp;      空格</span><br><span class="line">&amp;amp;       和号</span><br><span class="line">&amp;quot;      引号</span><br><span class="line">&amp;apos;      撇号</span><br><span class="line">&amp;lt;        小于号</span><br><span class="line">&amp;gt;        大于号</span><br><span class="line">&amp;ne;        不等号</span><br><span class="line">&amp;le;        小于等于</span><br><span class="line">&amp;ge;        大于等于</span><br><span class="line">&amp;cent;      分</span><br><span class="line">&amp;pound;     磅</span><br><span class="line">&amp;euro;      欧元</span><br><span class="line">&amp;yen;       元</span><br><span class="line">&amp;sect;      节</span><br><span class="line">&amp;times;     乘号</span><br><span class="line">&amp;divide;    除号</span><br><span class="line">&amp;plusmn;    正负号</span><br></pre></td></tr></table></figure>
-
-<p>&copy;      版权<br>&reg;       注册商标<br>&trade;     商标<br>&nbsp;      空格<br>&amp;       和号<br>&quot;      引号<br>&apos;      撇号<br>&lt;        小于号<br>&gt;        大于号<br>&ne;        不等号<br>&le;        小于等于<br>&ge;        大于等于<br>&cent;      分<br>&pound;     磅<br>&euro;      欧元<br>&yen;       元<br>&sect;      节<br>&times;     乘号<br>&divide;    除号<br>&plusmn;    正负号</p>
-<p>附件：[HTML特殊字符编码对照表][<a href="https://www.jb51.net/onlineread/htmlchar.htm]" target="_blank" rel="noopener">https://www.jb51.net/onlineread/htmlchar.htm]</a></p>
-<h2 id="插入音乐和视频"><a href="#插入音乐和视频" class="headerlink" title="插入音乐和视频"></a>插入音乐和视频</h2><h3 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h3><p>1）直接用 HTML 的标签，写法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;audio src=&quot;https://什么什么什么.mp3&quot; style=&quot;max-height :100%; max-width: 100%; display: block; margin-left: auto; margin-right: auto;&quot; controls=&quot;controls&quot; loop=&quot;loop&quot; preload=&quot;meta&quot;&gt;Your browser does not support the audio tag.&lt;/audio&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2）用插件，有显示歌词功能，也美观。首先在<strong>站点</strong>文件夹根目录安装插件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-tag-aplayer --save</span><br></pre></td></tr></table></figure>
-
-<p>然后文章中的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% aplayer &quot;歌曲名&quot; &quot;歌手名&quot; &quot;https://什么什么什么.mp3&quot; &quot;https://封面图.jpg&quot; &quot;lrc:https://歌词.lrc&quot; %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>另外可以支持歌单：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% aplayerlist %&#125;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;autoplay&quot;: false,</span><br><span class="line">    &quot;showlrc&quot;: 3,</span><br><span class="line">    &quot;mutex&quot;: true,</span><br><span class="line">    &quot;music&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;title&quot;: &quot;歌曲名&quot;,</span><br><span class="line">            &quot;author&quot;: &quot;歌手名&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;https://什么什么什么.mp3&quot;,</span><br><span class="line">            &quot;pic&quot;: &quot;https://封面图.jpg&quot;,</span><br><span class="line">            &quot;lrc&quot;: &quot;https://歌词.lrc&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;title&quot;: &quot;歌曲名&quot;,</span><br><span class="line">            &quot;author&quot;: &quot;歌手名&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;https://什么什么什么.mp3&quot;,</span><br><span class="line">            &quot;pic&quot;: &quot;https://封面图.jpg&quot;,</span><br><span class="line">            &quot;lrc&quot;: &quot;https://歌词.lrc&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endaplayerlist %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>里面的详细参数见 <a href="https://github.com/MoePlayer/hexo-tag-aplayer" target="_blank" rel="noopener">README</a> 和这插件的「母亲」Aplayer 的<a href="https://aplayer.js.org/" target="_blank" rel="noopener">官方文档</a>。关于 <a href="https://baike.baidu.com/item/lrc/46935" target="_blank" rel="noopener">LRC</a>歌词，可以用<a href="https://www.zhihu.com/question/27638171" target="_blank" rel="noopener">工具</a>下载网易云音乐的歌词，另发现暂时不支持<code>offset</code>参数。当然，如果那歌词很操蛋，有错误（比如字母大小写和标点符号乱加）或者时间完全对不上，然后你也和我一样是个完美主义者，那接下来就是令人窒息的操作了，一句一句自己查看修改……</p>
-<p>什么，你想把网易云的几百首歌手动同步到博客？慢慢慢，有一种<a href="https://github.com/MoePlayer/hexo-tag-aplayer#meingjs-support-new-in-30" target="_blank" rel="noopener">非常简单的方法</a>，此这种方法也支持单曲，将参数里的<code>playlist</code>更改为<code>song</code>即可，非常建议食用！更多功能请仔细阅读 README。</p>
-<h3 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h3><p>1）直接用 HTML 的标签，写法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;video poster=&quot;https://封面图.jpg&quot; src=&quot;https://什么什么什么.mp4&quot; style=&quot;max-height :100%; max-width: 100%; display: block; margin-left: auto; margin-right: auto;&quot; controls=&quot;controls&quot; loop=&quot;loop&quot; preload=&quot;meta&quot;&gt;Your browser does not support the video tag.&lt;/video&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2）用插件，可支持弹幕，首先在站点文件夹根目录安装插件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-tag-dplayer --save</span><br></pre></td></tr></table></figure>
-
-<p>然后文章中的写法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% dplayer &quot;url=https://什么什么什么.mp4&quot; &quot;https://封面图.jpg&quot; &quot;api=https://api.prprpr.me/dplayer/&quot; &quot;id=&quot; &quot;loop=false&quot; %&#125;</span><br></pre></td></tr></table></figure>
-
-<p>要使用弹幕，必须有<code>api</code>和<code>id</code>两项，并且若使用的是官方的 api 地址（即上面的），id 的值不能与<a href="https://api.prprpr.me/dplayer/list" target="_blank" rel="noopener">这个列表</a>的值一样。id 的值自己随便取，唯一要求就是前面这点。如果唯一要求难倒了你，可以使用<a href="http://tool.oschina.net/encrypt?type=2" target="_blank" rel="noopener">这个工具</a>将一段与众不同的文字生成一段看起来毫无意义的哈希值，这样看起来是不是好多了。</p>
-<p>当然，这个插件的功能还有很多，可以去 <a href="https://github.com/MoePlayer/hexo-tag-dplayer" target="_blank" rel="noopener">README</a> 和这插件的「母亲」Dplayer 的<a href="https://dplayer.js.org/" target="_blank" rel="noopener">官方文档</a>看看。</p>
-]]></content>
-      <categories>
-        <category>书写格式</category>
-        <category>Typora</category>
-      </categories>
-      <tags>
-        <tag>Typora</tag>
       </tags>
   </entry>
   <entry>
@@ -1875,6 +1875,30 @@
       <tags>
         <tag>python</tag>
         <tag>Opencv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>城市观星指南——轻松找到北极星</title>
+    <url>/posts/city-star1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：是不是憋在家里好久没出门放风了？在做好防护的前提下在空旷的楼下广场或自家阳台上看星星是缓解焦虑心情的好选择。</p>
+<a id="more"></a>
+
+<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/city_star1.jpg" alt></p>
+<p>北极星并不是某一特定的天体，而是指最靠近北天极的一颗星， 由于地球自转轴的漂移，产生了名为岁差的现象，岁差周期大概是26000年，在这段时间中，被称为北极星的天体也会不断更替。现阶段是由勾陈一代理北极星这一称号，但现在也还不是它最最靠近北天极的时候，预计在2100年时它会到达离北天极只有28′，然后，勾陈一就将逐渐远离北天极，而勾陈四也会逐渐成为下一任北极星。</p>
+<p>下面我们看看小姐姐的视频：</p>
+<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=92102231&cid=157257711&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
+
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>北极星是古代航海、野外活动辨认方向的一个很重要指标，另外也是小至观星入门之辨认方向星座，大至天文摄影、观测室赤道仪的准确定位等皆为十分重要的作用。由于北极星最靠近正北的方位，千百年来地球上的人们也靠它的星光来导航。</p>
+<p>在北半球的夜空中，位于北方天空的北斗七星十分显眼，这七颗恒星分别是大熊座的天枢（贪狼）、天璇（巨门）、天玑（禄存）、天权（文曲）、玉衡（廉贞）、开阳（武曲）以及瑶光（破军）。它们看起来比其他星星明亮，而且排列成勺子状。如果沿着天璇和天枢的方向延伸大约5倍，可以找到另一颗亮星，这就是北极星。无论在什么时候观测北斗七星和北极星，都会观测到这样的现象。在我国古代，北斗七星被用来“定四时，分寒暑”——“斗柄东指，天下皆春；斗柄南指，天下皆夏；斗柄西指，天下皆秋；斗柄北指，天下皆冬。”通过北斗七星的斗柄方向变化，可以知道季节更替。</p>
+<h2 id="个人感想"><a href="#个人感想" class="headerlink" title="个人感想"></a>个人感想</h2><p>我已经很久没有抬头看看星星了，忽然看到这个视频，产生了很大的感触。</p>
+<p>人有的时候停下来休息，抬头看看星空也未免不是一种感受宁静的方式。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+        <tag>观星</tag>
       </tags>
   </entry>
   <entry>
@@ -2528,62 +2552,6 @@
       </tags>
   </entry>
   <entry>
-    <title>城市观星指南——轻松找到北极星</title>
-    <url>/posts/city-star1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：是不是憋在家里好久没出门放风了？在做好防护的前提下在空旷的楼下广场或自家阳台上看星星是缓解焦虑心情的好选择。</p>
-<a id="more"></a>
-
-<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/city_star1.jpg" alt></p>
-<p>北极星并不是某一特定的天体，而是指最靠近北天极的一颗星， 由于地球自转轴的漂移，产生了名为岁差的现象，岁差周期大概是26000年，在这段时间中，被称为北极星的天体也会不断更替。现阶段是由勾陈一代理北极星这一称号，但现在也还不是它最最靠近北天极的时候，预计在2100年时它会到达离北天极只有28′，然后，勾陈一就将逐渐远离北天极，而勾陈四也会逐渐成为下一任北极星。</p>
-<p>下面我们看看小姐姐的视频：</p>
-<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=92102231&cid=157257711&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
-
-<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>北极星是古代航海、野外活动辨认方向的一个很重要指标，另外也是小至观星入门之辨认方向星座，大至天文摄影、观测室赤道仪的准确定位等皆为十分重要的作用。由于北极星最靠近正北的方位，千百年来地球上的人们也靠它的星光来导航。</p>
-<p>在北半球的夜空中，位于北方天空的北斗七星十分显眼，这七颗恒星分别是大熊座的天枢（贪狼）、天璇（巨门）、天玑（禄存）、天权（文曲）、玉衡（廉贞）、开阳（武曲）以及瑶光（破军）。它们看起来比其他星星明亮，而且排列成勺子状。如果沿着天璇和天枢的方向延伸大约5倍，可以找到另一颗亮星，这就是北极星。无论在什么时候观测北斗七星和北极星，都会观测到这样的现象。在我国古代，北斗七星被用来“定四时，分寒暑”——“斗柄东指，天下皆春；斗柄南指，天下皆夏；斗柄西指，天下皆秋；斗柄北指，天下皆冬。”通过北斗七星的斗柄方向变化，可以知道季节更替。</p>
-<h2 id="个人感想"><a href="#个人感想" class="headerlink" title="个人感想"></a>个人感想</h2><p>我已经很久没有抬头看看星星了，忽然看到这个视频，产生了很大的感触。</p>
-<p>人有的时候停下来休息，抬头看看星空也未免不是一种感受宁静的方式。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-        <tag>观星</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>初入密码学之置换加密与暴力破解</title>
-    <url>/posts/19315.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为学习现代密码学的一次作业，能进行不是较大文本量的txt文本周期性置换加密，并进行密文的暴力破解。</p>
-<a id="more"></a>
-
-<h2 id="文件解释"><a href="#文件解释" class="headerlink" title="文件解释"></a>文件解释</h2><p>1.将文件放在同一个python文件夹下使用</p>
-<p>2.encryption.py为加密程序，decrypt为暴力破解程序</p>
-<p>3.plain.txt为初始待加密文本，cipher.txt为加密后生成的文本，DecryptWoed.txt为暴力破解后生成的文本。</p>
-<p>4.若要运行可删除 (3)中的三个文本重新运行。</p>
-<h2 id="加密程序运行解释"><a href="#加密程序运行解释" class="headerlink" title="加密程序运行解释"></a>加密程序运行解释</h2><p>1.首先输入置换加密密钥的位数。</p>
-<p>2.输入置换加密的密钥。若加密密钥为(1 5 6 2 3 )则将其代换后输入 531462</p>
-<p>3.将待加密文本重命名为plain.txt</p>
-<p>4.等待加密后生成cipher.txt</p>
-<h2 id="解密程序运行解释"><a href="#解密程序运行解释" class="headerlink" title="解密程序运行解释"></a>解密程序运行解释</h2><p>1.输入密钥长度即可进行暴力破解</p>
-<p>2.采用的是深度搜索来遍历密钥的所有可能。</p>
-<p>3.等待解密后生成DecryptWoed.txt。</p>
-<p>4.其中所以可能会在DecryptWoed.txt以回车进行分隔。</p>
-<h2 id="加密程序"><a href="#加密程序" class="headerlink" title="加密程序"></a>加密程序</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">translate</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#将txt文本存入word1</span></span><br><span class="line">    file = open(<span class="string">'plain.txt'</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    word1 = file.read()</span><br><span class="line">    file.close</span><br><span class="line">    <span class="comment">#将txt文本转换只剩下英文单词</span></span><br><span class="line">    word=<span class="string">''</span></span><br><span class="line">    word2 = re.findall(<span class="string">'[a-zA-Z]+'</span>, word1)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word2:</span><br><span class="line">        word = word + i</span><br><span class="line">    <span class="keyword">return</span> word</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encryption</span><span class="params">(wordlist,deltalist)</span>:</span></span><br><span class="line">    <span class="comment">#进行置换加密</span></span><br><span class="line">    NewWordlist = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> wordlist:</span><br><span class="line">        con = <span class="string">''</span></span><br><span class="line">        str = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> deltalist:</span><br><span class="line">            con = con + str[ j <span class="number">-1</span> ]</span><br><span class="line">        NewWordlist.append(con)</span><br><span class="line">    <span class="keyword">return</span> NewWordlist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(word)</span>:</span></span><br><span class="line">    file2 = open(<span class="string">'cipher.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word:</span><br><span class="line">        file2.write(i)</span><br><span class="line"></span><br><span class="line">    file2.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    deltasize = int(input(<span class="string">"请输入您的密钥位数："</span>))</span><br><span class="line">    delta = input(<span class="string">"请输入您的密钥："</span>)</span><br><span class="line">    deltalist=[]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> delta:</span><br><span class="line">        deltalist.append(int(j))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#将word存入wordlist列表中</span></span><br><span class="line">    word = translate()</span><br><span class="line">    wordlist = []</span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    str = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word :</span><br><span class="line">        <span class="keyword">if</span>(j &lt; deltasize):</span><br><span class="line">            str = str +i</span><br><span class="line">            j=j+<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>(j == deltasize ):</span><br><span class="line">            wordlist.append(str)</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            str = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> wordlist:</span><br><span class="line">        str = i</span><br><span class="line">        print(str)</span><br><span class="line">    NewWordlist = []</span><br><span class="line">    NewWordlist = encryption(wordlist,deltalist)</span><br><span class="line">    <span class="comment">#用save函数存入cipher.txt中</span></span><br><span class="line">    save(NewWordlist)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-
-<h2 id="暴力破解代码"><a href="#暴力破解代码" class="headerlink" title="暴力破解代码"></a>暴力破解代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def save(word):</span><br><span class="line">    #存储</span><br><span class="line">    file2 = open(&apos;DecryptWoed.txt&apos;,&apos;a&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    for i in word:</span><br><span class="line">        file2.write(i)</span><br><span class="line">    file2.write((&quot;\n&quot;))</span><br><span class="line">    file2.close()</span><br><span class="line"></span><br><span class="line">def decrypt(wordlist,deltalist):</span><br><span class="line">    #进行置换解密</span><br><span class="line">    NewWordlist = []</span><br><span class="line">    for i in wordlist:</span><br><span class="line">        con = &apos;&apos;</span><br><span class="line">        str = i</span><br><span class="line">        for j in deltalist:</span><br><span class="line">            con = con + str[ j -1 ]</span><br><span class="line">        NewWordlist.append(con)</span><br><span class="line">    return NewWordlist</span><br><span class="line"></span><br><span class="line">def DFS(p,delta,token,newdelta,wordlist):</span><br><span class="line">    #深度搜索密钥的所以可能性</span><br><span class="line">    if p == len(delta):</span><br><span class="line">        print(newdelta)</span><br><span class="line">        save(decrypt(wordlist,newdelta))</span><br><span class="line">        return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    for index in range(len(delta)):</span><br><span class="line">        if token[index] == True:</span><br><span class="line">            newdelta[p] = delta[index]</span><br><span class="line">            token[index] = False</span><br><span class="line">            DFS(p+1,delta,token,newdelta,wordlist)</span><br><span class="line">            token[index] = True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    deltasize = int(input(&quot;输入密钥位数：&quot;))</span><br><span class="line">    delta =[]</span><br><span class="line">    for i in range(1, deltasize + 1):</span><br><span class="line">        delta.append(i)</span><br><span class="line">    token = [True for i in range(len(delta))]   #用来深度搜索判断</span><br><span class="line">    newdelta = [&apos;&apos; for i in range(0, len(delta))]  #引用来存储一次深度优先后的结果</span><br><span class="line">    file = open(&apos;cipher.txt&apos;,&apos;r&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    word = file.read()</span><br><span class="line">    #将word存入wordlist列表中</span><br><span class="line">    wordlist = []</span><br><span class="line">    j = 0</span><br><span class="line">    str = &apos;&apos;</span><br><span class="line">    for i in word :</span><br><span class="line">        if(j &lt; deltasize):</span><br><span class="line">            str = str +i</span><br><span class="line">            j=j+1</span><br><span class="line">        if(j == deltasize ):</span><br><span class="line">            wordlist.append(str)</span><br><span class="line">            j = 0</span><br><span class="line">            str = &apos;&apos;</span><br><span class="line"></span><br><span class="line">    DFS(0,delta,token,newdelta,wordlist)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>现代密码学</category>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>现代密码学</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>操作系统——几种常见的调度算法</title>
     <url>/posts/os-1.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：总结一下在操作系统学习中遇到的几种常见的调度算法，以供参考。</p>
@@ -2632,6 +2600,38 @@
       <tags>
         <tag>操作系统</tag>
         <tag>调度算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初入密码学之置换加密与暴力破解</title>
+    <url>/posts/19315.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为学习现代密码学的一次作业，能进行不是较大文本量的txt文本周期性置换加密，并进行密文的暴力破解。</p>
+<a id="more"></a>
+
+<h2 id="文件解释"><a href="#文件解释" class="headerlink" title="文件解释"></a>文件解释</h2><p>1.将文件放在同一个python文件夹下使用</p>
+<p>2.encryption.py为加密程序，decrypt为暴力破解程序</p>
+<p>3.plain.txt为初始待加密文本，cipher.txt为加密后生成的文本，DecryptWoed.txt为暴力破解后生成的文本。</p>
+<p>4.若要运行可删除 (3)中的三个文本重新运行。</p>
+<h2 id="加密程序运行解释"><a href="#加密程序运行解释" class="headerlink" title="加密程序运行解释"></a>加密程序运行解释</h2><p>1.首先输入置换加密密钥的位数。</p>
+<p>2.输入置换加密的密钥。若加密密钥为(1 5 6 2 3 )则将其代换后输入 531462</p>
+<p>3.将待加密文本重命名为plain.txt</p>
+<p>4.等待加密后生成cipher.txt</p>
+<h2 id="解密程序运行解释"><a href="#解密程序运行解释" class="headerlink" title="解密程序运行解释"></a>解密程序运行解释</h2><p>1.输入密钥长度即可进行暴力破解</p>
+<p>2.采用的是深度搜索来遍历密钥的所有可能。</p>
+<p>3.等待解密后生成DecryptWoed.txt。</p>
+<p>4.其中所以可能会在DecryptWoed.txt以回车进行分隔。</p>
+<h2 id="加密程序"><a href="#加密程序" class="headerlink" title="加密程序"></a>加密程序</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">translate</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#将txt文本存入word1</span></span><br><span class="line">    file = open(<span class="string">'plain.txt'</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    word1 = file.read()</span><br><span class="line">    file.close</span><br><span class="line">    <span class="comment">#将txt文本转换只剩下英文单词</span></span><br><span class="line">    word=<span class="string">''</span></span><br><span class="line">    word2 = re.findall(<span class="string">'[a-zA-Z]+'</span>, word1)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word2:</span><br><span class="line">        word = word + i</span><br><span class="line">    <span class="keyword">return</span> word</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encryption</span><span class="params">(wordlist,deltalist)</span>:</span></span><br><span class="line">    <span class="comment">#进行置换加密</span></span><br><span class="line">    NewWordlist = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> wordlist:</span><br><span class="line">        con = <span class="string">''</span></span><br><span class="line">        str = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> deltalist:</span><br><span class="line">            con = con + str[ j <span class="number">-1</span> ]</span><br><span class="line">        NewWordlist.append(con)</span><br><span class="line">    <span class="keyword">return</span> NewWordlist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(word)</span>:</span></span><br><span class="line">    file2 = open(<span class="string">'cipher.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word:</span><br><span class="line">        file2.write(i)</span><br><span class="line"></span><br><span class="line">    file2.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    deltasize = int(input(<span class="string">"请输入您的密钥位数："</span>))</span><br><span class="line">    delta = input(<span class="string">"请输入您的密钥："</span>)</span><br><span class="line">    deltalist=[]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> delta:</span><br><span class="line">        deltalist.append(int(j))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#将word存入wordlist列表中</span></span><br><span class="line">    word = translate()</span><br><span class="line">    wordlist = []</span><br><span class="line">    j = <span class="number">0</span></span><br><span class="line">    str = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> word :</span><br><span class="line">        <span class="keyword">if</span>(j &lt; deltasize):</span><br><span class="line">            str = str +i</span><br><span class="line">            j=j+<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>(j == deltasize ):</span><br><span class="line">            wordlist.append(str)</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            str = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> wordlist:</span><br><span class="line">        str = i</span><br><span class="line">        print(str)</span><br><span class="line">    NewWordlist = []</span><br><span class="line">    NewWordlist = encryption(wordlist,deltalist)</span><br><span class="line">    <span class="comment">#用save函数存入cipher.txt中</span></span><br><span class="line">    save(NewWordlist)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="暴力破解代码"><a href="#暴力破解代码" class="headerlink" title="暴力破解代码"></a>暴力破解代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def save(word):</span><br><span class="line">    #存储</span><br><span class="line">    file2 = open(&apos;DecryptWoed.txt&apos;,&apos;a&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    for i in word:</span><br><span class="line">        file2.write(i)</span><br><span class="line">    file2.write((&quot;\n&quot;))</span><br><span class="line">    file2.close()</span><br><span class="line"></span><br><span class="line">def decrypt(wordlist,deltalist):</span><br><span class="line">    #进行置换解密</span><br><span class="line">    NewWordlist = []</span><br><span class="line">    for i in wordlist:</span><br><span class="line">        con = &apos;&apos;</span><br><span class="line">        str = i</span><br><span class="line">        for j in deltalist:</span><br><span class="line">            con = con + str[ j -1 ]</span><br><span class="line">        NewWordlist.append(con)</span><br><span class="line">    return NewWordlist</span><br><span class="line"></span><br><span class="line">def DFS(p,delta,token,newdelta,wordlist):</span><br><span class="line">    #深度搜索密钥的所以可能性</span><br><span class="line">    if p == len(delta):</span><br><span class="line">        print(newdelta)</span><br><span class="line">        save(decrypt(wordlist,newdelta))</span><br><span class="line">        return</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    for index in range(len(delta)):</span><br><span class="line">        if token[index] == True:</span><br><span class="line">            newdelta[p] = delta[index]</span><br><span class="line">            token[index] = False</span><br><span class="line">            DFS(p+1,delta,token,newdelta,wordlist)</span><br><span class="line">            token[index] = True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    deltasize = int(input(&quot;输入密钥位数：&quot;))</span><br><span class="line">    delta =[]</span><br><span class="line">    for i in range(1, deltasize + 1):</span><br><span class="line">        delta.append(i)</span><br><span class="line">    token = [True for i in range(len(delta))]   #用来深度搜索判断</span><br><span class="line">    newdelta = [&apos;&apos; for i in range(0, len(delta))]  #引用来存储一次深度优先后的结果</span><br><span class="line">    file = open(&apos;cipher.txt&apos;,&apos;r&apos;,encoding=&apos;utf-8&apos;)</span><br><span class="line">    word = file.read()</span><br><span class="line">    #将word存入wordlist列表中</span><br><span class="line">    wordlist = []</span><br><span class="line">    j = 0</span><br><span class="line">    str = &apos;&apos;</span><br><span class="line">    for i in word :</span><br><span class="line">        if(j &lt; deltasize):</span><br><span class="line">            str = str +i</span><br><span class="line">            j=j+1</span><br><span class="line">        if(j == deltasize ):</span><br><span class="line">            wordlist.append(str)</span><br><span class="line">            j = 0</span><br><span class="line">            str = &apos;&apos;</span><br><span class="line"></span><br><span class="line">    DFS(0,delta,token,newdelta,wordlist)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>现代密码学</category>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>现代密码学</tag>
       </tags>
   </entry>
   <entry>
