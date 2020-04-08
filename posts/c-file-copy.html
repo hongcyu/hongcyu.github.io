@@ -541,6 +541,34 @@
           
 
           
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
 
           
 
@@ -595,13 +623,6 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
@@ -609,7 +630,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-file-management.html" rel="bookmark">Linux下文件系统的管理</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
       
     </li>
   
@@ -1044,7 +1072,21 @@ show_date_time();
   <span class="author" itemprop="copyrightHolder">hongCYu</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">81k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:13</span>
   
 </div>
 
@@ -1221,7 +1263,7 @@ show_date_time();
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "";
+    var search_path = "search.xml";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
