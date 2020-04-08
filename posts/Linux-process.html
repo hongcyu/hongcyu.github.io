@@ -168,7 +168,9 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200330153306297.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200401103539531.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200401104226138.png">
-<meta property="og:updated_time" content="2020-04-08T02:15:46.244Z">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200408102830668.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200408105947811.png">
+<meta property="og:updated_time" content="2020-04-08T03:01:50.255Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux进程与状态管理及其程序设计">
 <meta name="twitter:description" content="摘要：此为Linux中系统进程与状态管理的具体操作及其程序设计的方法来实现进程管理。">
@@ -774,8 +776,20 @@
 <p>创建管道：</p>
 <ol>
 <li>命令： mkfifo &lt;管道名称&gt;</li>
-<li>函数调用（C）：makefifo(&lt;名称&gt;,&lt;访问权限&gt;)</li>
+<li>函数调用（C）：mkfifo(&lt;名称&gt;,&lt;访问权限&gt;)</li>
 </ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">    umask(<span class="number">111</span>);</span><br><span class="line">	ret = mkfifo(argv[<span class="number">1</span>],<span class="number">0664</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200408102830668.png" alt="image-20200408102830668"></p>
+<p>传送信息：</p>
+<p>tips：不可用读写权限进行打开，因为管道是单向的。只能是只读或只写。</p>
+<p>fifoA.C:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> ffd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> pfd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4096</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> msg[<span class="number">512</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	ffd = open(argv[<span class="number">1</span>], O_RDONLY);</span><br><span class="line">	pfd = open(<span class="string">"./FIFO"</span>,O_WRONLY);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>((ret = read(ffd,buf,<span class="keyword">sizeof</span>(buf)))&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ret = write(pfd,buf,ret);</span><br><span class="line">		<span class="built_in">memset</span>(buf,<span class="number">0</span>,<span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	close(ffd);</span><br><span class="line">	close(pfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fifoB.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> pfd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">4096</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> msg[<span class="number">512</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	pfd = open(<span class="string">"./FIFO"</span>,O_RDONLY);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(ret = read(pfd,buf,<span class="keyword">sizeof</span>(buf))&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(buf);</span><br><span class="line">		<span class="built_in">memset</span>(buf,<span class="number">0</span>,<span class="keyword">sizeof</span>(buf));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	close(pfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200408105947811.png" alt="image-20200408105947811"></p>
 
       
     </div>
@@ -803,13 +817,6 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
       
     </li>
@@ -817,7 +824,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-user-program.html" rel="bookmark">Linux下用户管理的程序设计</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
   
@@ -914,6 +928,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/posts/Linux-network.html" rel="prev" title="Linux下的网络控制和网络通信">
+                Linux下的网络控制和网络通信 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -988,7 +1006,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1124,7 +1142,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
