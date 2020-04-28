@@ -174,7 +174,7 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427145908552.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427150136837.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427155401689.png">
-<meta property="og:updated_time" content="2020-04-28T02:02:07.941Z">
+<meta property="og:updated_time" content="2020-04-28T03:40:57.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下的网络控制和网络通信">
 <meta name="twitter:description" content="摘要：通过对Linux中的网络、网络控制和网络通信等来了解系统对于网络方面的细节，加强对Linux下网络的认识，加深对网络编程的理解。">
@@ -629,32 +629,28 @@
 <p>Client客户端：需要分配地址，客户端没有IP地址则需要发送什么？发给谁？</p>
 <p>答：</p>
 <p>Client发送请求：</p>
-<ol>
-<li>源地址：0.0.0.0</li>
-<li>目标地址：255.255.255.255（向一切地址发广播）只要DHCP在同一个网段内，则必定会收到应答。</li>
-<li>MAC：地址+IP包</li>
-</ol>
+<p>源地址：0.0.0.0</p>
+<p>目标地址：255.255.255.255（向一切地址发广播）只要DHCP在同一个网段内，则必定会收到应答。</p>
+<p>MAC：地址+IP包</p>
 <p>DHCP应答：</p>
-<ol>
+<ul>
 <li><p>DHCP Offer包：IP地址相关信息。</p>
-<p>源地址：DHCP服务器IP</p>
-<p>目标地址：255.255.255.255</p>
-<p>MAC：    源地址：DHCP的MAC    目标地址：client的MAC</p>
 </li>
-<li><p>问：假如网络中多个DHCP服务器，就会有多个应答，client如何处理？</p>
+<li><p>源地址：DHCP服务器IP</p>
+</li>
+<li><p>目标地址：255.255.255.255</p>
+</li>
+<li><p>MAC：    源地址：DHCP的MAC    目标地址：client的MAC</p>
+</li>
+</ul>
+<p>问：假如网络中多个DHCP服务器，就会有多个应答，client如何处理？</p>
 <p>答：按照先来先接收的原则。</p>
-</li>
-</ol>
 <p>Client：确认IP租用信息，DHCPQuest包：说明已经接收到的IP地址（包括client的IP地址+DHCP服务器IP地址）</p>
 <p>DHCP服务器确认信息：</p>
-<ol>
-<li><p>DHCP服务刷新：</p>
+<p>DHCP服务刷新：</p>
 <p>IP地址的租期（4096），当到达租期的一半时，发送刷新的请求。</p>
-</li>
-<li><p>服务器应答：刷新出租时间</p>
+<p>服务器应答：刷新出租时间</p>
 <p>服务器没有应答：等待，到87.5%时间时再次请求</p>
-</li>
-</ol>
 </li>
 </ul>
 <h3 id="DHCP配置过程"><a href="#DHCP配置过程" class="headerlink" title="DHCP配置过程"></a>DHCP配置过程</h3><p>1.安装软件</p>
@@ -702,17 +698,15 @@
 <li><p>工作原理：将域名和IP地址进行转换翻译。</p>
 </li>
 <li><p>域名管理原则</p>
-<ul>
-<li>分级原则：根域（.）、顶级域（com,uk,cn…）、二级域、三级域…</li>
-</ul>
+<p>分级原则：根域（.）、顶级域（com,uk,cn…）、二级域、三级域…</p>
 </li>
 <li><p>服务器类型</p>
-<ul>
-<li>主域名服务器（权威服务器）</li>
-<li>辅助域名服务器（备份、从主服务器复制信息、只读）</li>
-<li>缓存域名服务器（服务器软件，但是没有数据库，提供高速缓存、非权威）</li>
-<li>转发域名服务器（非本地域名的本地查询）</li>
-</ul>
+<blockquote>
+<p>主域名服务器（权威服务器）</p>
+<p>辅助域名服务器（备份、从主服务器复制信息、只读）</p>
+<p>缓存域名服务器（服务器软件，但是没有数据库，提供高速缓存、非权威）</p>
+<p>转发域名服务器（非本地域名的本地查询）</p>
+</blockquote>
 </li>
 <li><p>工作流程</p>
 <p><a href="http://www.mit.edu" target="_blank" rel="noopener">www.mit.edu</a>  –&gt;查看本机缓存（ 浏览器/hosts文件） –&gt; DNS –&gt;  转发服务器/根服务器  (递归或者迭代查询)</p>
@@ -729,13 +723,13 @@
 </li>
 <li><p>主配置文件</p>
 <p>记录dns服务器的基本参数信息</p>
-<ul>
-<li>port：53    </li>
-<li>记录正向、反向配置文件的位置、名称</li>
-<li>记录当前域的信息</li>
-<li>记录根域</li>
-</ul>
+<blockquote>
+<p>port：53    </p>
+<p>记录正向、反向配置文件的位置、名称</p>
+<p>记录当前域的信息</p>
+<p>记录根域</p>
 <p>修改etc/named.conf</p>
+</blockquote>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200420145644338.png" alt="image-20200420145644338"></p>
 <p>以及添加以下自定义内容：</p>
 <blockquote>
@@ -802,17 +796,11 @@
 <p>主动和被动方式：</p>
 <ol>
 <li><p>主动</p>
-<ul>
-<li><p>Client：申请X端口，请求访问server的21端口，server应答，并利用21端口传达控制命令。</p>
-</li>
-<li><p>server：利用20端口向客户端的X+1端口发出传送请求，进行数据传送。</p>
-</li>
-</ul>
+<p>Client：申请X端口，请求访问server的21端口，server应答，并利用21端口传达控制命令。</p>
+<p>server：利用20端口向客户端的X+1端口发出传送请求，进行数据传送。</p>
 </li>
 <li><p>被动</p>
-<ul>
-<li>server连接成功后，给client发送一个端口用于数据传输。</li>
-</ul>
+<p>server连接成功后，给client发送一个端口用于数据传输。</p>
 </li>
 </ol>
 </li>
@@ -823,8 +811,7 @@
 <p>基本配置文件：/etc/vsftpd/vsftpd.conf</p>
 <p>资源文件：/var/ftp</p>
 <p>用户类型：匿名、本地、虚拟</p>
-<ul>
-<li><p>匿名</p>
+<p>匿名</p>
 <p>anonymous：可以无口令（或口令为anonymous）</p>
 <p>进行备份和过滤：</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200422113039501.png" alt="image-20200422113039501"></p>
@@ -834,22 +821,18 @@
 
 
 </li>
-</ul>
-</li>
 </ol>
 <ol start="5">
 <li><p>启动</p>
 <p>service vsftpd start</p>
 </li>
 <li><p>测试登入</p>
-<ul>
-<li>安装ftp客户端：yum install ftp</li>
-<li>终端输入<code>ftp</code>,填写IP后输入账号密码（均为ftp）即可连接</li>
-<li>ftp ip ：登入</li>
-<li>cd/binasc</li>
-<li>put/get：上传下载</li>
-<li>quit：退出</li>
-</ul>
+<p>安装ftp客户端：yum install ftp</p>
+<p>终端输入<code>ftp</code>,填写IP后输入账号密码（均为ftp）即可连接</p>
+<p>ftp ip ：登入</p>
+<p>cd/binasc</p>
+<p>put/get：上传下载</p>
+<p>quit：退出</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200427142311393.png" alt="image-20200427142311393"></p>
 </li>
 <li><p>默认路径</p>
@@ -943,14 +926,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-file-management.html" rel="bookmark">Linux下文件系统的管理</a></div>
+      <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
   
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
+      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
       
     </li>
   
