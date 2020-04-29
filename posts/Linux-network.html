@@ -174,7 +174,8 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427145908552.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427150136837.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200427155401689.png">
-<meta property="og:updated_time" content="2020-04-28T03:40:57.096Z">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20170411162146752.png">
+<meta property="og:updated_time" content="2020-04-28T06:38:40.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下的网络控制和网络通信">
 <meta name="twitter:description" content="摘要：通过对Linux中的网络、网络控制和网络通信等来了解系统对于网络方面的细节，加强对Linux下网络的认识，加深对网络编程的理解。">
@@ -794,15 +795,15 @@
 <li><p>端口</p>
 <p>20和21</p>
 <p>主动和被动方式：</p>
-<ol>
-<li><p>主动</p>
+<blockquote>
+<p>主动:</p>
 <p>Client：申请X端口，请求访问server的21端口，server应答，并利用21端口传达控制命令。</p>
 <p>server：利用20端口向客户端的X+1端口发出传送请求，进行数据传送。</p>
-</li>
-<li><p>被动</p>
+</blockquote>
+<blockquote>
+<p>被动:</p>
 <p>server连接成功后，给client发送一个端口用于数据传输。</p>
-</li>
-</ol>
+</blockquote>
 </li>
 <li><p>安装</p>
 <p>yum install vsftpd</p>
@@ -817,12 +818,7 @@
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200422113039501.png" alt="image-20200422113039501"></p>
 <p>将/etc/vsftpd/vsftpd.conf修改为以下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">listen_port=21</span><br><span class="line">anonymous_enable=YES</span><br><span class="line">write_enable=YES</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">anon_other_write_enable=YES</span><br><span class="line">anon_umask=022</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
-</ol>
-<ol start="5">
 <li><p>启动</p>
 <p>service vsftpd start</p>
 </li>
@@ -851,7 +847,7 @@
 <p>例如：<code>myftp:x:1002:1002::/home/myftp:/bin/nologin</code></p>
 </li>
 <li><p>修改/etc/vsftpd/vsftpd.conf为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">listen_port=21</span><br><span class="line">anonymous_enable=YES</span><br><span class="line">write_enable=YES</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">anon_other_write_enable=YES</span><br><span class="line">anon_umask=022</span><br><span class="line">local_enable=YES</span><br><span class="line">local_umask=022</span><br><span class="line">pam_service_name=vsftca</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">listen_port=21</span><br><span class="line">anonymous_enable=YES</span><br><span class="line">write_enable=YES</span><br><span class="line">anon_upload_enable=YES</span><br><span class="line">anon_mkdir_write_enable=YES</span><br><span class="line">anon_other_write_enable=YES</span><br><span class="line">anon_umask=022</span><br><span class="line">local_enable=YES</span><br><span class="line">local_umask=022</span><br><span class="line">pam_service_name=vsftpd</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>执行命令</p>
 <p>#ldd /usr/sbin/vsftpd</p>
@@ -892,6 +888,15 @@
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200427155401689.png" alt="image-20200427155401689"></p>
 </li>
 </ol>
+<blockquote>
+<p>tips:</p>
+</blockquote>
+<p>在Windows中访问ftp的话需要再/etc/vsftpd/vsftpd.conf下添加以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pasv_enable=YES</span><br><span class="line">pasv_min_port=3000</span><br><span class="line">pasv_max_port=6000</span><br></pre></td></tr></table></figure>
+
+<p>并在有需要的情况下修改以下选项：</p>
+<p>设置IE浏览器&gt;&gt;Internet选项&gt;&gt;高级&gt;&gt;将“使用被动FTP（用于防火墙和DSL调制解调器的兼容）”选项去掉&gt;&gt;确定即可</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20170411162146752.png" alt="20170411162146752"></p>
 
       
     </div>

@@ -152,7 +152,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：Linux下网络程序设计的方案，进行网络相关我程序设计，进一步理解这个Linux系统管理和开发。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-27T07:39:00.043Z">
+<meta property="og:updated_time" content="2020-04-29T03:06:21.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux网络程序设计">
 <meta name="twitter:description" content="摘要：Linux下网络程序设计的方案，进行网络相关我程序设计，进一步理解这个Linux系统管理和开发。">
@@ -561,13 +561,13 @@
 <li><p>套接字地址：决定ip和port</p>
 <p>1）本地套接字</p>
 <p>2）网络套接字：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct sockaddr in&#123;</span><br><span class="line">	sa_family_t sin_family;	//AF_INET</span><br><span class="line">	uint16_t sin_port;		//端口号</span><br><span class="line">	struct in_addr sin)addr;//ip地址</span><br><span class="line">	unsigned char sin_zero[8];//占位</span><br><span class="line">					&#125;</span><br><span class="line">	struct sockaddr_in_myaddr;</span><br><span class="line">	memset(&amp;myaddr,0,sizeof(myaddr));</span><br><span class="line">    myaddr.sin_family = AF_INET;</span><br><span class="line">    myaddr_sin_port = htons(54321);//h:host,b:net,s:short</span><br><span class="line">    myaddr.sin_addr.s_addr = inet_addr(&quot;192.168.123.123&quot;)//IP转为32位的位串（成功返回对应二进制串，失败返回-1）</span><br><span class="line">    inet_aton(&quot;192.168.123.123&quot;,&amp;myaddr.sin_addr)//失败返回0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct sockaddr in&#123;</span><br><span class="line">	sa_family_t sin_family;	//AF_INET</span><br><span class="line">	uint16_t sin_port;		//端口号</span><br><span class="line">	struct in_addr sin)addr;//ip地址</span><br><span class="line">	unsigned char sin_zero[8];//占位</span><br><span class="line">					&#125;</span><br><span class="line">	struct sockaddr_in_myaddr;</span><br><span class="line">	memset(&amp;myaddr,0,sizeof(myaddr));</span><br><span class="line">    myaddr.sin_family = AF_INET;</span><br><span class="line">    myaddr_sin_port = htons(54321);//h:host,n:net,s:short</span><br><span class="line">    myaddr.sin_addr.s_addr = inet_addr(&quot;192.168.123.123&quot;)//IP转为32位的位串（成功返回对应二进制串，失败返回-1）</span><br><span class="line">    inet_aton(&quot;192.168.123.123&quot;,&amp;myaddr.sin_addr)//失败返回0</span><br></pre></td></tr></table></figure>
 
 <p>3）绑定</p>
 <p>bind(int sockfd,(struct sockaddr*)&amp;myaddr,int len);</p>
 <p>4）监听：TCPServer</p>
 <p>listen(int sockfd,int len);</p>
-<p>​       通信：UDP</p>
+<p>5）通信：UDP</p>
 <p>read与write函数</p>
 </li>
 </ol>
