@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/favicon.jpg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.7.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="摘要：记录了测试中adb的基本命令以及appium的使用步骤。">
+<meta name="keywords" content="软件工程,adb,appium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="adb和APPIUM的基本知识">
+<meta property="og:url" content="https://hongcyu.cn/posts/30468.html">
+<meta property="og:site_name" content="hongCYu&#39;s Blog">
+<meta property="og:description" content="摘要：记录了测试中adb的基本命令以及appium的使用步骤。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608113936800.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608135029472.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608135110433.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608140431938.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608141606092.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608145340436.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608145514813.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608153720261.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608163409158.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608170547645.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608172521989.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608173738176.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608175016380.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608202840720.png">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608203303230.png">
+<meta property="og:updated_time" content="2020-06-08T12:42:14.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="adb和APPIUM的基本知识">
+<meta name="twitter:description" content="摘要：记录了测试中adb的基本命令以及appium的使用步骤。">
+<meta name="twitter:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20200608113936800.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hongcyu.cn/posts/30468.html">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>adb和APPIUM的基本知识 | hongCYu's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        
+        <span class="site-title">hongCYu's Blog</span>
+        
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">向往可以快乐地写代码~</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-links">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/links/" rel="section"><i class="menu-item-icon fa fa-fw fa-user-plus"></i> <br>友链</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hongcyu.cn/posts/30468.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hongCYu">
+      <meta itemprop="description" content="欢迎你和我进行交流。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hongCYu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">adb和APPIUM的基本知识
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-04 10:12:16" itemprop="dateCreated datePublished" datetime="2020-06-04T10:12:16+08:00">2020-06-04</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/软件工程/" itemprop="url" rel="index"><span itemprop="name">软件工程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/posts/30468.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30468.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：记录了测试中adb的基本命令以及appium的使用步骤。</p>
+<a id="more"></a>
+
+<h2 id="adb调试工具"><a href="#adb调试工具" class="headerlink" title="adb调试工具"></a>adb调试工具</h2><h3 id="adb的概念"><a href="#adb的概念" class="headerlink" title="adb的概念"></a>adb的概念</h3><ul>
+<li>开发安卓应用的程序员必须要掌握</li>
+<li>测试工程师在做测试时会用到</li>
+</ul>
+<h3 id="adb的构成和工作原理"><a href="#adb的构成和工作原理" class="headerlink" title="adb的构成和工作原理"></a>adb的构成和工作原理</h3><p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608113936800.png" alt="image-20200608113936800"></p>
+<h3 id="adb的常用命令"><a href="#adb的常用命令" class="headerlink" title="adb的常用命令"></a>adb的常用命令</h3><ul>
+<li><p>获取包名和界面名</p>
+<p>1.包名和界面名的概念</p>
+<p>包名（package）：决定文件的唯一性</p>
+<p>界面名（activity）：一个界面对应一个一个界面名</p>
+<p>2.获取包名和界面名</p>
+<blockquote>
+<p>1.打开测试的应用程序</p>
+<p>2.输入adb命令</p>
+</blockquote>
+<p>命令格式：</p>
+<ul>
+<li><p>Mac/Linux:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys window windows | grep mFocusedApp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys window windows | findstr mFocusedApp</span><br></pre></td></tr></table></figure>
+
+<p>会显示：</p>
+<blockquote>
+<p> mFocusedApp=AppWindowToken{29920155 token=Token{26b8340c ActivityRecord{1f97333f u0 com.android.settings/.Settings t2}}}</p>
+<p>包名：com.android..settings   </p>
+<p>界面名：.Settings</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>文件传输</p>
+<p>1.发生文件到手机</p>
+<p>命令格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push 电脑的文件路径 手机的文件夹路径</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<blockquote>
+<p>adb push C:\Users\hcy81\Desktop\33.txt /sdcard</p>
+</blockquote>
+<p>2.从手机拉取文件</p>
+<p>命令格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull 手机的文件夹路径 电脑的文件路径</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<blockquote>
+<p>adb pull /sdcard/33.txt C:\Users\hcy81\Desktop</p>
+</blockquote>
+</li>
+<li><p>获取app启动时间</p>
+<p>应用场景：</p>
+<p>1.对启动时间有要求</p>
+<p>2.测试标准：参照同类软件，启动时间不能超过一倍即可</p>
+<p>命令格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell am start -W 包名/启动名</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>作用：启动com.android.settings 程序进入界面（.Settings）</p>
+<p>adb shell am start -W com.android.settings/.Settings</p>
+</blockquote>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608135029472.png" alt="image-20200608135029472"></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608135110433.png" alt="image-20200608135110433"></p>
+</li>
+<li><p>获取手机日志</p>
+<p>应用场景：</p>
+<p>将bug的日志文件发送给开发，便于定位bug</p>
+<p>使用步骤：</p>
+<p>1.打开需要测试的应用</p>
+<p>2.找到触发的bug位置</p>
+<p>3.使用查看日志的命令</p>
+<p>4.触发bug</p>
+<p>5.获取日志信息</p>
+<p>命令格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他命令</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608140431938.png" alt="image-20200608140431938"></p>
+</li>
+</ul>
+<h2 id="appium"><a href="#appium" class="headerlink" title="appium"></a>appium</h2><h3 id="快速体验（启动参数）"><a href="#快速体验（启动参数）" class="headerlink" title="快速体验（启动参数）"></a>快速体验（启动参数）</h3><ol>
+<li>打开手机模拟器</li>
+<li>打开appium工具</li>
+<li>创建py文件</li>
+<li>将以下代码复制并运行即可</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608141606092.png" alt="image-20200608141606092"></p>
+<p>启动过程：</p>
+<ol>
+<li>appium的启动实际.上是在本机使用了4723端口开启了一个服务</li>
+<li>我们写的python代码会访问本机的appium服务器，并获取driver对象</li>
+<li>appium 会将我们的driver对象调用的方法转化成post请求，提交给appium服务器</li>
+<li>appium 通过接收到的post请求发送给手机，再由手机进行执行</li>
+</ol>
+<h3 id="appium基础操作API"><a href="#appium基础操作API" class="headerlink" title="appium基础操作API"></a>appium基础操作API</h3><ol>
+<li>能够使用appium在脚本内启动其他app</li>
+<li>能够使用appium获取包名和界面名</li>
+<li>能够使用appium关闭app和驱动对象</li>
+<li>能够使用appium安装和卸輯app</li>
+<li>能够使用appium将应用置于后台</li>
+</ol>
+<h4 id="在脚本内启动其他app"><a href="#在脚本内启动其他app" class="headerlink" title="在脚本内启动其他app"></a>在脚本内启动其他app</h4><p>应用场景：</p>
+<p>如果一个应用需要跳转到另外-一个应用，就可以使用这个api进行应用的跳转，就像我们通过外卖应用下订单之后会跳转到支付应用一样。</p>
+<p>方法名和参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#脚本启动其他app</span><br><span class="line">#参数：</span><br><span class="line">#	appPackage:要打开的包名</span><br><span class="line">#	appActivity:要打开的界面名</span><br><span class="line">driver.start_activity(appPackage,appActivity)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>打开设置5s后跳转到短信</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">driver.start_activity(<span class="string">'com.android.mms'</span>,<span class="string">'.ui.ConversationList'</span>)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取app的包名和界面名"><a href="#获取app的包名和界面名" class="headerlink" title="获取app的包名和界面名"></a>获取app的包名和界面名</h3><p>应用场景：</p>
+<p>当我们从一个应用跳转到另外-个应用的时候，想输出其包名、界面名或者想在报告中展现对应信息，我们就可以调用这个属性来进行获取。</p>
+<p>属性名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#获取包名：</span><br><span class="line">driver.current_package</span><br><span class="line">#获取界面名：</span><br><span class="line">driver.current_activity</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>打开设置后输出当前包名和应用名</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">print(driver.current_package)</span><br><span class="line">print(driver.current_activity)</span><br><span class="line"></span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭app和驱动对象"><a href="#关闭app和驱动对象" class="headerlink" title="关闭app和驱动对象"></a>关闭app和驱动对象</h3><p>方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#关闭当前的app，不会关闭驱动对象</span><br><span class="line">driver.close_app()</span><br><span class="line">#关闭驱动对象，同时关闭所以关联的app</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>打开设置, 使用close. app()方法关闭，再尝试使用quit()方法，最后打印当前程序的包名，观察区别</p>
+</blockquote>
+<p>close_app:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from appium import webdriver</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[&apos;platformName&apos;] = &apos;Android&apos;</span><br><span class="line">desired_caps[&apos;platformVersion&apos;] = &apos;5.1&apos;</span><br><span class="line">desired_caps[&apos;deviceName&apos;] = &apos;192.168.79.102:5555&apos;</span><br><span class="line">desired_caps[&apos;appPackage&apos;] = &apos;com.android.settings&apos;</span><br><span class="line">desired_caps[&apos;appActivity&apos;] = &apos;.Settings&apos;</span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(&apos;http://localhost:4723/wd/hub&apos;,desired_caps)</span><br><span class="line">time.sleep(3)</span><br><span class="line"></span><br><span class="line">driver.close_app()</span><br><span class="line">print(driver.current_package)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608145340436.png" alt="image-20200608145340436"></p>
+<p>quit:(报错是因为driver对象消失)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from appium import webdriver</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[&apos;platformName&apos;] = &apos;Android&apos;</span><br><span class="line">desired_caps[&apos;platformVersion&apos;] = &apos;5.1&apos;</span><br><span class="line">desired_caps[&apos;deviceName&apos;] = &apos;192.168.79.102:5555&apos;</span><br><span class="line">desired_caps[&apos;appPackage&apos;] = &apos;com.android.settings&apos;</span><br><span class="line">desired_caps[&apos;appActivity&apos;] = &apos;.Settings&apos;</span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(&apos;http://localhost:4723/wd/hub&apos;,desired_caps)</span><br><span class="line">time.sleep(3)</span><br><span class="line"></span><br><span class="line">driver.quit()</span><br><span class="line">print(driver.current_package)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608145514813.png" alt="image-20200608145514813"></p>
+<h3 id="安装卸载以及确认是否安装app"><a href="#安装卸载以及确认是否安装app" class="headerlink" title="安装卸载以及确认是否安装app"></a>安装卸载以及确认是否安装app</h3><p>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#安装app</span><br><span class="line">#参数：</span><br><span class="line">#	app_path:apk路径</span><br><span class="line">driver.install_app(app_path)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#卸载app</span><br><span class="line">#参数：</span><br><span class="line">#	app_id:app的包名</span><br><span class="line">driver.remove_app(app_id)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#判断是否安装app</span><br><span class="line">#参数：</span><br><span class="line">#	app_id:app的包名</span><br><span class="line">#返回值：</span><br><span class="line">#布尔值：true/false</span><br><span class="line">driver.is_app_installed(app_id)</span><br></pre></td></tr></table></figure>
+
+<h3 id="将应用置于后台"><a href="#将应用置于后台" class="headerlink" title="将应用置于后台"></a>将应用置于后台</h3><p>应用场景：</p>
+<p>银行类app会在进入后台一定时间后， 如果再回到前台也页面会重新输入密码，如果需要自动化测试这种功能,可以使用这个api进行测试。</p>
+<p>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#app放置到后台一定时间后再回到前台，模拟热启动(会自动返回前台)</span><br><span class="line">#参数：</span><br><span class="line">#seconds：后台停留时间</span><br><span class="line">driver.background_app(seconds)</span><br></pre></td></tr></table></figure>
+
+<p>注意到：</p>
+<blockquote>
+<p> 热启动：表示进入后台回到前台，关机再开这种断电行为叫”冷启动“</p>
+</blockquote>
+<h2 id="UIAutomatorViewer"><a href="#UIAutomatorViewer" class="headerlink" title="UIAutomatorViewer"></a>UIAutomatorViewer</h2><p>能够使用UIAutomatorViewer获取元素的特征信息</p>
+<h3 id="UIAutomatorViewer使用"><a href="#UIAutomatorViewer使用" class="headerlink" title="UIAutomatorViewer使用"></a>UIAutomatorViewer使用</h3><p>应用场景：</p>
+<p>定位元素时必须根据元素的相关特征进行定位，而UIAutomatorViewer就是获取元素特征。</p>
+<p>简介：</p>
+<p>UIAutomatorViewer用来扫描和分析Android的UI控件的工具。</p>
+<p>使用步骤：</p>
+<ol>
+<li>进入sdk目录下的目录<ul>
+<li>mac在tools/bin下，打开UIAutomatorViewer</li>
+<li>Windows在tools/bin下，打开UIAutomatorViewer.bat</li>
+</ul>
+</li>
+<li>电脑连接真机或者模拟器</li>
+<li>启动待测app</li>
+<li>点击UIAutomatorViewer的左上角Device Screenshot</li>
+<li>点击控件</li>
+<li>查看右下角Node Detail相关信息</li>
+</ol>
+<p>示例：</p>
+<p>查看《设置》应用程序右，上角“放大镜”按钮的”resource-id”</p>
+<p>1.打开uiautomatorviewer</p>
+<p>2.打开android模拟器</p>
+<p>3.启动《设置》应用程序</p>
+<p>4.点击Device Screenshot按钮</p>
+<p>5.点击”放大镜”按钮</p>
+<p>6.查看Node Detail中的”resource-id”信息</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608153720261.png" alt="image-20200608153720261"></p>
+<h3 id="元素定位操作API"><a href="#元素定位操作API" class="headerlink" title="元素定位操作API"></a>元素定位操作API</h3><p>应用场景：</p>
+<p>计算机需要元素定位才能知道点击哪个位置。</p>
+<p>步骤：</p>
+<ol>
+<li>打开uiautomatorviewer</li>
+<li>打开模拟器</li>
+<li>通过uiautomatorviewer获取node detail</li>
+<li>通过元素定位api进行定位</li>
+<li>进行元素的操作</li>
+</ol>
+<h4 id="定位一个元素"><a href="#定位一个元素" class="headerlink" title="定位一个元素"></a>定位一个元素</h4><p>方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过id定位一个元素</span><br><span class="line">#参数</span><br><span class="line">#	id_value:元素的resource-id属性值</span><br><span class="line">#返回值：</span><br><span class="line">#	定位到单个元素</span><br><span class="line">driver.find_element_by_id(id_value)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过id定位一个元素</span><br><span class="line">#参数</span><br><span class="line">#	class_value:元素的class属性值</span><br><span class="line">#返回值：</span><br><span class="line">#	定位到单个元素</span><br><span class="line">driver.find_element_by_class_name(class_value)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过id定位一个元素</span><br><span class="line">#参数</span><br><span class="line">#	xpath_value:定位元素的xpath表达式</span><br><span class="line">#返回值：</span><br><span class="line">#	定位到单个元素</span><br><span class="line">driver.find_element_by_xpath(xpath_value)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>通过id定位“放大镜“，并点击</p>
+<p>通过class定位输入框，输入”hello”</p>
+<p>通过xpath定位“返回”，并点击</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line"></span><br><span class="line"><span class="comment">#id定位放大镜，点击</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"com.android.settings:id/search"</span>).click()</span><br><span class="line"><span class="comment">#class定位输入框，输入</span></span><br><span class="line">driver.find_element_by_class_name(<span class="string">"android.widget.EditText"</span>).send_keys(<span class="string">"hello"</span>)</span><br><span class="line"><span class="comment">#xpath定位返回，点击</span></span><br><span class="line">driver.find_element_by_xpath(<span class="string">"//*[@content-desc='收起']"</span>).click()</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>如果很多元素的“特征”相同的，使用find. element. .by. xx的方法会找到第一个</p>
+</blockquote>
+<h4 id="定位一组元素"><a href="#定位一组元素" class="headerlink" title="定位一组元素"></a>定位一组元素</h4><p>应用场景：</p>
+<p>批量操作某个相同特征的元素，使用定位一组的方式更方便</p>
+<p>方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过id定位一组元素</span><br><span class="line">#参数</span><br><span class="line">#	id_value:元素的resource-id的属性值</span><br><span class="line">#返回值：</span><br><span class="line">#	列表，定位到的所以符合的元素</span><br><span class="line">driver.find_elements_by_id(id_value)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过class定位一组元素</span><br><span class="line">#参数</span><br><span class="line">#	class_value:元素的class的属性值</span><br><span class="line">#返回值：</span><br><span class="line">#	列表，定位到的所以符合的元素</span><br><span class="line">driver.find_elements_by_class_name(class_value)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#通过xpath定位一组元素</span><br><span class="line">#参数</span><br><span class="line">#	xpath_value:元素的xpath的属性值</span><br><span class="line">#返回值：</span><br><span class="line">#	列表，定位到的所以符合的元素</span><br><span class="line">driver.find_elements_by_xpath(xpath_value)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>通过id的形式，获取所有resource-id 为”com.android.settings:id/title”的元素，并打印其文字内容</p>
+<p>通过class_ name的形式，获取所有class 为”android.widget.TextView”的元素，并打印其文字内容</p>
+<p>通过xpath的形式，获取所有包含”设”的元素，并打印其文字内容</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line"></span><br><span class="line"><span class="comment">#通过id的形式，获取所有resource-id 为"com.android.settings:id/title"的元素，并打印其文字内容</span></span><br><span class="line">titles = driver.find_elements_by_id(<span class="string">"com.android.settings:id/title"</span>)</span><br><span class="line">print(len(titles))</span><br><span class="line"><span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">    print(title.text)</span><br><span class="line"><span class="comment">#通过class_ name的形式，获取所有class 为"android.widget.TextView"的元素，并打印其文字内容</span></span><br><span class="line">text_views = driver.find_elements_by_class_name(<span class="string">"android.widget.TextView"</span>)</span><br><span class="line">print(len(text_views))</span><br><span class="line"><span class="keyword">for</span> text_view <span class="keyword">in</span> text_views:</span><br><span class="line">    print(text_view.text)</span><br><span class="line"><span class="comment">#通过xpath的形式，获取所有包含”设”的元素，并打印其文字内容</span></span><br><span class="line">words = driver.find_elements_by_xpath(<span class="string">"//*[contains(@text,'设')]"</span>)</span><br><span class="line">print(len(words))</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">    print(word.text)</span><br><span class="line">    </span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h4 id="定位元素的注意点"><a href="#定位元素的注意点" class="headerlink" title="定位元素的注意点"></a>定位元素的注意点</h4><p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608163409158.png" alt="image-20200608163409158"></p>
+<h3 id="元素等待"><a href="#元素等待" class="headerlink" title="元素等待"></a>元素等待</h3><p>应用场景：</p>
+<p>可能由于一些原因，我们想找到的元素并没有出来，会报错。</p>
+<ol>
+<li>网速原因</li>
+<li>服务器处理的请求原因</li>
+<li>电脑配置的原因</li>
+</ol>
+<p>概念：</p>
+<p>webdriver定位页面元素如果未找到，会在指定时间内等待</p>
+<blockquote>
+<p>元素等待分为：</p>
+<p>1.显示等待</p>
+<p>2.隐式等待</p>
+</blockquote>
+<h4 id="隐式等待"><a href="#隐式等待" class="headerlink" title="隐式等待"></a>隐式等待</h4><p>应用场景：</p>
+<p>针对所有的定位元素的超时时间设置为同一个值的时候</p>
+<p>概念：</p>
+<p>等待元素加载指定的时长，超出的时长抛出NoSuchElementException异常</p>
+<p>步骤：</p>
+<p>获取driver对象后，使用driver调用implicitly_wait 方法即可</p>
+<p>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from selenium.webdriver.support.wait import webDriverwait</span><br><span class="line">#seconds:等待秒数</span><br><span class="line">driver.implicitly_wait(seconds)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<blockquote>
+<p>20s内，在设置中找返回按钮，找到点击，没找到报错</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from appium import webdriver</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[&apos;platformName&apos;] = &apos;Android&apos;</span><br><span class="line">desired_caps[&apos;platformVersion&apos;] = &apos;5.1&apos;</span><br><span class="line">desired_caps[&apos;deviceName&apos;] = &apos;192.168.79.102:5555&apos;</span><br><span class="line">desired_caps[&apos;appPackage&apos;] = &apos;com.android.settings&apos;</span><br><span class="line">desired_caps[&apos;appActivity&apos;] = &apos;.Settings&apos;</span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(&apos;http://localhost:4723/wd/hub&apos;,desired_caps)</span><br><span class="line"></span><br><span class="line">driver.implicitly_wait(20)</span><br><span class="line"></span><br><span class="line">print(&quot;--准备找返回--&quot;)</span><br><span class="line">driver.find_element_by_xpath(&quot;//*[@content-desc=&apos;收起&apos;]&quot;).click()</span><br><span class="line">print(&quot;--点完了--&quot;)</span><br><span class="line"></span><br><span class="line">time.sleep(3)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>如果找到，之间进行后续操作</p>
+<p>规定时间内没找到则报错</p>
+<h4 id="显示等待"><a href="#显示等待" class="headerlink" title="显示等待"></a>显示等待</h4><p>应用场景：</p>
+<p>针对所有的定位元素的超时时间设置为不同的时候</p>
+<p>概念：</p>
+<p>等待元素加载指定的时长，超出的时长抛出NoSuchElementException异常</p>
+<p>步骤：</p>
+<p>1.导包</p>
+<p>2.创建WebDriverWait对象</p>
+<p>3.调用WebDriverWait对象的until方法</p>
+<p>示例：</p>
+<blockquote>
+<p>5s内，每1秒在设置中找返回按钮，找到点击，没找到报错</p>
+</blockquote>
+<p>核心代码：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608170547645.png" alt="image-20200608170547645"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">"--准备找返回--"</span>)</span><br><span class="line">wait = WebDriverWait(driver,<span class="number">5</span>,poll_frequency=<span class="number">1</span>)</span><br><span class="line">click_button = wait.until(<span class="keyword">lambda</span> x :x.find_element_by_xpath(<span class="string">"//*[@content-desc='收起']"</span>))</span><br><span class="line">click_button.click()</span><br><span class="line">print(<span class="string">"--点完了--"</span>)</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h4 id="隐式等待和显示等待的选择"><a href="#隐式等待和显示等待的选择" class="headerlink" title="隐式等待和显示等待的选择"></a>隐式等待和显示等待的选择</h4><p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608172521989.png" alt="image-20200608172521989"></p>
+<h3 id="元素操作API"><a href="#元素操作API" class="headerlink" title="元素操作API"></a>元素操作API</h3><h4 id="点击元素"><a href="#点击元素" class="headerlink" title="点击元素"></a>点击元素</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#对element按钮进行点击操作</span><br><span class="line">element.click()</span><br></pre></td></tr></table></figure>
+
+<h4 id="输入和清空输入框"><a href="#输入和清空输入框" class="headerlink" title="输入和清空输入框"></a>输入和清空输入框</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#对element输入框进行输入操作</span><br><span class="line">#参数：</span><br><span class="line">#value:输入的内容</span><br><span class="line">element.send_keys(value)</span><br><span class="line">#对element输入框进行清空操作</span><br><span class="line">element.clear()</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>默认输入中文是无效的，但不会报错，需要在前置代码增加两个参数</p>
+<p>desired_caps [‘ unicodeKeyboard’] = True</p>
+<p>desired_ caps [‘resetKeyboard’] = True</p>
+</blockquote>
+<h4 id="获取元素的文本内容"><a href="#获取元素的文本内容" class="headerlink" title="获取元素的文本内容"></a>获取元素的文本内容</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#获取element的文本内容</span><br><span class="line">#返回值</span><br><span class="line">#	控件的文本内容</span><br><span class="line">element.text</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取元素的位置和大小"><a href="#获取元素的位置和大小" class="headerlink" title="获取元素的位置和大小"></a>获取元素的位置和大小</h4><p>方法名：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608173738176.png" alt="image-20200608173738176"></p>
+<h4 id="获取元素的属性值"><a href="#获取元素的属性值" class="headerlink" title="获取元素的属性值"></a>获取元素的属性值</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#对element进行点击操作</span><br><span class="line">#参数：</span><br><span class="line">#	value：要获取的属性名</span><br><span class="line">#返回值：</span><br><span class="line">#	根据属性名得到属性值</span><br><span class="line">element.get_attribute(value)#value:元素的属性</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[<span class="string">'platformName'</span>] = <span class="string">'Android'</span></span><br><span class="line">desired_caps[<span class="string">'platformVersion'</span>] = <span class="string">'5.1'</span></span><br><span class="line">desired_caps[<span class="string">'deviceName'</span>] = <span class="string">'192.168.79.102:5555'</span></span><br><span class="line">desired_caps[<span class="string">'appPackage'</span>] = <span class="string">'com.android.settings'</span></span><br><span class="line">desired_caps[<span class="string">'appActivity'</span>] = <span class="string">'.Settings'</span></span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(<span class="string">'http://localhost:4723/wd/hub'</span>,desired_caps)</span><br><span class="line"></span><br><span class="line">eles = driver.find_elements_by_id(<span class="string">"com.android.settings:id/title"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> eles:</span><br><span class="line">    print(i.get_attribute(<span class="string">"enabled"</span>))</span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>tips：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608175016380.png" alt="image-20200608175016380"></p>
+<h3 id="滑动和拖拽事件"><a href="#滑动和拖拽事件" class="headerlink" title="滑动和拖拽事件"></a>滑动和拖拽事件</h3><p>应用场景：</p>
+<p>我们在做自动化测试的时候，有些按钮是需要滑动几次屏幕后才会出现，此时，我们需要使用代码来模拟手指的滑动，也就是我们将要学习的滑动和拖拽事件。</p>
+<h4 id="swipe滑动事件"><a href="#swipe滑动事件" class="headerlink" title="swipe滑动事件"></a>swipe滑动事件</h4><p>概念：</p>
+<p>从一个坐标滑动到另外一个坐标位置，只能是两个点之间的滑动。</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#参数：</span><br><span class="line">#	start_x:起点x</span><br><span class="line">#	start_y:起点y</span><br><span class="line">#	end_x:终点x</span><br><span class="line">#	end_y:终点y</span><br><span class="line">#	duration:滑动操作的持续时间，单位：ms</span><br><span class="line">driver.swipe(start_x,start_y,end_x,end_y,duration=None)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>距离相等时，持续时间越短，惯性越大</p>
+<p>持续时间相等时，滑动距离越大，实际滑动距离也越大</p>
+</blockquote>
+<h4 id="scroll滑动事件"><a href="#scroll滑动事件" class="headerlink" title="scroll滑动事件"></a>scroll滑动事件</h4><p>概念：</p>
+<p>从一个元素滑动到另一个元素，直到页面自动停止</p>
+<p>方法名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#参数：</span><br><span class="line">#	origin_el:	滑动开始的元素</span><br><span class="line">#	destination:	滑动解释的元素</span><br><span class="line">driver.scroll(origin_el,destination_el)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save_button = driver.find_element_by_xpath(&quot;//*[@text=&apos;存储&apos;]&quot;)</span><br><span class="line">more_button = driver.find_element_by_xpath(&quot;//*[@text=&apos;更多&apos;]&quot;)</span><br><span class="line">driver.scroll(save_button,more_button)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>不能设置持续事件，惯性大</p>
+</blockquote>
+<h4 id="drag-and-drop拖拽事件"><a href="#drag-and-drop拖拽事件" class="headerlink" title="drag_and_drop拖拽事件"></a>drag_and_drop拖拽事件</h4><p>概念：</p>
+<p>从一个元素滑动到另一个元素，第二个元素替代第一个元素原本屏幕上的位置</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#参数：</span><br><span class="line">#	origin_el:	滑动开始的元素</span><br><span class="line">#	destination:	滑动解释的元素</span><br><span class="line">driver.drag_and_drop(origin_el,destination_el)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save_button = driver.find_element_by_xpath(&quot;//*[@text=&apos;存储&apos;]&quot;)</span><br><span class="line">more_button = driver.find_element_by_xpath(&quot;//*[@text=&apos;更多&apos;]&quot;)</span><br><span class="line">driver.drag_and_drop(save_button,more_button)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>不能设置持续时间，没有惯性</p>
+</blockquote>
+<h4 id="滑动和拖拽事件的选择"><a href="#滑动和拖拽事件的选择" class="headerlink" title="滑动和拖拽事件的选择"></a>滑动和拖拽事件的选择</h4><p>滑动和拖拽无非就是考虑是否有惯性，以及传递的参数是‘元素’还是‘坐标’</p>
+<p>分为以下四种情况：</p>
+<ul>
+<li><p>有惯性，传入元素</p>
+<p>scroll</p>
+</li>
+<li><p>无惯性，传入元素</p>
+<p>drag_and_drop</p>
+</li>
+<li><p>有惯性，传入坐标</p>
+<p>swipe,并设置较短duration时间</p>
+</li>
+<li><p>无惯性，传入坐标</p>
+<p>swipe,并设置较长duration时间</p>
+</li>
+</ul>
+<h3 id="高级手势TouchAction"><a href="#高级手势TouchAction" class="headerlink" title="高级手势TouchAction"></a>高级手势TouchAction</h3><p>应用场景：</p>
+<p>TouchAction可以实现一些针对手势的操作,比如滑动、长按、拖动等。我们可以将这些基本手势组合成-一个相对复杂的手势。比如，我们解锁手机或者一些应用软件都有手势解锁的这种方式。</p>
+<p>使用步骤：</p>
+<ol>
+<li>创建TouchAction对象</li>
+<li>通过对象调用想执行的手势</li>
+<li>通过perform()执行动作</li>
+</ol>
+<h4 id="手指轻巧操作"><a href="#手指轻巧操作" class="headerlink" title="手指轻巧操作"></a>手指轻巧操作</h4><p>应用场景：</p>
+<p>模拟手指对某个元素或坐标按下并快速抬起。比如，固定点击(100, 100)的位置。</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#参数</span><br><span class="line">#	element：元素</span><br><span class="line">#	x:x坐标</span><br><span class="line">#	y:y坐标</span><br><span class="line">TouchAction(driver).tap(element=None,X=None,Y=None，count=1).perform()</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from appium import webdriver</span><br><span class="line">import time</span><br><span class="line">from appium.webdriver.common.touch_action import TouchAction</span><br><span class="line">desired_caps = dict()</span><br><span class="line">desired_caps[&apos;platformName&apos;] = &apos;Android&apos;</span><br><span class="line">desired_caps[&apos;platformVersion&apos;] = &apos;5.1&apos;</span><br><span class="line">desired_caps[&apos;deviceName&apos;] = &apos;192.168.79.102:5555&apos;</span><br><span class="line">desired_caps[&apos;appPackage&apos;] = &apos;com.android.settings&apos;</span><br><span class="line">desired_caps[&apos;appActivity&apos;] = &apos;.Settings&apos;</span><br><span class="line"></span><br><span class="line">driver = webdriver.Remote(&apos;http://localhost:4723/wd/hub&apos;,desired_caps)</span><br><span class="line"></span><br><span class="line">wlan_button = driver.find_element_by_xpath(&quot;//*[@text=&apos;WLAN&apos;]&quot;)</span><br><span class="line">TouchAction(driver).tap(wlan_button).perform()</span><br><span class="line"></span><br><span class="line">time.sleep(3)</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h4 id="按下和抬起的操作"><a href="#按下和抬起的操作" class="headerlink" title="按下和抬起的操作"></a>按下和抬起的操作</h4><p>应用场景：</p>
+<p>模拟手指一直按下，模拟手指抬起。可以模拟轻巧和长按操作</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#按下</span><br><span class="line">#参数</span><br><span class="line">#	element：元素</span><br><span class="line">#	x:x坐标</span><br><span class="line">#	y:y坐标</span><br><span class="line">TouchAction(driver).press(element=None,X=None,Y=None，count=1).perform()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#抬起</span><br><span class="line">TouchAction(driver).release().perform()</span><br></pre></td></tr></table></figure>
+
+<h4 id="等待操作"><a href="#等待操作" class="headerlink" title="等待操作"></a>等待操作</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#模拟手指暂停的操作</span><br><span class="line">#参数：</span><br><span class="line">#ms:毫秒</span><br><span class="line">TouchAction(driver).wait(ms=0).perform()</span><br></pre></td></tr></table></figure>
+
+<h4 id="长按操作"><a href="#长按操作" class="headerlink" title="长按操作"></a>长按操作</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#参数</span><br><span class="line">#	element：元素</span><br><span class="line">#	x:x坐标</span><br><span class="line">#	y:y坐标</span><br><span class="line">#	duration:	长按时长，毫秒</span><br><span class="line">TouchAction(driver).long_press(element=None,X=None,Y=None，duration=0).perform()</span><br></pre></td></tr></table></figure>
+
+<h4 id="移动操作"><a href="#移动操作" class="headerlink" title="移动操作"></a>移动操作</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#参数</span><br><span class="line">#	element：元素</span><br><span class="line">#	x:x坐标</span><br><span class="line">#	y:y坐标</span><br><span class="line">TouchAction(driver).move_to(element=None,x=None,y=None).perform()</span><br></pre></td></tr></table></figure>
+
+<h3 id="手机操作API"><a href="#手机操作API" class="headerlink" title="手机操作API"></a>手机操作API</h3><h4 id="获取手机的分辨率"><a href="#获取手机的分辨率" class="headerlink" title="获取手机的分辨率"></a>获取手机的分辨率</h4><p>应用场景：</p>
+<p>自动化测试可能会需要根据当前设备的屏幕分辨率来计算一些点击或者滑动的坐标。</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#获取手机分辨率</span><br><span class="line">#返回值：字典&#123;&apos;height&apos;:800,&apos;width&apos;480&#125;</span><br><span class="line">driver.get_window_size()</span><br></pre></td></tr></table></figure>
+
+<h4 id="手机截图"><a href="#手机截图" class="headerlink" title="手机截图"></a>手机截图</h4><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#截图</span><br><span class="line">#参数：</span><br><span class="line">#	filename：指定路径，指定格式</span><br><span class="line">get_screenshot_as_file(filename)</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<blockquote>
+<p>1.打开设置页面</p>
+<p>2.截图保村screenshot.jpg</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#截图</span><br><span class="line">driver.get_screenshot_as_file(&quot;screenshot.jpg&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取和设置手机网络"><a href="#获取和设置手机网络" class="headerlink" title="获取和设置手机网络"></a>获取和设置手机网络</h4><h5 id="获取手机网络"><a href="#获取手机网络" class="headerlink" title="获取手机网络"></a>获取手机网络</h5><p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#获取手机网络</span><br><span class="line">driver.network_connection</span><br></pre></td></tr></table></figure>
+
+<p>对照表：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608202840720.png" alt="image-20200608202840720"></p>
+<h5 id="设置手机网络"><a href="#设置手机网络" class="headerlink" title="设置手机网络"></a>设置手机网络</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#设置手机网络</span><br><span class="line">driver.set_network_connection(connectionType)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200608203303230.png" alt="image-20200608203303230"></p>
+<h4 id="发送键到设备"><a href="#发送键到设备" class="headerlink" title="发送键到设备"></a>发送键到设备</h4><p>应用场景：</p>
+<p>模拟按“返回键””home键”等等操作，比如，很多应用有按两次返回键退出应用的功能，如果这个功能需要我们做自动化，那么一定会用到这个方法。</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#参数</span><br><span class="line">#	keycode:发送给设备的关键代码</span><br><span class="line">#	metastate:关于被发送代码的元信息，一般默认</span><br><span class="line">driver.press_keycode(keycode,metastate=None)</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>按键对应编码</p>
+<p><a href="https://blog.csdn.net/feizhixuan46789/article/details/16801429" target="_blank" rel="noopener">https://blog.csdn.net/feizhixuan46789/article/details/16801429</a></p>
+</blockquote>
+<h4 id="操作手机的通知栏"><a href="#操作手机的通知栏" class="headerlink" title="操作手机的通知栏"></a>操作手机的通知栏</h4><p>应用场景：</p>
+<p>测试即时通信类软件的时候，如果A给B发送一条消息，B的通知栏肯定会显示对应的消息。我们想通过通知栏来判断B是否收到消息，一定要先操作手机的通知栏。</p>
+<p>方法名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#打开通知栏</span><br><span class="line">driver.open_notifications()</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<blockquote>
+<p>appium官方并没有为我们提供关闭通知的api,那么现实生活中怎么关闭，就怎样操作就行，比如，手指从下往上滑动，或者，按返回键</p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#打开通知栏，按下返回键</span><br><span class="line">driver.open_notifications()</span><br><span class="line">time.sleep(3)</span><br><span class="line">driver.press_keycode(4)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+      
+
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\32147.html" rel="bookmark">接口测试基础知识</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\Software_model.html" rel="bookmark">软件工程———软件过程模型</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\software_testing_2.html" rel="bookmark">软件测试——编写测试用例</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\software_testing_3.html" rel="bookmark">软件测试——测试计划</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\Software_testing_1.html" rel="bookmark">软件测试——自动化测试</a></div>
+      
+    </li>
+  
+  </ul>
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="hongCYu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+  <div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　-------</div>
+    
+</div>
+    
+   </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/软件工程/" rel="tag"># 软件工程</a>
+          
+            <a href="/tags/adb/" rel="tag"># adb</a>
+          
+            <a href="/tags/appium/" rel="tag"># appium</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+              <div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦(●'◡'●)&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/44793.html" rel="next" title="软件缺陷报告与JIRA的使用">
+                <i class="fa fa-chevron-left"></i> 软件缺陷报告与JIRA的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="hongCYu">
+            
+              <p class="site-author-name" itemprop="name">hongCYu</p>
+              <p class="site-description motion-element" itemprop="description">欢迎你和我进行交流。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/hongcyu" title="GitHub &rarr; https://github.com/hongcyu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:hongcyu@qq.com" title="E-Mail &rarr; mailto:hongcyu@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com" title="https://www.baidu.com" rel="noopener" target="_blank">Baidu</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com" title="https://github.com" rel="noopener" target="_blank">Github</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com" title="https://www.google.com" rel="noopener" target="_blank">Google</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bilibili.com" title="https://www.bilibili.com" rel="noopener" target="_blank">Bilibili</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          <div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("07/25/2019 00:00:00");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#adb调试工具"><span class="nav-number">1.</span> <span class="nav-text">adb调试工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adb的概念"><span class="nav-number">1.1.</span> <span class="nav-text">adb的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adb的构成和工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">adb的构成和工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adb的常用命令"><span class="nav-number">1.3.</span> <span class="nav-text">adb的常用命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#appium"><span class="nav-number">2.</span> <span class="nav-text">appium</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速体验（启动参数）"><span class="nav-number">2.1.</span> <span class="nav-text">快速体验（启动参数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#appium基础操作API"><span class="nav-number">2.2.</span> <span class="nav-text">appium基础操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在脚本内启动其他app"><span class="nav-number">2.2.1.</span> <span class="nav-text">在脚本内启动其他app</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取app的包名和界面名"><span class="nav-number">2.3.</span> <span class="nav-text">获取app的包名和界面名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭app和驱动对象"><span class="nav-number">2.4.</span> <span class="nav-text">关闭app和驱动对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装卸载以及确认是否安装app"><span class="nav-number">2.5.</span> <span class="nav-text">安装卸载以及确认是否安装app</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将应用置于后台"><span class="nav-number">2.6.</span> <span class="nav-text">将应用置于后台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIAutomatorViewer"><span class="nav-number">3.</span> <span class="nav-text">UIAutomatorViewer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UIAutomatorViewer使用"><span class="nav-number">3.1.</span> <span class="nav-text">UIAutomatorViewer使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素定位操作API"><span class="nav-number">3.2.</span> <span class="nav-text">元素定位操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定位一个元素"><span class="nav-number">3.2.1.</span> <span class="nav-text">定位一个元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位一组元素"><span class="nav-number">3.2.2.</span> <span class="nav-text">定位一组元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位元素的注意点"><span class="nav-number">3.2.3.</span> <span class="nav-text">定位元素的注意点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素等待"><span class="nav-number">3.3.</span> <span class="nav-text">元素等待</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式等待"><span class="nav-number">3.3.1.</span> <span class="nav-text">隐式等待</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#显示等待"><span class="nav-number">3.3.2.</span> <span class="nav-text">显示等待</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式等待和显示等待的选择"><span class="nav-number">3.3.3.</span> <span class="nav-text">隐式等待和显示等待的选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素操作API"><span class="nav-number">3.4.</span> <span class="nav-text">元素操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#点击元素"><span class="nav-number">3.4.1.</span> <span class="nav-text">点击元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入和清空输入框"><span class="nav-number">3.4.2.</span> <span class="nav-text">输入和清空输入框</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取元素的文本内容"><span class="nav-number">3.4.3.</span> <span class="nav-text">获取元素的文本内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取元素的位置和大小"><span class="nav-number">3.4.4.</span> <span class="nav-text">获取元素的位置和大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取元素的属性值"><span class="nav-number">3.4.5.</span> <span class="nav-text">获取元素的属性值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动和拖拽事件"><span class="nav-number">3.5.</span> <span class="nav-text">滑动和拖拽事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#swipe滑动事件"><span class="nav-number">3.5.1.</span> <span class="nav-text">swipe滑动事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scroll滑动事件"><span class="nav-number">3.5.2.</span> <span class="nav-text">scroll滑动事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#drag-and-drop拖拽事件"><span class="nav-number">3.5.3.</span> <span class="nav-text">drag_and_drop拖拽事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动和拖拽事件的选择"><span class="nav-number">3.5.4.</span> <span class="nav-text">滑动和拖拽事件的选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级手势TouchAction"><span class="nav-number">3.6.</span> <span class="nav-text">高级手势TouchAction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手指轻巧操作"><span class="nav-number">3.6.1.</span> <span class="nav-text">手指轻巧操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按下和抬起的操作"><span class="nav-number">3.6.2.</span> <span class="nav-text">按下和抬起的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待操作"><span class="nav-number">3.6.3.</span> <span class="nav-text">等待操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#长按操作"><span class="nav-number">3.6.4.</span> <span class="nav-text">长按操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动操作"><span class="nav-number">3.6.5.</span> <span class="nav-text">移动操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手机操作API"><span class="nav-number">3.7.</span> <span class="nav-text">手机操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取手机的分辨率"><span class="nav-number">3.7.1.</span> <span class="nav-text">获取手机的分辨率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#手机截图"><span class="nav-number">3.7.2.</span> <span class="nav-text">手机截图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取和设置手机网络"><span class="nav-number">3.7.3.</span> <span class="nav-text">获取和设置手机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取手机网络"><span class="nav-number">3.7.3.1.</span> <span class="nav-text">获取手机网络</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置手机网络"><span class="nav-number">3.7.3.2.</span> <span class="nav-text">设置手机网络</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送键到设备"><span class="nav-number">3.7.4.</span> <span class="nav-text">发送键到设备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作手机的通知栏"><span class="nav-number">3.7.5.</span> <span class="nav-text">操作手机的通知栏</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hongCYu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <!-- <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+  <script async src="/js/src/busuanzi.pure.mini.js"></script>
+  
+    <span class="site-uv">
+      你是来访的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+  
+    <span class="site-pv">
+      访问次数：
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+
+  <!--<script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
+  <!-- https://deserts.io/diy-a-comment-system/ -->
+  <script type="text/javascript">
+    new Valine({
+        lang: 'zh-cn',
+        admin_email: 'hongcyu@qq.com', //博主邮箱
+        el: '#comments' ,
+        appId: 'O2NHJD145dPTiqfaWrNDDniR-gzGzoHsz',
+        appKey: 'd2CXUwazDsDgIDljKISICUmj',
+        emoticon_url: 'https://cdn.jsdelivr.net/gh/hongcyu/image/alu',
+        emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+        placeholder: '点击此处就可以留言啦 q(≧▽≦q)',
+  });
+
+  <!--点击邮件中的链接跳转至相应评论-->
+  if(window.location.hash){
+      var checkExist = setInterval(function() {
+         if ($(window.location.hash).length) {
+            $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+            clearInterval(checkExist);
+         }
+      }, 100);
+   }
+
+  </script>
+
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  <script>
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 20011,
+      el: 'wpac-rating',
+      color: 'FF0000'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+  
+  <script src="/live2d-widget/autoload.js"></script>
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+
+
+
+</body>
+</html>
