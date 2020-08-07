@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://hongcyu.cn/posts/city-star1.html</loc>
+    <lastmod>2020-08-07</lastmod>
+  </url>  <url>
+    <loc>https://hongcyu.cn/posts/51797.html</loc>
+    <lastmod>2020-07-05</lastmod>
+  </url>  <url>
     <loc>https://hongcyu.cn/posts/24380.html</loc>
-    <lastmod>2020-06-21</lastmod>
+    <lastmod>2020-06-22</lastmod>
   </url>  <url>
     <loc>https://hongcyu.cn/posts/60331.html</loc>
     <lastmod>2020-06-20</lastmod>
@@ -78,9 +84,6 @@
   </url>  <url>
     <loc>https://hongcyu.cn/posts/FTP.html</loc>
     <lastmod>2020-03-11</lastmod>
-  </url>  <url>
-    <loc>https://hongcyu.cn/posts/city-star1.html</loc>
-    <lastmod>2020-03-08</lastmod>
   </url>  <url>
     <loc>https://hongcyu.cn/posts/linux-gcc.html</loc>
     <lastmod>2020-03-03</lastmod>
