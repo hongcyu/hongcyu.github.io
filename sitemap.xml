@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hongcyu.cn/posts/city-star1.html</loc>
+    <loc>https://hongcyu.cn/posts/turtle_draw_pic.html</loc>
     
-    <lastmod>2020-08-07T15:20:52.289Z</lastmod>
+    <lastmod>2020-08-16T04:41:03.488Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/unittest_1.html</loc>
+    
+    <lastmod>2020-08-16T03:33:48.965Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/Software_model.html</loc>
+    
+    <lastmod>2020-08-16T02:35:08.576Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://hongcyu.cn/posts/51797.html</loc>
     
-    <lastmod>2020-07-05T15:17:22.561Z</lastmod>
+    <lastmod>2020-08-07T15:22:33.432Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/city-star1.html</loc>
+    
+    <lastmod>2020-08-07T15:20:52.289Z</lastmod>
     
   </url>
   
@@ -58,30 +79,9 @@
   </url>
   
   <url>
-    <loc>https://hongcyu.cn/posts/32147.html</loc>
-    
-    <lastmod>2020-06-08T12:54:22.466Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/software_testing_3.html</loc>
-    
-    <lastmod>2020-06-07T11:40:48.699Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hongcyu.cn/posts/software_testing_2.html</loc>
     
     <lastmod>2020-06-07T04:00:56.834Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/software_testing_4.html</loc>
-    
-    <lastmod>2020-06-06T14:26:21.956Z</lastmod>
     
   </url>
   
@@ -96,13 +96,6 @@
     <loc>https://hongcyu.cn/posts/Software_testing_1.html</loc>
     
     <lastmod>2020-06-06T12:02:22.955Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/Software_model.html</loc>
-    
-    <lastmod>2020-06-06T06:35:20.849Z</lastmod>
     
   </url>
   
