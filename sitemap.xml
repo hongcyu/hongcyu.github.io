@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/KMP_C_and_Python.html</loc>
+    
+    <lastmod>2020-08-18T15:29:21.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/51797.html</loc>
+    
+    <lastmod>2020-08-18T13:40:50.237Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/turtle_draw_pic.html</loc>
     
     <lastmod>2020-08-16T04:45:41.661Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>https://hongcyu.cn/posts/Software_model.html</loc>
     
     <lastmod>2020-08-16T02:35:08.576Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/51797.html</loc>
-    
-    <lastmod>2020-08-07T15:22:33.432Z</lastmod>
     
   </url>
   
