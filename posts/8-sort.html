@@ -147,7 +147,7 @@
   <meta name="description" content="摘要：八大排序的C和Python实现，缓慢更新中…学到哪更新到哪（脑袋瓜笨啊~）">
 <meta name="keywords" content="C语言,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="8-sort">
+<meta property="og:title" content="八大排序算法实现与讲解">
 <meta property="og:url" content="https://hongcyu.cn/posts/8-sort.html">
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：八大排序的C和Python实现，缓慢更新中…学到哪更新到哪（脑袋瓜笨啊~）">
@@ -155,9 +155,11 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/algorithm_1_0.gif">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/algorithm_5_0.gif">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/algorithm_2_1.gif">
-<meta property="og:updated_time" content="2020-08-19T15:23:25.008Z">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/algorithm_4_0.gif">
+<meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200820230548.png">
+<meta property="og:updated_time" content="2020-08-20T15:37:03.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="8-sort">
+<meta name="twitter:title" content="八大排序算法实现与讲解">
 <meta name="twitter:description" content="摘要：八大排序的C和Python实现，缓慢更新中…学到哪更新到哪（脑袋瓜笨啊~）">
 <meta name="twitter:image" content="https://gitee.com/hongcyu/image/raw/master/images/algorithm_1_0.gif">
 
@@ -176,7 +178,7 @@
   };
 </script>
 
-  <title>8-sort | hongCYu's Blog</title>
+  <title>八大排序算法实现与讲解 | hongCYu's Blog</title>
   
 
 
@@ -444,7 +446,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">8-sort
+          <h1 class="post-title" itemprop="name headline">八大排序算法实现与讲解
 
               
             
@@ -552,10 +554,10 @@
 </ul>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/algorithm_1_0.gif" alt></p>
 <p>C：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> *arr,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i&lt; len<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j&lt; len <span class="number">-1</span> -i; j++)</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j+<span class="number">1</span>];</span><br><span class="line">                arr[j+<span class="number">1</span>] = tmp;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> *arr,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">int</span> swap = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i&lt; len<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j&lt; len <span class="number">-1</span> -i; j++)</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j+<span class="number">1</span>];</span><br><span class="line">                arr[j+<span class="number">1</span>] = tmp;</span><br><span class="line">                swap = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">if</span>(swap)	<span class="comment">//如果没进行交换直接退出</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Python:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(arr:[int])</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)<span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)<span class="number">-1</span>-i):</span><br><span class="line">            <span class="keyword">if</span> arr[j] &gt; arr[j+<span class="number">1</span>]:</span><br><span class="line">                arr[j],arr[j+<span class="number">1</span>] = arr[j+<span class="number">1</span>],arr[j]</span><br><span class="line">                swap = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(arr:[int])</span>-&gt; [int]:</span></span><br><span class="line">    swap = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)<span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)<span class="number">-1</span>-i):</span><br><span class="line">            <span class="keyword">if</span> arr[j] &gt; arr[j+<span class="number">1</span>]:</span><br><span class="line">                arr[j],arr[j+<span class="number">1</span>] = arr[j+<span class="number">1</span>],arr[j]</span><br><span class="line">                swap = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> swap:</span><br><span class="line">            <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
 
 <h2 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h2><p>主要思路：每趟从待排序的记录中选出关键字最小的记录，顺序放在已排序的记录序列末尾，直到全部排序结束为止。</p>
 <ul>
@@ -568,7 +570,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select_sort</span><span class="params">(<span class="keyword">int</span> *arr,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">int</span> min;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        min = i;</span><br><span class="line">        <span class="keyword">for</span>(j=i + <span class="number">1</span>;j&lt;len;j++)</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &lt; arr[min])</span><br><span class="line">                min = j;</span><br><span class="line">        tmp = arr[i];</span><br><span class="line">        arr[i]=arr[min];</span><br><span class="line">        arr[min] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Python:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_sort</span><span class="params">(arr:[int])</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)):</span><br><span class="line">        min_index = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(arr)):</span><br><span class="line">            <span class="keyword">if</span> arr[min_index] &gt; arr[j]:</span><br><span class="line">                min_index = j</span><br><span class="line">        arr[min_index],arr[i] = arr[i],arr[min_index]</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_sort</span><span class="params">(arr:[int])</span>-&gt; [int]:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(arr)):</span><br><span class="line">        min_index = i</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>,len(arr)):</span><br><span class="line">            <span class="keyword">if</span> arr[min_index] &gt; arr[j]:</span><br><span class="line">                min_index = j</span><br><span class="line">        arr[min_index],arr[i] = arr[i],arr[min_index]</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
 
 <h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>主要思路：每一趟将一个待排序的记录，按照其关键字的大小插入到有序队列的合适位置里，直到全部插入完成。 </p>
 <ul>
@@ -583,13 +585,66 @@
 <p>Python:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_sort</span><span class="params">(arr:[int])</span>-&gt; [int]:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(arr)):</span><br><span class="line">        tmp = arr[i]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> arr[j] &gt; tmp:</span><br><span class="line">                arr[j+<span class="number">1</span>] = arr[j]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        arr[j+<span class="number">1</span>] = tmp</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
 
-<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>等待更新…</p>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>希尔(Shell)排序又称为<strong>缩小增量排序</strong>，它是一种<strong>插入排序</strong>。它<strong>是直接插入排序算法的一种改进版</strong>。希尔排序的比较次数和移动次数都要比直接插入排序少，当N越大时，效果越明显。</p>
+<p>算法思想：</p>
+<p>我们举个例子来描述算法流程（以下摘自<a href="https://zh.wikipedia.org/wiki/希尔排序" target="_blank" rel="noopener">维基百科</a>）：</p>
+<p>假设有这样一组数 {13, 14, 94, 33, 82, 25, 59, 94, 65, 23, 45, 27, 73, 25, 39, 10}，如果我们以步长为 5 开始进行排序：</p>
+<table>
+<thead>
+<tr>
+<th>排序前</th>
+<th>排序后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>13 14 94 33 82<br>25 59 94 65 23<br>45 27 73 25 39<br>10</td>
+<td>10 14 73 25 23<br>13 27 94 33 39<br>25 59 94 65 82<br>45</td>
+</tr>
+</tbody></table>
+<p>将上述四行数字，依序接在一起时我们得到：{10, 14, 73, 25, 23, 13, 27, 94, 33, 39, 25, 59, 94, 65, 82, 45}，然后再以 3 为步长：</p>
+<table>
+<thead>
+<tr>
+<th>排序前</th>
+<th>排序后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10 14 73<br>25 23 13<br>27 94 33<br>39 25 59<br>94 65 82<br>45</td>
+<td>10 14 13<br>25 23 33<br>27 25 59<br>39 65 73<br>45 94 82<br>94</td>
+</tr>
+</tbody></table>
+<p>最后以 1 为步长进行排序（此时就是简单的插入排序了）。</p>
+<p>可想而知，步长的选择是希尔排序的重要部分。算法最开始以一定的步长进行排序，然后会继续以更小的步长进行排序，最终算法以步长为 1 进行排序。当步长为 1 时，算法变为直接插入排序，这就保证了数据一定会被全部排序。</p>
+<ul>
+<li>时间复杂度：平均:O(nlogn)    最坏:O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+<li>稳定性：不稳定</li>
+</ul>
+<p>C:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell_sort</span><span class="params">(<span class="keyword">int</span> *arr,<span class="keyword">int</span> len,<span class="keyword">int</span> gap)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tmp;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i = gap; i&lt;len; i = i+gap)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp = arr[i];</span><br><span class="line">        <span class="keyword">for</span>(j = i -gap;j&gt;=<span class="number">0</span>;j=j-gap)</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; tmp)</span><br><span class="line">                arr[j+gap] = arr[j];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        arr[j+gap] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shell</span><span class="params">(<span class="keyword">int</span> *arr,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> gap[] = &#123;<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>&#125;;    <span class="comment">//可以分为步长的一半，这里就自定义好了</span></span><br><span class="line">    <span class="keyword">int</span> len_gap = <span class="keyword">sizeof</span>(gap)/<span class="keyword">sizeof</span>(gap[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len_gap;++i)</span><br><span class="line">        shell_sort(arr,len,gap[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Python:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(arr:[int])</span>-&gt;[int]:</span></span><br><span class="line">    g = [<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> gap <span class="keyword">in</span> g:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(gap,len(arr)):</span><br><span class="line">            tmp = arr[i]</span><br><span class="line">            j = i-gap</span><br><span class="line">            <span class="keyword">while</span> j&gt;=<span class="number">0</span> <span class="keyword">and</span> arr[j] &gt; tmp:</span><br><span class="line">                arr[j+gap] = arr[j]</span><br><span class="line">                j = j - gap</span><br><span class="line">            arr[j+gap] = tmp</span><br><span class="line">        print(arr)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快速排序的基本思想是：通过一趟排序将要排序的数据<strong>分割</strong>成独立的两部分：<strong>分割点左边都是比它小的数，右边都是比它大的数。</strong></p>
+<p>然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/algorithm_4_0.gif" alt></p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200820230548.png" alt></p>
 <p>C:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>Python:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>等待更新…</p>
+<p>C:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Python:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>剩余的排序搁置了QAQ</strong></p>
 
       
     </div>
@@ -1090,7 +1145,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单选择排序"><span class="nav-number">2.</span> <span class="nav-text">简单选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单选择排序"><span class="nav-number">2.</span> <span class="nav-text">简单选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li></ol></div>
             
 
           </div>
