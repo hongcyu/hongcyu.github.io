@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/unittest_1.html</loc>
+    
+    <lastmod>2020-08-21T14:50:20.949Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/8-sort.html</loc>
     
-    <lastmod>2020-08-20T15:37:03.897Z</lastmod>
+    <lastmod>2020-08-21T14:49:43.328Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>https://hongcyu.cn/posts/turtle_draw_pic.html</loc>
     
     <lastmod>2020-08-16T04:45:41.661Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/unittest_1.html</loc>
-    
-    <lastmod>2020-08-16T03:33:48.965Z</lastmod>
     
   </url>
   
