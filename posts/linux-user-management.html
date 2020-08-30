@@ -160,7 +160,6 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311213248.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311214850.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311220950.png">
-<meta property="og:image" content="c:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1583936557257.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311223253.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084223.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084301.png">
@@ -178,7 +177,7 @@
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193916.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312193935.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/20200312195042.png">
-<meta property="og:updated_time" content="2020-03-12T15:04:15.549Z">
+<meta property="og:updated_time" content="2020-08-30T14:34:13.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下的用户管理与操作">
 <meta name="twitter:description" content="摘要：这为学习Linux系统管理与开发课程中对于用户管理的一些使用和总结。">
@@ -599,11 +598,11 @@
 <p>ls    ：显示当前目录下的文件</p>
 <p>ls -l    :显示文件并包含详细信息</p>
 <p>ls | more    :以翻页的方式查看目录文件</p>
-<p>mv <filename1>  <filename2>     ：将文件进行备份</filename2></filename1></p>
-<p>rm <filename>：      删除文件</filename></p>
+<p>mv &lt; filename1 &gt;  &lt; filename2 &gt;     ：将文件进行备份</p>
+<p>rm &lt; filename &gt;：      删除文件</p>
 <p>rm -r     :删除目录</p>
-<p>cat <filename>    :查看文件内容</filename></p>
-<p>head/tail <filename>    :从头/尾查看文件（每次10行）</filename></p>
+<p>cat &lt; filename &gt;    :查看文件内容</p>
+<p>head/tail &lt; filename &gt;    :从头/尾查看文件（每次10行）</p>
 </blockquote>
 <h2 id="用户配置文件"><a href="#用户配置文件" class="headerlink" title="用户配置文件"></a>用户配置文件</h2><ol>
 <li>用户信息文件     /etc/passwd</li>
@@ -620,11 +619,11 @@
 <p>· 组编号</p>
 <p>· 用户说明</p>
 <p>· 家目录</p>
-<p>· 用户对应的ash</p>
+<p>· 用户对应的bash</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311214850.png" alt></p>
 <p>一共分成7个部分，其中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root   :          x         :   0   :   0   :   root   : /root:  /bin/bash</span><br><span class="line">用户名称： 口令(X标识符表示存在) : 用户ID : 组编号： 用户说明  ：家目录： 用户对应的ash</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root   :          x         :   0   :   0   :   root   : /root:  /bin/bash</span><br><span class="line">用户名称： 口令(X标识符表示存在) : 用户ID : 组编号： 用户说明  ：家目录： 用户对应的bash</span><br></pre></td></tr></table></figure>
 
 <p>tips：</p>
 <ol>
@@ -651,11 +650,10 @@
 <p>· GID</p>
 <p>· 组中附加用户</p>
 </blockquote>
-<p><img src="C:%5CUsers%5Chcy81%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1583936557257.png" alt="1583936557257"></p>
 <h3 id="组影子文件"><a href="#组影子文件" class="headerlink" title="组影子文件"></a>组影子文件</h3><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200311223253.png" alt></p>
 <h2 id="用户与组的添加"><a href="#用户与组的添加" class="headerlink" title="用户与组的添加"></a>用户与组的添加</h2><p>tips：用户和组的添加需要管理员权限！</p>
 <h3 id="添加一个全新的用户"><a href="#添加一个全新的用户" class="headerlink" title="添加一个全新的用户"></a>添加一个全新的用户</h3><blockquote>
-<p>用户添加    useradd <username></username></p>
+<p>用户添加    useradd &lt; username &gt;</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hongcyu@localhost etc]$ su</span><br><span class="line">密码：</span><br><span class="line">[root@localhost etc]# useradd bob</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
 
@@ -663,7 +661,7 @@
 <blockquote>
 <p>tips:</p>
 <p>可以使用管道来强制修改密码，在超级用户下使用：</p>
-<p>echo 123456 | passwd <username></username></p>
+<p>echo 123456 | passwd &lt; username &gt;</p>
 </blockquote>
 <p>接着到passwd文件中可以看的出来bob这个用户已经添加成功了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312084223.png" alt></p>
@@ -682,7 +680,7 @@
 <p>passwd 表示修改当前用户的口令</p>
 </blockquote>
 <blockquote>
-<p>passwd  <username>  修改其他用户的口令</username></p>
+<p>passwd   &lt; username &gt;  修改其他用户的口令</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[hongcyu@localhost home]$ su</span><br><span class="line">密码：</span><br><span class="line">[root@localhost home]# passwd bob</span><br><span class="line">更改用户 bob 的密码 。</span><br><span class="line">新的 密码：</span><br><span class="line">重新输入新的 密码：</span><br><span class="line">passwd：所有的身份验证令牌已经成功更新。</span><br></pre></td></tr></table></figure>
 
@@ -694,13 +692,13 @@
 <p>其实是每个用户在创建时会自动生成一些配置文件，而这些文件在每个用户最先配置时都是一样的。其实进入<code>/etc/skel</code>会发现存在的一样的文件，很好的解释了是在用户创建的最后把skel下的文件复制了过去。所以作为一个管理员，如果你想向新用户发送一个信息，就可以在skel下创建文件，这样每当创建新用户时就会将skel下的文件全部的复制过去。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200312090541.png" alt></p>
 <h3 id="将新用户添加到已有的目录"><a href="#将新用户添加到已有的目录" class="headerlink" title="将新用户添加到已有的目录"></a>将新用户添加到已有的目录</h3><blockquote>
-<p>user add -d <route> <username></username></route></p>
+<p>useradd -d &lt; route &gt; &lt; username &gt;</p>
 </blockquote>
 <p>首先进入管理员用户，到/home下自己用<code>mkdir</code>创建一个新的文件夹</p>
 <p>接着使用<code>useradd -d /home/tomtom tom</code>来指定新用户的家目录，会产生一个警告，是因为如果没有刚刚创建的<code>tomtom</code>文件夹的话，系统会自己创建并复制初始配置文件，但是由于我们是自己先前已经创建的目录，可以看到提示说不从 skel 目录里向其中复制任何文件。如果想有的话可以手动从skel复制过去。</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/2133134134.png" alt></p>
 <h3 id="创建新的组"><a href="#创建新的组" class="headerlink" title="创建新的组"></a>创建新的组</h3><blockquote>
-<p>useradd -g <groupname> <username></username></groupname></p>
+<p>useradd -g &lt; groupname &gt; &lt; username &gt;</p>
 </blockquote>
 <p>需要注意的是，在创建用户时如果未指定组的话会自带创建一个名字和用户名一样的组。</p>
 <p>接着我们使用命令去创建用户时会发现提示错误，那么到底是添加成功还是添加不成功呢。</p>
@@ -710,44 +708,44 @@
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312093512.png" alt></p>
 <p>所以想将新用户指定到固定的组时需要先添加组。</p>
 <blockquote>
-<p>groupadd  <groupname></groupname></p>
+<p>groupadd  &lt; groupname &gt;</p>
 </blockquote>
 <p>创建组成功后接着运行之前创建用户的命令即可创建新用户成功。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# groupadd mygroup</span><br><span class="line">[root@localhost etc]# useradd -g mygroup alice</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312104602.png" alt></p>
 <h3 id="将新用户加入多个组"><a href="#将新用户加入多个组" class="headerlink" title="将新用户加入多个组"></a>将新用户加入多个组</h3><blockquote>
-<p>useradd -G <groupname1>,<groupname2>， …  <username></username></groupname2></groupname1></p>
+<p>useradd -G &lt; groupname1 &gt;,&lt; groupname2 &gt;， …  &lt; username &gt;</p>
 </blockquote>
 <p>我们执行<code>useradd -G mygroup,bob sonya</code>后到group中看一下，可以发现bob和mygroup中都有了sonya这个用户。</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312104912.png" alt></p>
 <h3 id="将用户添加到组"><a href="#将用户添加到组" class="headerlink" title="将用户添加到组"></a>将用户添加到组</h3><blockquote>
-<p>gpasswd -a <username> <groupname></groupname></username></p>
+<p>gpasswd -a &lt; username &gt; &lt; groupname &gt;</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# gpasswd -a sonya bob</span><br><span class="line">正在将用户“sonya”加入到“bob”组中</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
 
 <h3 id="自定义用户号和组号"><a href="#自定义用户号和组号" class="headerlink" title="自定义用户号和组号"></a>自定义用户号和组号</h3><blockquote>
-<p>useradd -u<number> <username></username></number></p>
+<p>useradd -u&lt; number &gt; &lt; username &gt;</p>
 </blockquote>
 <p>我们执行<code>useradd -u8888 testuser</code>后到passwd下查看可以看到详细信息</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312105332.png" alt></p>
 <h2 id="用户与组的删除"><a href="#用户与组的删除" class="headerlink" title="用户与组的删除"></a>用户与组的删除</h2><h3 id="删除所在组的成员"><a href="#删除所在组的成员" class="headerlink" title="删除所在组的成员"></a>删除所在组的成员</h3><blockquote>
-<p>gpasswd -d <username> <groupname></groupname></username></p>
+<p>gpasswd -d &lt; username &gt; &lt; groupname &gt;</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# gpasswd -d sonya bob</span><br><span class="line">正在将用户“sonya”从“bob”组中删除</span><br><span class="line">[root@localhost etc]#</span><br></pre></td></tr></table></figure>
 
 <h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><blockquote>
-<p>userdel <username></username></p>
+<p>userdel &lt; username &gt;</p>
 </blockquote>
 <p>虽然删除成功了但是你会发现它的家目录却并没有被删除。然后你会发现文件夹被超级用户接管了。这样的好处是不会因为勿删导致文件无法找回。</p>
 <p>tips：若是删除用户时它的组中有其他成员则组并不会被一起删除。</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193020.png" alt></p>
 <blockquote>
-<p>userdel -r <username>   带家目录一起删除</username></p>
+<p>userdel -r &lt; username &gt;   带家目录一起删除</p>
 </blockquote>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193624.png" alt></p>
 <h3 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h3><blockquote>
-<p>groupdel <groupname></groupname></p>
+<p>groupdel &lt; groupname &gt;</p>
 </blockquote>
 <p>运行之后发现mygroup 的组被删除了。</p>
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312193916.png" alt></p>
@@ -777,13 +775,6 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
       
     </li>
@@ -791,7 +782,14 @@
     <li class="popular-posts-item">
       
       
-      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
+      <div class="popular-posts-title"><a href="\posts\fedora-2.html" rel="bookmark">Fedora安装后的配置</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\Linux-file-readandwrite.html" rel="bookmark">Linux下文件读写的操作</a></div>
       
     </li>
   
