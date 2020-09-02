@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/Linux-file-competence.html</loc>
+    
+    <lastmod>2020-09-02T14:24:58.344Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/linux-user-management.html</loc>
     
     <lastmod>2020-08-30T14:34:13.087Z</lastmod>
@@ -173,13 +180,6 @@
     <loc>https://hongcyu.cn/posts/c-file-copy.html</loc>
     
     <lastmod>2020-03-18T14:19:14.703Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hongcyu.cn/posts/Linux-file-competence.html</loc>
-    
-    <lastmod>2020-03-18T06:58:03.001Z</lastmod>
     
   </url>
   
