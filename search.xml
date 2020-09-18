@@ -163,32 +163,28 @@
       </tags>
   </entry>
   <entry>
-    <title>Fedora下yum命令的学习</title>
-    <url>/posts/Fedora_yum.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在这里介绍一下yum命令的使用，并进行基本的操作。</p>
+    <title>C语言模拟实现文件复制的操作</title>
+    <url>/posts/c-file-copy.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux中采取程序设计来模拟实现系统中文件复制的操作，进一步了解Linux系统中的操作。</p>
 <a id="more"></a>
 
-<ol>
-<li><p><strong>查看操作</strong>：输入yum list 可以查看仓库中所有的包文件列表。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229144438.png" alt></p>
-</li>
-<li><p><strong>移除操作</strong>： 输入sudo yum remove &lt;包名&gt;</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229144704.png" alt></p>
-</li>
-<li><p><strong>安装操作</strong>：sudo yum install  &lt;包名&gt;</p>
-</li>
-<li><p><strong>更新操作</strong>：yum update &lt;包名&gt;</p>
-</li>
-<li><p><strong>检测更新</strong>：yum check-update &lt;包名&gt;</p>
-</li>
-</ol>
+<p>编写要求：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318215453.png" alt></p>
+<p>接着我们直接上代码吧！直接在里面解释</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//以下为创建所需要使用的变量，fd为句柄，return为返回值，buf为缓冲区，tips用来存储输入。</span></span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> tips[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> access_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> stat_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span>	<span class="comment">//创建stat结构体</span></span><br><span class="line">	</span><br><span class="line">	access_return = access(argv[<span class="number">1</span>],F_OK | R_OK);  <span class="comment">//使用access函数来获取文件权限和存在状态。</span></span><br><span class="line">	<span class="keyword">if</span>(access_return == <span class="number">0</span>)</span><br><span class="line">		read_fd = open(argv[<span class="number">1</span>],O_RDONLY);   <span class="comment">//当返回值为0时执行读文件</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Open file error.\n"</span>);	<span class="comment">//否则提示错误并退出</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs, <span class="number">0</span> , <span class="keyword">sizeof</span>(bs));	<span class="comment">//清空结构体</span></span><br><span class="line">	</span><br><span class="line">	stat_return = stat(argv[<span class="number">1</span>],&amp;bs);	<span class="comment">//利用stat获取文件信息</span></span><br><span class="line">	access_return = access(argv[<span class="number">2</span>],F_OK);	<span class="comment">//利用access获取第二个文件是否存在</span></span><br><span class="line">	<span class="keyword">if</span>(access_return &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;	<span class="comment">//不存在则创建新文件</span></span><br><span class="line">		write_fd = open(argv[<span class="number">2</span>],O_CREAT |O_RDWR,bs.st_mode);	</span><br><span class="line">		<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">		&#123;	<span class="comment">//如果创建失败则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Create file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;	<span class="comment">//如果存在则询问是否重写</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Warning!Overwrite this file? yes/no?\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" &gt; "</span>);</span><br><span class="line">		gets(tips);</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">strcmp</span>(tips,<span class="string">"yes"</span>) == <span class="number">0</span>)	<span class="comment">//输入存入tips，如果为tips则重新</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"reading...\n"</span>);</span><br><span class="line">			write_fd = open(argv[<span class="number">2</span>],O_RDWR);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;	<span class="comment">//如果输入不为tips则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Good bye!See you next time.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//使用read读取文件内容</span></span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf, read_return);	<span class="comment">//使用write写入文件</span></span><br><span class="line">		<span class="keyword">if</span> (write_return &lt; read_return)		<span class="comment">//判断写入的字节是否小于读取的字节，小于则退出并提示写入失败</span></span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Write file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span> ,<span class="keyword">sizeof</span>(buf));	<span class="comment">//清空buf缓冲区</span></span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//再一次读取文件</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//输出文件的大小</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"It has been copied.This file size is %lld bytes.\n"</span>,bs.st_size);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//关闭各个句柄</span></span><br><span class="line">	close(access_return);</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>大家可以参考<a href="https://hongcyu.cn/posts/Linux-file-readandwrite.html">Linux下文件读写的操作</a>里面的函数解释~</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>Fedora</category>
+        <category>C语言</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Fedora</tag>
-        <tag>yum</tag>
+        <tag>C语言</tag>
+        <tag>Linux</tag>
+        <tag>程序设计</tag>
       </tags>
   </entry>
   <entry>
@@ -640,28 +636,110 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言模拟实现文件复制的操作</title>
-    <url>/posts/c-file-copy.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux中采取程序设计来模拟实现系统中文件复制的操作，进一步了解Linux系统中的操作。</p>
+    <title>Fedora下yum命令的学习</title>
+    <url>/posts/Fedora_yum.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在这里介绍一下yum命令的使用，并进行基本的操作。</p>
 <a id="more"></a>
 
-<p>编写要求：</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318215453.png" alt></p>
-<p>接着我们直接上代码吧！直接在里面解释</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//以下为创建所需要使用的变量，fd为句柄，return为返回值，buf为缓冲区，tips用来存储输入。</span></span><br><span class="line">	<span class="keyword">int</span> read_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> read_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> write_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">char</span> buf[LEN] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> tips[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> access_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> stat_return = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">bs</span>;</span>	<span class="comment">//创建stat结构体</span></span><br><span class="line">	</span><br><span class="line">	access_return = access(argv[<span class="number">1</span>],F_OK | R_OK);  <span class="comment">//使用access函数来获取文件权限和存在状态。</span></span><br><span class="line">	<span class="keyword">if</span>(access_return == <span class="number">0</span>)</span><br><span class="line">		read_fd = open(argv[<span class="number">1</span>],O_RDONLY);   <span class="comment">//当返回值为0时执行读文件</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Open file error.\n"</span>);	<span class="comment">//否则提示错误并退出</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">memset</span>(&amp;bs, <span class="number">0</span> , <span class="keyword">sizeof</span>(bs));	<span class="comment">//清空结构体</span></span><br><span class="line">	</span><br><span class="line">	stat_return = stat(argv[<span class="number">1</span>],&amp;bs);	<span class="comment">//利用stat获取文件信息</span></span><br><span class="line">	access_return = access(argv[<span class="number">2</span>],F_OK);	<span class="comment">//利用access获取第二个文件是否存在</span></span><br><span class="line">	<span class="keyword">if</span>(access_return &lt; <span class="number">0</span>)</span><br><span class="line">	&#123;	<span class="comment">//不存在则创建新文件</span></span><br><span class="line">		write_fd = open(argv[<span class="number">2</span>],O_CREAT |O_RDWR,bs.st_mode);	</span><br><span class="line">		<span class="keyword">if</span>(write_fd &lt; <span class="number">0</span>)</span><br><span class="line">		&#123;	<span class="comment">//如果创建失败则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Create file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;	<span class="comment">//如果存在则询问是否重写</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Warning!Overwrite this file? yes/no?\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" &gt; "</span>);</span><br><span class="line">		gets(tips);</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">strcmp</span>(tips,<span class="string">"yes"</span>) == <span class="number">0</span>)	<span class="comment">//输入存入tips，如果为tips则重新</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"reading...\n"</span>);</span><br><span class="line">			write_fd = open(argv[<span class="number">2</span>],O_RDWR);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;	<span class="comment">//如果输入不为tips则退出</span></span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Good bye!See you next time.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//使用read读取文件内容</span></span><br><span class="line">	<span class="keyword">while</span>( read_return &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write_return = write(write_fd, buf, read_return);	<span class="comment">//使用write写入文件</span></span><br><span class="line">		<span class="keyword">if</span> (write_return &lt; read_return)		<span class="comment">//判断写入的字节是否小于读取的字节，小于则退出并提示写入失败</span></span><br><span class="line">		&#123;</span><br><span class="line">			close(read_fd);</span><br><span class="line">			close(write_fd);</span><br><span class="line">			close(access_return);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Write file error.\n"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memset</span>(buf, <span class="number">0</span> ,<span class="keyword">sizeof</span>(buf));	<span class="comment">//清空buf缓冲区</span></span><br><span class="line">		read_return = read(read_fd, buf, <span class="keyword">sizeof</span>(buf));	<span class="comment">//再一次读取文件</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//输出文件的大小</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"It has been copied.This file size is %lld bytes.\n"</span>,bs.st_size);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//关闭各个句柄</span></span><br><span class="line">	close(access_return);</span><br><span class="line">	close(read_fd);</span><br><span class="line">	close(write_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>大家可以参考<a href="https://hongcyu.cn/posts/Linux-file-readandwrite.html">Linux下文件读写的操作</a>里面的函数解释~</p>
-</blockquote>
+<ol>
+<li><p><strong>查看操作</strong>：输入yum list 可以查看仓库中所有的包文件列表。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229144438.png" alt></p>
+</li>
+<li><p><strong>移除操作</strong>： 输入sudo yum remove &lt;包名&gt;</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/20200229144704.png" alt></p>
+</li>
+<li><p><strong>安装操作</strong>：sudo yum install  &lt;包名&gt;</p>
+</li>
+<li><p><strong>更新操作</strong>：yum update &lt;包名&gt;</p>
+</li>
+<li><p><strong>检测更新</strong>：yum check-update &lt;包名&gt;</p>
+</li>
+</ol>
 ]]></content>
       <categories>
-        <category>C语言</category>
+        <category>Fedora</category>
+      </categories>
+      <tags>
+        <tag>Fedora</tag>
+        <tag>yum</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fedora安装后的配置</title>
+    <url>/posts/fedora-2.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在Fedora系统安装后还需要一些配置才能正常使用。</p>
+<a id="more"></a>
+
+<h2 id="添加sudo用户"><a href="#添加sudo用户" class="headerlink" title="添加sudo用户"></a>添加sudo用户</h2><p>现在操作系统里面，我们不允许管理员作为普通用户进行登入。但是有很多操作需要管理员授权，所以Linux给出了一种解决方法就是sudo用户来做。</p>
+<p>sudo: superuser do(超级用户在做)</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[hongcyu@localhost 桌面] $ sudo passwd</span><br></pre></td></tr></table></figure>
+
+<p>这样做的好处就是不要使用管理员的口令，大大增加了系统的安全性。</p>
+<p>在ubantu系统中默认sudo用户是可用的，而fedora却默认是不可用的，一般按下面的操作</p>
+<p>先进入管理员做最初的设置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ su</span><br><span class="line">密码： </span><br><span class="line">[root@localhost 桌面]#</span><br></pre></td></tr></table></figure>
+
+<p>可以看到区别：$  变成了  #</p>
+<p>接着我们执行命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#visudo</span><br></pre></td></tr></table></figure>
+
+<p>此时会打开一个文件，只能看不能改，但是visudo才能修改</p>
+<p>接着我们找到</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<p>下root下方添加自己的用户名</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hongcyu ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<p>按ESC输入   :w  进行保存</p>
+<h2 id="手动修改软件源"><a href="#手动修改软件源" class="headerlink" title="手动修改软件源"></a>手动修改软件源</h2><p>进入/etc 目录</p>
+<p>etc目录一个很重要的目录，许多系统配置是在这个目录下的，找到图中圈出的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-1.jpg" alt></p>
+<p>进入这个目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd yum.repos.d</span><br></pre></td></tr></table></figure>
+
+<p>输入ls -l即可看见配置文件，默认的后缀是repo</p>
+<p>我们先打开一个文件进行查看 可以看到如图所示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ vi fedora.repo</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-2.jpg" alt></p>
+<p>第三行的baseurl是非常重要的，因为以后下载都会从这个网址进行查找后下载。</p>
+<ol>
+<li>复制以下到<code>/etc/yum.repos.d/fedora.repo</code> 文件：</li>
+</ol>
+<p>​       遇到不可保存的情况可以使用  <strong>$ sudo vi fedora.repo</strong>  来进行编辑，之后类似。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[fedora]</span><br><span class="line">name=Fedora $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-source]</span><br><span class="line">name=Fedora $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>/etc/yum.repos.d/fedora-updates.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[updates]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-source]</span><br><span class="line">name=Fedora $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><code>/etc/yum.repos.d/fedora-modular.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[fedora-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">#metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>/etc/yum.repos.d/fedora-updates-modular.repo</code> 文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[updates-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
+
+<p>最后运行 <code>sudo dnf makecache</code> 生成缓存。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-3.jpg" alt></p>
+<h2 id="自动修改软件源"><a href="#自动修改软件源" class="headerlink" title="自动修改软件源"></a>自动修改软件源</h2><p>用以下命令替换 <code>/etc/yum.repos.d</code> 下的文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo sed -e &apos;s|^metalink=|#metalink=|g&apos; \</span><br><span class="line">         -e &apos;s|^#baseurl=http://download.fedoraproject.org/pub/fedora/linux|baseurl=https://mirrors.ustc.edu.cn/fedora|g&apos; \</span><br><span class="line">         -i.bak \</span><br><span class="line">         /etc/yum.repos.d/fedora.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-modular.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates-modular.repo</span><br></pre></td></tr></table></figure>
+
+<p>参考网址： <a href="http://mirrors.ustc.edu.cn/help/fedora.html" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/help/fedora.html</a></p>
+]]></content>
+      <categories>
+        <category>Fedora</category>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>C语言</tag>
         <tag>Linux</tag>
-        <tag>程序设计</tag>
+        <tag>Fedora</tag>
       </tags>
   </entry>
   <entry>
@@ -767,143 +845,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Fedora安装后的配置</title>
-    <url>/posts/fedora-2.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：在Fedora系统安装后还需要一些配置才能正常使用。</p>
-<a id="more"></a>
-
-<h2 id="添加sudo用户"><a href="#添加sudo用户" class="headerlink" title="添加sudo用户"></a>添加sudo用户</h2><p>现在操作系统里面，我们不允许管理员作为普通用户进行登入。但是有很多操作需要管理员授权，所以Linux给出了一种解决方法就是sudo用户来做。</p>
-<p>sudo: superuser do(超级用户在做)</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[hongcyu@localhost 桌面] $ sudo passwd</span><br></pre></td></tr></table></figure>
-
-<p>这样做的好处就是不要使用管理员的口令，大大增加了系统的安全性。</p>
-<p>在ubantu系统中默认sudo用户是可用的，而fedora却默认是不可用的，一般按下面的操作</p>
-<p>先进入管理员做最初的设置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ su</span><br><span class="line">密码： </span><br><span class="line">[root@localhost 桌面]#</span><br></pre></td></tr></table></figure>
-
-<p>可以看到区别：$  变成了  #</p>
-<p>接着我们执行命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#visudo</span><br></pre></td></tr></table></figure>
-
-<p>此时会打开一个文件，只能看不能改，但是visudo才能修改</p>
-<p>接着我们找到</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-
-<p>下root下方添加自己的用户名</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hongcyu ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-
-<p>按ESC输入   :w  进行保存</p>
-<h2 id="手动修改软件源"><a href="#手动修改软件源" class="headerlink" title="手动修改软件源"></a>手动修改软件源</h2><p>进入/etc 目录</p>
-<p>etc目录一个很重要的目录，许多系统配置是在这个目录下的，找到图中圈出的文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-1.jpg" alt></p>
-<p>进入这个目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd yum.repos.d</span><br></pre></td></tr></table></figure>
-
-<p>输入ls -l即可看见配置文件，默认的后缀是repo</p>
-<p>我们先打开一个文件进行查看 可以看到如图所示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ vi fedora.repo</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-2.jpg" alt></p>
-<p>第三行的baseurl是非常重要的，因为以后下载都会从这个网址进行查找后下载。</p>
-<ol>
-<li>复制以下到<code>/etc/yum.repos.d/fedora.repo</code> 文件：</li>
-</ol>
-<p>​       遇到不可保存的情况可以使用  <strong>$ sudo vi fedora.repo</strong>  来进行编辑，之后类似。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[fedora]</span><br><span class="line">name=Fedora $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-source]</span><br><span class="line">name=Fedora $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Everything/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><code>/etc/yum.repos.d/fedora-updates.repo</code> 文件：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[updates]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-debuginfo]</span><br><span class="line">name=Fedora $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-source]</span><br><span class="line">name=Fedora $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Everything/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><code>/etc/yum.repos.d/fedora-modular.repo</code> 文件：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[fedora-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/os/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">#metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/$basearch/debug/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-debug-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[fedora-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/releases/$releasever/Modular/source/tree/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-modular-source-$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><code>/etc/yum.repos.d/fedora-updates-modular.repo</code> 文件：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[updates-modular]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-debuginfo]</span><br><span class="line">name=Fedora Modular $releasever - $basearch - Updates - Debug</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/$basearch/debug/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-debug-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br><span class="line"></span><br><span class="line">[updates-modular-source]</span><br><span class="line">name=Fedora Modular $releasever - Updates Source</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=https://mirrors.ustc.edu.cn/fedora/updates/$releasever/Modular/SRPMS/</span><br><span class="line">#metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-modular-source-f$releasever&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">type=rpm</span><br><span class="line">gpgcheck=1</span><br><span class="line">metadata_expire=6h</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch</span><br><span class="line">skip_if_unavailable=False</span><br></pre></td></tr></table></figure>
-
-<p>最后运行 <code>sudo dnf makecache</code> 生成缓存。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/Linux-3.jpg" alt></p>
-<h2 id="自动修改软件源"><a href="#自动修改软件源" class="headerlink" title="自动修改软件源"></a>自动修改软件源</h2><p>用以下命令替换 <code>/etc/yum.repos.d</code> 下的文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo sed -e &apos;s|^metalink=|#metalink=|g&apos; \</span><br><span class="line">         -e &apos;s|^#baseurl=http://download.fedoraproject.org/pub/fedora/linux|baseurl=https://mirrors.ustc.edu.cn/fedora|g&apos; \</span><br><span class="line">         -i.bak \</span><br><span class="line">         /etc/yum.repos.d/fedora.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-modular.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates.repo \</span><br><span class="line">         /etc/yum.repos.d/fedora-updates-modular.repo</span><br></pre></td></tr></table></figure>
-
-<p>参考网址： <a href="http://mirrors.ustc.edu.cn/help/fedora.html" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/help/fedora.html</a></p>
-]]></content>
-      <categories>
-        <category>Fedora</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Fedora</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客添加相册页面</title>
-    <url>/posts/23551.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：Hexo 博客并没有自带的相册功能，所以我们需要自己动手来创建一个相册，其中修改了一些原作者的问题。</p>
-<a id="more"></a>
-
-<p>我的<a href="https://hongcyu.coding.me/photos/" target="_blank" rel="noopener">个人相册</a>目前不适配低分辨率，建议在 1920*1080 及以上访问效果最好哦，需要自己进行适配的，可以在我的代码基础上自行进行修改~</p>
-<h2 id="创建腾讯云存储桶（cos）"><a href="#创建腾讯云存储桶（cos）" class="headerlink" title="创建腾讯云存储桶（cos）"></a>创建腾讯云存储桶（cos）</h2><p>跳转：「<a href="https://cloud.tencent.com/" target="_blank" rel="noopener">腾讯云</a>」–&gt;产品（左上角）–&gt;存储–&gt;对象存储</p>
-<p>我们先新建一个专门存放相册图片的存储桶，在<font color="red">对象存储</font>页面左边点击存储桶列表 -&gt; 新建存储桶</p>
-<p>然后在存储桶页面，名称可以自己任意填写，需要选择下图中标注的<font color="red">公有读私有写</font>，然后点击确定。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-2.png" alt></p>
-<hr>
-<p>然后我们点击这个存储桶，选择左侧的基础配置 -&gt; 跨域访问CORS设置 -&gt; 添加规则</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-3.png" alt></p>
-<p>然后按下图所示进行填写</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-4.png" alt></p>
-<p><strong>域名以 http://或 https:// 开头，每行一个，一行最多一个通配符 *</strong></p>
-<p><strong>如果填写域名后遇到跨域问题，可以将 origin 这里填写为 * 就可以解决</strong></p>
-<hr>
-<p>点击权限管理–&gt;Policy权限设置–&gt;添加策略</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-6.png" alt></p>
-<p>按照下面图片进行设置</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-1.png" alt></p>
-<hr>
-<p>然后记住基础配置中的<font color="red">访问域名</font>，这里就是我们动态生成相册，获取链接时需要用到的<font color="red">xml链接</font>，下面要用到。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-5.png" alt></p>
-<h2 id="新建相册页面"><a href="#新建相册页面" class="headerlink" title="新建相册页面"></a>新建相册页面</h2><p>首先在 hexo 博客本地新建一个页面（菜单栏）：</p>
-<p>hexo博客根站点目录下</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;photos&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后在<code>hexo/source/photos/index.md</code>中编辑页面如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 光影流年</span><br><span class="line">date: 2019-12-05 13:00:00</span><br><span class="line">type: &quot;photos&quot;</span><br><span class="line">---</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">	.posts-expand .post-body img&#123;</span><br><span class="line">		padding: 1px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.footer&#123;</span><br><span class="line">		display: none !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"> 	/*不展示底部*/</span><br><span class="line"> 	.footer-inner&#123;</span><br><span class="line"> 		display: none !important;</span><br><span class="line"> 	&#125;</span><br><span class="line"></span><br><span class="line">	.v * &#123;</span><br><span class="line">    	color: #f4f4f4 !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.v .vwrap .vmark .valert .vcode &#123;</span><br><span class="line">    	background: #00050b !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"> 	/*不展示侧栏*/</span><br><span class="line"> 	.sidebar-toggle&#123;</span><br><span class="line"> 		display: none !important;</span><br><span class="line"> 	&#125;</span><br><span class="line"></span><br><span class="line">    /*修改相册页面内容宽度为全屏*/</span><br><span class="line">	.main-inner&#123;</span><br><span class="line">		width: 100%;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*修改主体页面样式*/</span><br><span class="line">	.main &#123;</span><br><span class="line">    	padding-bottom: 150px;</span><br><span class="line">    	margin-top: 0px;</span><br><span class="line">    	background: #121212;</span><br><span class="line">	&#125;</span><br><span class="line">	.main-inner&#123;</span><br><span class="line">		margin-top: unset;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*body体样式*/</span><br><span class="line">	body &#123;</span><br><span class="line">		background-image: unset;</span><br><span class="line">		background-attachment: unset;</span><br><span class="line">		background-size: 100%;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.header&#123;</span><br><span class="line">		background: rgba(28, 25, 25, 0.6);</span><br><span class="line">		border-bottom: unset;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.menu .menu-item a&#123;</span><br><span class="line">		font-weight: 300;</span><br><span class="line">   		color: #222;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    .imgbox&#123;</span><br><span class="line">	  width: 100%;</span><br><span class="line">	  overflow: hidden;</span><br><span class="line">	  border-right: 0px solid #bcbcbc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	.box&#123;</span><br><span class="line">		visibility: visible;</span><br><span class="line">		overflow: auto; </span><br><span class="line">		zoom: 1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box li&#123;</span><br><span class="line">		float: left;</span><br><span class="line">    	width: 25%;  /*每个框占25%*/</span><br><span class="line">    	position: relative;</span><br><span class="line">    	overflow: hidden;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	list-style: none;</span><br><span class="line">    	margin: 0;</span><br><span class="line">    	/*display: inline;*/</span><br><span class="line">    	padding: 0;</span><br><span class="line">    	height: 400px;   /*固定高度*/</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box li span&#123;</span><br><span class="line">		display: block;</span><br><span class="line">    	padding: 4% 7% 10% 7%;</span><br><span class="line">    	min-height: 80px;</span><br><span class="line">    	background: #fff;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	font-size: 16px;</span><br><span class="line">    	background: #121212;</span><br><span class="line">    	font-weight: 600;</span><br><span class="line">    	line-height: 26px;</span><br><span class="line">    	-webkit-box-sizing: border-box;</span><br><span class="line">    	box-sizing: border-box;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    img.imgitem&#123;</span><br><span class="line">		padding: unset;</span><br><span class="line">		padding: unset;</span><br><span class="line">		border: unset;</span><br><span class="line">		position: relative;</span><br><span class="line">		padding: 0px;</span><br><span class="line">		width: 100%;</span><br><span class="line">		height: 350px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	div#comments.comments.v &#123;</span><br><span class="line">    	border: 0px;</span><br><span class="line">    	margin: auto !important;</span><br><span class="line">    	margin-top: unset;</span><br><span class="line">    	margin-left: unset;</span><br><span class="line">    	margin-right: unset;</span><br><span class="line">    	width: 60%;</span><br><span class="line">    	padding-top: 50px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	div#posts.posts-expand &#123;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	padding: unset;</span><br><span class="line">    	margin-bottom: 10px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.valine .vlist .vcard .vcomment-body .vhead .vname&#123;</span><br><span class="line">		color: #fff;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.valine .vlist .vcard .vcomment-body .text-wrapper .vcomment p&#123;</span><br><span class="line">		color: #fff;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box p&#123;</span><br><span class="line">		display: block;</span><br><span class="line">    	background: #121212;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	font-size: 12px;</span><br><span class="line">    	font-family: &apos;SwisMedium&apos;;</span><br><span class="line">    	text-align: center;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box span strong&#123;</span><br><span class="line">		background: rgba(0,0,0,0.4);</span><br><span class="line">		padding: 20px;</span><br><span class="line">		font-family: serif, sans-serif;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand .post-title &#123;</span><br><span class="line">		display: none;</span><br><span class="line">	&#125;</span><br><span class="line">	.title&#123;</span><br><span class="line">    	display: inline-block;</span><br><span class="line">    	vertical-align: middle;</span><br><span class="line">    	font: 85px/250px &apos;ChaletComprimeMilanSixty&apos;;</span><br><span class="line">    	background-position: left bottom !important;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	background-size: 100% auto !important; </span><br><span class="line">		-webkit-background-size: cover; </span><br><span class="line">		-moz-background-size: cover;</span><br><span class="line">		-o-background-size: cover;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	height: 580px;</span><br><span class="line">    	cursor: unset !important;</span><br><span class="line">    	-webkit-box-sizing: border-box;</span><br><span class="line">    	box-sizing: border-box;</span><br><span class="line">	&#125;</span><br><span class="line">	.btn-more-posts&#123;</span><br><span class="line">		display: inline-block;</span><br><span class="line">    	vertical-align: middle;</span><br><span class="line">    	font: 85px/250px &apos;ChaletComprimeMilanSixty&apos;;</span><br><span class="line">    	color: #000;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	height: 400px;</span><br><span class="line">    	background-color: #121212;</span><br><span class="line">    	/*-webkit-box-sizing: border-box;*/</span><br><span class="line">    	/*box-sizing: border-box;*/</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">@media (max-width: 767px)&#123;</span><br><span class="line">	.box li &#123;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	height: auto;</span><br><span class="line">	&#125;</span><br><span class="line">	.title &#123;</span><br><span class="line">    	height: 200px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand .post-body img&#123;</span><br><span class="line">		box-sizing: none;</span><br><span class="line">		padding: 0px !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box span &#123;</span><br><span class="line">    	min-height: 80px;</span><br><span class="line">    	border-right: unset;</span><br><span class="line">    	font-size: 17px;</span><br><span class="line">	&#125;</span><br><span class="line">	.box p&#123;</span><br><span class="line">    	border-right: unset;</span><br><span class="line">    	font-size: 12px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand &#123;</span><br><span class="line">    	margin: unset;</span><br><span class="line">	&#125;</span><br><span class="line">	div#comments.comments.v &#123;</span><br><span class="line">    	width: 96%;</span><br><span class="line">    	padding-top: 50px;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media (min-width: 1300px)&#123;</span><br><span class="line">	.container .main-inner&#123;</span><br><span class="line">		width: 100%;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 主体部分 --&gt;</span><br><span class="line">&lt;div id=&quot;box&quot; class=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"></span><br><span class="line">function loadXMLDoc(xmlUrl) </span><br><span class="line">&#123;</span><br><span class="line">	try //Internet Explorer</span><br><span class="line">	&#123;</span><br><span class="line">		xmlDoc=new ActiveXObject(&quot;Microsoft.XMLDOM&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(e)</span><br><span class="line">	&#123;</span><br><span class="line">	  try //Firefox, Mozilla, Opera, etc.</span><br><span class="line">	    &#123;</span><br><span class="line">		  xmlDoc=document.implementation.createDocument(&quot;&quot;,&quot;&quot;,null);</span><br><span class="line">	    &#125;</span><br><span class="line">	  catch(e) &#123;alert(e.message)&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	try </span><br><span class="line">	&#123;</span><br><span class="line">		  xmlDoc.async=false;</span><br><span class="line">		  xmlDoc.load(xmlUrl);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(e) &#123;</span><br><span class="line">		try //Google Chrome  </span><br><span class="line">		  &#123;  </span><br><span class="line">			var chromeXml = new XMLHttpRequest();</span><br><span class="line">			chromeXml.open(&quot;GET&quot;, xmlUrl, false);</span><br><span class="line">			chromeXml.send(null);</span><br><span class="line">			xmlDoc = chromeXml.responseXML.documentElement; 				</span><br><span class="line">			//alert(xmlDoc.childNodes[0].nodeName);</span><br><span class="line">			//return xmlDoc;    </span><br><span class="line">		  &#125;  </span><br><span class="line">		  catch(e)  </span><br><span class="line">		  &#123;  </span><br><span class="line">			  alert(e.message)  </span><br><span class="line">		  &#125;  		  	</span><br><span class="line">	&#125;</span><br><span class="line">	return xmlDoc; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var xmllink=&quot;填写你的xml地址&quot;</span><br><span class="line">//访问域名链接就是我上面提到的那个访问域名xml链接</span><br><span class="line"></span><br><span class="line">xmlDoc=loadXMLDoc(xmllink);</span><br><span class="line">var urls = xmlDoc.getElementsByTagName(&apos;Key&apos;);</span><br><span class="line">var date = xmlDoc.getElementsByTagName(&apos;LastModified&apos;);</span><br><span class="line">var wid = 350;</span><br><span class="line">var showNum = 13; //每个相册一次展示多少照片，为4的倍数+1</span><br><span class="line">if ((window.innerWidth) &gt; 1200) &#123; wid = (window.innerWidth * 3) / 18;&#125;</span><br><span class="line">var box = document.getElementById(&apos;box&apos;);</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">var content = new Array();</span><br><span class="line">var tmp=0;</span><br><span class="line">var kkk=-1;</span><br><span class="line">for (var t = 0; t &lt; urls.length ; t++) &#123;</span><br><span class="line">	var bucket=urls[t].innerHTML;</span><br><span class="line">	var length=bucket.indexOf(&apos;/&apos;);</span><br><span class="line">	if(length===bucket.length-1)&#123;</span><br><span class="line">		kkk++;</span><br><span class="line">		content[kkk]=new Array();</span><br><span class="line">		content[kkk][0]=&#123;&apos;url&apos;:bucket,&apos;date&apos;:date[t].innerHTML.substring(0,10)&#125;;</span><br><span class="line">		tmp=1;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		content[kkk][tmp++]=&#123;&apos;url&apos;:bucket.substring(length+1),&apos;date&apos;:date[t].innerHTML.substring(0,10)&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; content.length; i++) &#123;</span><br><span class="line">	var conBox=document.createElement(&quot;div&quot;);</span><br><span class="line">	conBox.id=&apos;conBox&apos;+i;</span><br><span class="line">	box.appendChild(conBox);</span><br><span class="line">	var item=document.createElement(&quot;div&quot;);</span><br><span class="line">	var title=content[i][0].url;</span><br><span class="line">	item.innerHTML=&quot;&lt;button class=title style=background:url(&quot;+xmllink+&apos;/&apos; + title + &quot;surface.jpg&quot;+&quot;);background-repeat:no-repeat;&gt;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6; &gt;&quot; + title.substring(0,title.length - 1) + &quot;&lt;/strong&gt;&lt;/span&gt;&lt;/button&gt;&quot;;</span><br><span class="line">	conBox.appendChild(item);</span><br><span class="line"></span><br><span class="line">        for (var j = 1; j &lt; content[i].length &amp;&amp; j &lt; showNum+1; j++) &#123;</span><br><span class="line">	        var con=content[i][j].url;</span><br><span class="line">		var item=document.createElement(&quot;li&quot;);</span><br><span class="line">		if(con.substring(0,con.length-4) != &quot;surface&quot;)&#123;</span><br><span class="line">			item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=&quot;+xmllink+&apos;/&apos; + title + con +&quot; alt=&quot; + con + &quot;&gt;&lt;/div&gt;&lt;span&gt;&quot; + con.substring(0,con.length-4);</span><br><span class="line">			conBox.appendChild(item);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if(content[i].length &gt; showNum)&#123;</span><br><span class="line">		var moreItem=document.createElement(&quot;button&quot;);</span><br><span class="line">		moreItem.className = &quot;btn-more-posts&quot;;</span><br><span class="line">		moreItem.id = &quot;more&quot; + i;</span><br><span class="line">		moreItem.value = showNum + 1;</span><br><span class="line">		let cur = i;</span><br><span class="line">		moreItem.onclick = function ()&#123;</span><br><span class="line">			moreClick(this,cur,content[cur],content[cur][0].url);</span><br><span class="line">		&#125;</span><br><span class="line">		moreItem.innerHTML=&quot;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6;&gt;加载更多&lt;/strong&gt;&lt;/span&gt;&quot;;</span><br><span class="line">		conBox.appendChild(moreItem);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function moreClick(obj,cur,cont,title)&#123;</span><br><span class="line">	var parent = obj.parentNode;</span><br><span class="line">	parent.removeChild(obj);</span><br><span class="line">	var j=obj.value;</span><br><span class="line">	var begin=j;</span><br><span class="line">	for ( ; j &lt; cont.length &amp;&amp; j &lt; Number(showNum) + Number(begin); j++) &#123;</span><br><span class="line">		var con=cont[j].url;</span><br><span class="line">		var item=document.createElement(&quot;li&quot;);</span><br><span class="line">		item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=&quot;+xmllink+&apos;/&apos;+title+con+&quot; alt=&quot;+con+&quot;&gt;&lt;/div&gt;&lt;span&gt;&quot;+con.substring(0,con.length-4);</span><br><span class="line">		parent.appendChild(item);</span><br><span class="line">		var v=item.getElementsByTagName(&apos;img&apos;);</span><br><span class="line">		v[0].id=imgid;</span><br><span class="line">		imgid++;</span><br><span class="line">	&#125;</span><br><span class="line">	if(cont.length &gt; j)&#123;</span><br><span class="line">		obj.value=j;</span><br><span class="line">		parent.appendChild(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>其中我们只需要修改 xmllink 的值，就是上文提到的访问域名：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var xmllink=&quot;填写你的xml地址&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="上传图片"><a href="#上传图片" class="headerlink" title="上传图片"></a>上传图片</h2><p>上传图片推荐使用「<a href="https://cloud.tencent.com/document/product/436/11366" target="_blank" rel="noopener">使用腾讯云存储客户端</a>」文中推荐的客户端软件哦，其中需要注意的地方如下：</p>
-<p>①上传图片前，需要先在存储桶中建立一个文件夹，文件夹名字就是相册名字，当然可以建立多个文件夹</p>
-<p>②文件夹里不能再建文件夹，不然会出 BUG</p>
-<p>③每个文件夹中需要一张名为<font color="red">surface</font> 的图片，它会自动作为该文件夹相册的的封面</p>
-<p>④确保存储桶的 xml 域名能在浏览器上访问</p>
-<p>⑤尽量自己修改样式以满足自己的需求</p>
-<p>⑥CSS 样式直接写在 md 文件中，不用写在全局 custom.styl 文件中</p>
-<hr>
-<p>然后就 ok 了！可以使用<code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</code>重新渲染页面查看一下相册！如果有 BUG 也欢迎在评论区中留言，我尽量解决！</p>
-<hr>
-<p>参考：</p>
-<p>Sanarous：「<a href="https://bestzuo.cn/posts/3923764626.html" target="_blank" rel="noopener">hexo博客添加相册页面</a>」</p>
-<p>小鸡：「<a href="https://me.idealli.com/post/73ad4183" target="_blank" rel="noopener">给hexo静态博客添加动态相册功能</a>」</p>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>相册</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo博客文章链接优化</title>
     <url>/posts/hexo-link.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：将Hexo博客的文章链接进行优化，使其不再是日期+标题，而改成随机数字或自定义。</p>
@@ -976,6 +917,92 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客添加相册页面</title>
+    <url>/posts/23551.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：Hexo 博客并没有自带的相册功能，所以我们需要自己动手来创建一个相册，其中修改了一些原作者的问题。</p>
+<a id="more"></a>
+
+<p>我的<a href="https://hongcyu.coding.me/photos/" target="_blank" rel="noopener">个人相册</a>目前不适配低分辨率，建议在 1920*1080 及以上访问效果最好哦，需要自己进行适配的，可以在我的代码基础上自行进行修改~</p>
+<h2 id="创建腾讯云存储桶（cos）"><a href="#创建腾讯云存储桶（cos）" class="headerlink" title="创建腾讯云存储桶（cos）"></a>创建腾讯云存储桶（cos）</h2><p>跳转：「<a href="https://cloud.tencent.com/" target="_blank" rel="noopener">腾讯云</a>」–&gt;产品（左上角）–&gt;存储–&gt;对象存储</p>
+<p>我们先新建一个专门存放相册图片的存储桶，在<font color="red">对象存储</font>页面左边点击存储桶列表 -&gt; 新建存储桶</p>
+<p>然后在存储桶页面，名称可以自己任意填写，需要选择下图中标注的<font color="red">公有读私有写</font>，然后点击确定。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-2.png" alt></p>
+<hr>
+<p>然后我们点击这个存储桶，选择左侧的基础配置 -&gt; 跨域访问CORS设置 -&gt; 添加规则</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-3.png" alt></p>
+<p>然后按下图所示进行填写</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-4.png" alt></p>
+<p><strong>域名以 http://或 https:// 开头，每行一个，一行最多一个通配符 *</strong></p>
+<p><strong>如果填写域名后遇到跨域问题，可以将 origin 这里填写为 * 就可以解决</strong></p>
+<hr>
+<p>点击权限管理–&gt;Policy权限设置–&gt;添加策略</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-6.png" alt></p>
+<p>按照下面图片进行设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-1.png" alt></p>
+<hr>
+<p>然后记住基础配置中的<font color="red">访问域名</font>，这里就是我们动态生成相册，获取链接时需要用到的<font color="red">xml链接</font>，下面要用到。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/AF-5.png" alt></p>
+<h2 id="新建相册页面"><a href="#新建相册页面" class="headerlink" title="新建相册页面"></a>新建相册页面</h2><p>首先在 hexo 博客本地新建一个页面（菜单栏）：</p>
+<p>hexo博客根站点目录下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;photos&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>hexo/source/photos/index.md</code>中编辑页面如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 光影流年</span><br><span class="line">date: 2019-12-05 13:00:00</span><br><span class="line">type: &quot;photos&quot;</span><br><span class="line">---</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">	.posts-expand .post-body img&#123;</span><br><span class="line">		padding: 1px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.footer&#123;</span><br><span class="line">		display: none !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"> 	/*不展示底部*/</span><br><span class="line"> 	.footer-inner&#123;</span><br><span class="line"> 		display: none !important;</span><br><span class="line"> 	&#125;</span><br><span class="line"></span><br><span class="line">	.v * &#123;</span><br><span class="line">    	color: #f4f4f4 !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.v .vwrap .vmark .valert .vcode &#123;</span><br><span class="line">    	background: #00050b !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"> 	/*不展示侧栏*/</span><br><span class="line"> 	.sidebar-toggle&#123;</span><br><span class="line"> 		display: none !important;</span><br><span class="line"> 	&#125;</span><br><span class="line"></span><br><span class="line">    /*修改相册页面内容宽度为全屏*/</span><br><span class="line">	.main-inner&#123;</span><br><span class="line">		width: 100%;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*修改主体页面样式*/</span><br><span class="line">	.main &#123;</span><br><span class="line">    	padding-bottom: 150px;</span><br><span class="line">    	margin-top: 0px;</span><br><span class="line">    	background: #121212;</span><br><span class="line">	&#125;</span><br><span class="line">	.main-inner&#123;</span><br><span class="line">		margin-top: unset;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/*body体样式*/</span><br><span class="line">	body &#123;</span><br><span class="line">		background-image: unset;</span><br><span class="line">		background-attachment: unset;</span><br><span class="line">		background-size: 100%;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.header&#123;</span><br><span class="line">		background: rgba(28, 25, 25, 0.6);</span><br><span class="line">		border-bottom: unset;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.menu .menu-item a&#123;</span><br><span class="line">		font-weight: 300;</span><br><span class="line">   		color: #222;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    .imgbox&#123;</span><br><span class="line">	  width: 100%;</span><br><span class="line">	  overflow: hidden;</span><br><span class="line">	  border-right: 0px solid #bcbcbc;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	.box&#123;</span><br><span class="line">		visibility: visible;</span><br><span class="line">		overflow: auto; </span><br><span class="line">		zoom: 1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box li&#123;</span><br><span class="line">		float: left;</span><br><span class="line">    	width: 25%;  /*每个框占25%*/</span><br><span class="line">    	position: relative;</span><br><span class="line">    	overflow: hidden;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	list-style: none;</span><br><span class="line">    	margin: 0;</span><br><span class="line">    	/*display: inline;*/</span><br><span class="line">    	padding: 0;</span><br><span class="line">    	height: 400px;   /*固定高度*/</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box li span&#123;</span><br><span class="line">		display: block;</span><br><span class="line">    	padding: 4% 7% 10% 7%;</span><br><span class="line">    	min-height: 80px;</span><br><span class="line">    	background: #fff;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	font-size: 16px;</span><br><span class="line">    	background: #121212;</span><br><span class="line">    	font-weight: 600;</span><br><span class="line">    	line-height: 26px;</span><br><span class="line">    	-webkit-box-sizing: border-box;</span><br><span class="line">    	box-sizing: border-box;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    img.imgitem&#123;</span><br><span class="line">		padding: unset;</span><br><span class="line">		padding: unset;</span><br><span class="line">		border: unset;</span><br><span class="line">		position: relative;</span><br><span class="line">		padding: 0px;</span><br><span class="line">		width: 100%;</span><br><span class="line">		height: 350px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	div#comments.comments.v &#123;</span><br><span class="line">    	border: 0px;</span><br><span class="line">    	margin: auto !important;</span><br><span class="line">    	margin-top: unset;</span><br><span class="line">    	margin-left: unset;</span><br><span class="line">    	margin-right: unset;</span><br><span class="line">    	width: 60%;</span><br><span class="line">    	padding-top: 50px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	div#posts.posts-expand &#123;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	padding: unset;</span><br><span class="line">    	margin-bottom: 10px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.valine .vlist .vcard .vcomment-body .vhead .vname&#123;</span><br><span class="line">		color: #fff;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.valine .vlist .vcard .vcomment-body .text-wrapper .vcomment p&#123;</span><br><span class="line">		color: #fff;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box p&#123;</span><br><span class="line">		display: block;</span><br><span class="line">    	background: #121212;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	font-size: 12px;</span><br><span class="line">    	font-family: &apos;SwisMedium&apos;;</span><br><span class="line">    	text-align: center;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box span strong&#123;</span><br><span class="line">		background: rgba(0,0,0,0.4);</span><br><span class="line">		padding: 20px;</span><br><span class="line">		font-family: serif, sans-serif;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand .post-title &#123;</span><br><span class="line">		display: none;</span><br><span class="line">	&#125;</span><br><span class="line">	.title&#123;</span><br><span class="line">    	display: inline-block;</span><br><span class="line">    	vertical-align: middle;</span><br><span class="line">    	font: 85px/250px &apos;ChaletComprimeMilanSixty&apos;;</span><br><span class="line">    	background-position: left bottom !important;</span><br><span class="line">    	color: #fff;</span><br><span class="line">    	background-size: 100% auto !important; </span><br><span class="line">		-webkit-background-size: cover; </span><br><span class="line">		-moz-background-size: cover;</span><br><span class="line">		-o-background-size: cover;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	height: 580px;</span><br><span class="line">    	cursor: unset !important;</span><br><span class="line">    	-webkit-box-sizing: border-box;</span><br><span class="line">    	box-sizing: border-box;</span><br><span class="line">	&#125;</span><br><span class="line">	.btn-more-posts&#123;</span><br><span class="line">		display: inline-block;</span><br><span class="line">    	vertical-align: middle;</span><br><span class="line">    	font: 85px/250px &apos;ChaletComprimeMilanSixty&apos;;</span><br><span class="line">    	color: #000;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	text-align: center;</span><br><span class="line">    	border: unset;</span><br><span class="line">    	height: 400px;</span><br><span class="line">    	background-color: #121212;</span><br><span class="line">    	/*-webkit-box-sizing: border-box;*/</span><br><span class="line">    	/*box-sizing: border-box;*/</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">@media (max-width: 767px)&#123;</span><br><span class="line">	.box li &#123;</span><br><span class="line">    	width: 100%;</span><br><span class="line">    	height: auto;</span><br><span class="line">	&#125;</span><br><span class="line">	.title &#123;</span><br><span class="line">    	height: 200px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand .post-body img&#123;</span><br><span class="line">		box-sizing: none;</span><br><span class="line">		padding: 0px !important;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.box span &#123;</span><br><span class="line">    	min-height: 80px;</span><br><span class="line">    	border-right: unset;</span><br><span class="line">    	font-size: 17px;</span><br><span class="line">	&#125;</span><br><span class="line">	.box p&#123;</span><br><span class="line">    	border-right: unset;</span><br><span class="line">    	font-size: 12px;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	.posts-expand &#123;</span><br><span class="line">    	margin: unset;</span><br><span class="line">	&#125;</span><br><span class="line">	div#comments.comments.v &#123;</span><br><span class="line">    	width: 96%;</span><br><span class="line">    	padding-top: 50px;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media (min-width: 1300px)&#123;</span><br><span class="line">	.container .main-inner&#123;</span><br><span class="line">		width: 100%;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 主体部分 --&gt;</span><br><span class="line">&lt;div id=&quot;box&quot; class=&quot;box&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"></span><br><span class="line">function loadXMLDoc(xmlUrl) </span><br><span class="line">&#123;</span><br><span class="line">	try //Internet Explorer</span><br><span class="line">	&#123;</span><br><span class="line">		xmlDoc=new ActiveXObject(&quot;Microsoft.XMLDOM&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(e)</span><br><span class="line">	&#123;</span><br><span class="line">	  try //Firefox, Mozilla, Opera, etc.</span><br><span class="line">	    &#123;</span><br><span class="line">		  xmlDoc=document.implementation.createDocument(&quot;&quot;,&quot;&quot;,null);</span><br><span class="line">	    &#125;</span><br><span class="line">	  catch(e) &#123;alert(e.message)&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	try </span><br><span class="line">	&#123;</span><br><span class="line">		  xmlDoc.async=false;</span><br><span class="line">		  xmlDoc.load(xmlUrl);</span><br><span class="line">	&#125;</span><br><span class="line">	catch(e) &#123;</span><br><span class="line">		try //Google Chrome  </span><br><span class="line">		  &#123;  </span><br><span class="line">			var chromeXml = new XMLHttpRequest();</span><br><span class="line">			chromeXml.open(&quot;GET&quot;, xmlUrl, false);</span><br><span class="line">			chromeXml.send(null);</span><br><span class="line">			xmlDoc = chromeXml.responseXML.documentElement; 				</span><br><span class="line">			//alert(xmlDoc.childNodes[0].nodeName);</span><br><span class="line">			//return xmlDoc;    </span><br><span class="line">		  &#125;  </span><br><span class="line">		  catch(e)  </span><br><span class="line">		  &#123;  </span><br><span class="line">			  alert(e.message)  </span><br><span class="line">		  &#125;  		  	</span><br><span class="line">	&#125;</span><br><span class="line">	return xmlDoc; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var xmllink=&quot;填写你的xml地址&quot;</span><br><span class="line">//访问域名链接就是我上面提到的那个访问域名xml链接</span><br><span class="line"></span><br><span class="line">xmlDoc=loadXMLDoc(xmllink);</span><br><span class="line">var urls = xmlDoc.getElementsByTagName(&apos;Key&apos;);</span><br><span class="line">var date = xmlDoc.getElementsByTagName(&apos;LastModified&apos;);</span><br><span class="line">var wid = 350;</span><br><span class="line">var showNum = 13; //每个相册一次展示多少照片，为4的倍数+1</span><br><span class="line">if ((window.innerWidth) &gt; 1200) &#123; wid = (window.innerWidth * 3) / 18;&#125;</span><br><span class="line">var box = document.getElementById(&apos;box&apos;);</span><br><span class="line">var i = 0;</span><br><span class="line"></span><br><span class="line">var content = new Array();</span><br><span class="line">var tmp=0;</span><br><span class="line">var kkk=-1;</span><br><span class="line">for (var t = 0; t &lt; urls.length ; t++) &#123;</span><br><span class="line">	var bucket=urls[t].innerHTML;</span><br><span class="line">	var length=bucket.indexOf(&apos;/&apos;);</span><br><span class="line">	if(length===bucket.length-1)&#123;</span><br><span class="line">		kkk++;</span><br><span class="line">		content[kkk]=new Array();</span><br><span class="line">		content[kkk][0]=&#123;&apos;url&apos;:bucket,&apos;date&apos;:date[t].innerHTML.substring(0,10)&#125;;</span><br><span class="line">		tmp=1;</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		content[kkk][tmp++]=&#123;&apos;url&apos;:bucket.substring(length+1),&apos;date&apos;:date[t].innerHTML.substring(0,10)&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; content.length; i++) &#123;</span><br><span class="line">	var conBox=document.createElement(&quot;div&quot;);</span><br><span class="line">	conBox.id=&apos;conBox&apos;+i;</span><br><span class="line">	box.appendChild(conBox);</span><br><span class="line">	var item=document.createElement(&quot;div&quot;);</span><br><span class="line">	var title=content[i][0].url;</span><br><span class="line">	item.innerHTML=&quot;&lt;button class=title style=background:url(&quot;+xmllink+&apos;/&apos; + title + &quot;surface.jpg&quot;+&quot;);background-repeat:no-repeat;&gt;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6; &gt;&quot; + title.substring(0,title.length - 1) + &quot;&lt;/strong&gt;&lt;/span&gt;&lt;/button&gt;&quot;;</span><br><span class="line">	conBox.appendChild(item);</span><br><span class="line"></span><br><span class="line">        for (var j = 1; j &lt; content[i].length &amp;&amp; j &lt; showNum+1; j++) &#123;</span><br><span class="line">	        var con=content[i][j].url;</span><br><span class="line">		var item=document.createElement(&quot;li&quot;);</span><br><span class="line">		if(con.substring(0,con.length-4) != &quot;surface&quot;)&#123;</span><br><span class="line">			item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=&quot;+xmllink+&apos;/&apos; + title + con +&quot; alt=&quot; + con + &quot;&gt;&lt;/div&gt;&lt;span&gt;&quot; + con.substring(0,con.length-4);</span><br><span class="line">			conBox.appendChild(item);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	if(content[i].length &gt; showNum)&#123;</span><br><span class="line">		var moreItem=document.createElement(&quot;button&quot;);</span><br><span class="line">		moreItem.className = &quot;btn-more-posts&quot;;</span><br><span class="line">		moreItem.id = &quot;more&quot; + i;</span><br><span class="line">		moreItem.value = showNum + 1;</span><br><span class="line">		let cur = i;</span><br><span class="line">		moreItem.onclick = function ()&#123;</span><br><span class="line">			moreClick(this,cur,content[cur],content[cur][0].url);</span><br><span class="line">		&#125;</span><br><span class="line">		moreItem.innerHTML=&quot;&lt;span style=display:inline;&gt;&lt;strong style=color:#f0f3f6;&gt;加载更多&lt;/strong&gt;&lt;/span&gt;&quot;;</span><br><span class="line">		conBox.appendChild(moreItem);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function moreClick(obj,cur,cont,title)&#123;</span><br><span class="line">	var parent = obj.parentNode;</span><br><span class="line">	parent.removeChild(obj);</span><br><span class="line">	var j=obj.value;</span><br><span class="line">	var begin=j;</span><br><span class="line">	for ( ; j &lt; cont.length &amp;&amp; j &lt; Number(showNum) + Number(begin); j++) &#123;</span><br><span class="line">		var con=cont[j].url;</span><br><span class="line">		var item=document.createElement(&quot;li&quot;);</span><br><span class="line">		item.innerHTML=&quot;&lt;div class=imgbox id=imgbox style=height:&quot;+wid+&quot;px;&gt;&lt;img class=imgitem src=&quot;+xmllink+&apos;/&apos;+title+con+&quot; alt=&quot;+con+&quot;&gt;&lt;/div&gt;&lt;span&gt;&quot;+con.substring(0,con.length-4);</span><br><span class="line">		parent.appendChild(item);</span><br><span class="line">		var v=item.getElementsByTagName(&apos;img&apos;);</span><br><span class="line">		v[0].id=imgid;</span><br><span class="line">		imgid++;</span><br><span class="line">	&#125;</span><br><span class="line">	if(cont.length &gt; j)&#123;</span><br><span class="line">		obj.value=j;</span><br><span class="line">		parent.appendChild(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中我们只需要修改 xmllink 的值，就是上文提到的访问域名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var xmllink=&quot;填写你的xml地址&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="上传图片"><a href="#上传图片" class="headerlink" title="上传图片"></a>上传图片</h2><p>上传图片推荐使用「<a href="https://cloud.tencent.com/document/product/436/11366" target="_blank" rel="noopener">使用腾讯云存储客户端</a>」文中推荐的客户端软件哦，其中需要注意的地方如下：</p>
+<p>①上传图片前，需要先在存储桶中建立一个文件夹，文件夹名字就是相册名字，当然可以建立多个文件夹</p>
+<p>②文件夹里不能再建文件夹，不然会出 BUG</p>
+<p>③每个文件夹中需要一张名为<font color="red">surface</font> 的图片，它会自动作为该文件夹相册的的封面</p>
+<p>④确保存储桶的 xml 域名能在浏览器上访问</p>
+<p>⑤尽量自己修改样式以满足自己的需求</p>
+<p>⑥CSS 样式直接写在 md 文件中，不用写在全局 custom.styl 文件中</p>
+<hr>
+<p>然后就 ok 了！可以使用<code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</code>重新渲染页面查看一下相册！如果有 BUG 也欢迎在评论区中留言，我尽量解决！</p>
+<hr>
+<p>参考：</p>
+<p>Sanarous：「<a href="https://bestzuo.cn/posts/3923764626.html" target="_blank" rel="noopener">hexo博客添加相册页面</a>」</p>
+<p>小鸡：「<a href="https://me.idealli.com/post/73ad4183" target="_blank" rel="noopener">给hexo静态博客添加动态相册功能</a>」</p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>相册</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo的简单命令</title>
+    <url>/posts/34490.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：介绍了Hexo的一些简单命令。</p>
+<a id="more"></a>
+<h2 id="hexo-s"><a href="#hexo-s" class="headerlink" title="hexo s"></a>hexo s</h2><p>启动本地服务器，用于预览主题。默认地址： <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a><br>hexo s 是 hexo server 的缩写，命令效果一致；<br>预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；<br>对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。</p>
+<hr>
+<h2 id="hexo-new-“学习笔记”"><a href="#hexo-new-“学习笔记”" class="headerlink" title="hexo new “学习笔记”"></a>hexo new “学习笔记”</h2><p>新建一篇标题为 学习笔记 的文章，因为标题里有空格，所以加上了引号。<br>文章标题可以在对应 md 文件里改，新建时标题可以写的简单些。</p>
+<hr>
+<h2 id="hexo-d"><a href="#hexo-d" class="headerlink" title="hexo d"></a>hexo d</h2><p>自动生成网站静态文件，并部署到设定的仓库。<br>hexo d 是 hexo deploy 的缩写，命令效果一致。</p>
+<hr>
+<h2 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h2><p>清除缓存文件 db.json 和已生成的静态文件 public 。<br>网站显示异常时可以执行这条命令试试。</p>
+<hr>
+<h2 id="hexo-g"><a href="#hexo-g" class="headerlink" title="hexo g"></a>hexo g</h2><p>生成网站静态文件到默认设置的 public 文件夹。<br>便于查看网站生成的静态文件或者手动部署网站；<br>如果使用自动部署，不需要先执行该命令；<br>hexo g 是 hexo generate 的缩写，命令效果一致。</p>
+<hr>
+<h2 id="hexo-new-page-aboutme"><a href="#hexo-new-page-aboutme" class="headerlink" title="hexo new page aboutme"></a>hexo new page aboutme</h2><p>新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/<br>标题可以为中文，但一般习惯用英文；<br>页面标题和文章一样可以随意修改；<br>页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.bilibili.com/video/av44544186" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186</a><br><a href="https://blog.csdn.net/dxxzst/article/details/76135935" target="_blank" rel="noopener">https://blog.csdn.net/dxxzst/article/details/76135935</a></p>
+]]></content>
+      <categories>
+        <category>命令格式</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux-Fedora系统的安装</title>
     <url>/posts/fedora-1.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：这是一次在Linux课程上的安装尝试，安装的是Fedora系统。在下一篇我会更新手动换源和一键换源的步骤。</p>
@@ -1025,35 +1052,8 @@
         <category>Fedora</category>
       </categories>
       <tags>
-        <tag>Fedora</tag>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo的简单命令</title>
-    <url>/posts/34490.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：介绍了Hexo的一些简单命令。</p>
-<a id="more"></a>
-<h2 id="hexo-s"><a href="#hexo-s" class="headerlink" title="hexo s"></a>hexo s</h2><p>启动本地服务器，用于预览主题。默认地址： <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a><br>hexo s 是 hexo server 的缩写，命令效果一致；<br>预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；<br>对 Hexo 根目录 _config.yml 的修改，需要重启本地服务器后才能预览效果。</p>
-<hr>
-<h2 id="hexo-new-“学习笔记”"><a href="#hexo-new-“学习笔记”" class="headerlink" title="hexo new “学习笔记”"></a>hexo new “学习笔记”</h2><p>新建一篇标题为 学习笔记 的文章，因为标题里有空格，所以加上了引号。<br>文章标题可以在对应 md 文件里改，新建时标题可以写的简单些。</p>
-<hr>
-<h2 id="hexo-d"><a href="#hexo-d" class="headerlink" title="hexo d"></a>hexo d</h2><p>自动生成网站静态文件，并部署到设定的仓库。<br>hexo d 是 hexo deploy 的缩写，命令效果一致。</p>
-<hr>
-<h2 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h2><p>清除缓存文件 db.json 和已生成的静态文件 public 。<br>网站显示异常时可以执行这条命令试试。</p>
-<hr>
-<h2 id="hexo-g"><a href="#hexo-g" class="headerlink" title="hexo g"></a>hexo g</h2><p>生成网站静态文件到默认设置的 public 文件夹。<br>便于查看网站生成的静态文件或者手动部署网站；<br>如果使用自动部署，不需要先执行该命令；<br>hexo g 是 hexo generate 的缩写，命令效果一致。</p>
-<hr>
-<h2 id="hexo-new-page-aboutme"><a href="#hexo-new-page-aboutme" class="headerlink" title="hexo new page aboutme"></a>hexo new page aboutme</h2><p>新建一个标题为 aboutme 的页面，默认链接地址为 主页地址/aboutme/<br>标题可以为中文，但一般习惯用英文；<br>页面标题和文章一样可以随意修改；<br>页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。</p>
-<hr>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.bilibili.com/video/av44544186" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186</a><br><a href="https://blog.csdn.net/dxxzst/article/details/76135935" target="_blank" rel="noopener">https://blog.csdn.net/dxxzst/article/details/76135935</a></p>
-]]></content>
-      <categories>
-        <category>命令格式</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
+        <tag>Fedora</tag>
       </tags>
   </entry>
   <entry>
@@ -1218,91 +1218,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux下关于目录的操作及其程序设计</title>
-    <url>/posts/linux-catalog.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。</p>
-<a id="more"></a>
-
-<h2 id="读取目录"><a href="#读取目录" class="headerlink" title="读取目录"></a>读取目录</h2><ol>
-<li>打开目录</li>
-<li>读取目录信息</li>
-<li>关闭目录</li>
-</ol>
-<h3 id="打开目录"><a href="#打开目录" class="headerlink" title="打开目录"></a>打开目录</h3><p>头文件dirent.h</p>
-<blockquote>
-<p>DIR*    opendir(目录名称)；</p>
-<p>成功：    地址</p>
-<p>失败：    NULL</p>
-</blockquote>
-<h3 id="关闭目录"><a href="#关闭目录" class="headerlink" title="关闭目录"></a>关闭目录</h3><blockquote>
-<p>closedir(DIR* 指针)；</p>
-<p>成功：    0</p>
-<p>失败：    -1</p>
-</blockquote>
-<h3 id="读取目录信息"><a href="#读取目录信息" class="headerlink" title="读取目录信息"></a>读取目录信息</h3><blockquote>
-<p>struct dirent* readdir(DIR* 指针)；</p>
-<p>成功：    返回结构体指针</p>
-<p>失败：    NULL</p>
-<p>方式：    循环自动读取</p>
-<p>结构体内容：</p>
-<p>​            dt_tpye：目录类型</p>
-<p>​            dt_name：名称</p>
-</blockquote>
-<p>tips:</p>
-<p>如果文件名以<code>“.”</code>引导，该文件不可见</p>
-<p><code>.</code>为当前目录</p>
-<p><code>..</code>为父目录</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span> (dp == <span class="literal">NULL</span>)</span><br><span class="line">		bail(<span class="string">"open dir error."</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp))!= <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt;d_name[<span class="number">0</span>] ==<span class="string">'.'</span>) </span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_REG)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Regular file: %s \n"</span>,dir-&gt;d_name);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_DIR)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Dir file: %s\n"</span>,dir-&gt;d_name);</span><br><span class="line">	&#125;</span><br><span class="line">	closedir(dp);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318115207.png" alt></p>
-<h2 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h2><p>在Linux中可以使用命令 <code>mkdir</code> 进行创建目录，也可以在程序设计中使用mkdir进行创建。</p>
-<blockquote>
-<p> 创建目录函数</p>
-<p><code>mkdir (目录名称，权限参数)</code></p>
-<p>成功返回： 0</p>
-<p>失败返回： -1</p>
-</blockquote>
-<blockquote>
-<p>切换目录函数</p>
-<p><code>chdir(新目录名称)</code></p>
-<p>成功返回： 0</p>
-<p>失败返回： -1</p>
-</blockquote>
-<p>例如：</p>
-<ol>
-<li>给定源目录</li>
-<li>遍历目录</li>
-<li>创建一个新目录</li>
-<li>将源目录加入到新目录中</li>
-</ol>
-<p>假定：</p>
-<ol>
-<li>一级目录，不进入子目录</li>
-<li>只创建，不复制</li>
-</ol>
-<p>可行性：</p>
-<p>cpdir（ source,dest)中</p>
-<ol>
-<li>source 要存在，可读</li>
-<li>dest 要不存在，可写</li>
-<li>读取source状态，作为dest状态</li>
-<li>创建目标目录</li>
-<li>source:     readdir;chdir(dest)</li>
-<li>dest:     mkdir/create;chdir(source)</li>
-<li>关闭两个目录指针</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> sdir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> ddir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> sname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> dname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> create_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">sb</span>;</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">1</span>],F_OK) &lt; <span class="number">0</span>) <span class="comment">//判断源文件是否存在，不存在则报错</span></span><br><span class="line">		bail(<span class="string">"Source directory not exist!"</span>);</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">2</span>],F_OK) == <span class="number">0</span>) <span class="comment">//判断目标文件是否存在，存在则报错</span></span><br><span class="line">		bail(<span class="string">"Dest directory exist!"</span>);</span><br><span class="line">	getcwd(sdir,<span class="keyword">sizeof</span>(sdir)); <span class="comment">//获取源文件路径，存入sdir</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb)); <span class="comment">//清空sb</span></span><br><span class="line">	stat(argv[<span class="number">1</span>],&amp;sb);	<span class="comment">//	获取权限存入sb块中</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((mkdir(argv[<span class="number">2</span>],sb.st_mode)) &lt; <span class="number">0</span>)		<span class="comment">//创建目标目录,并判断是否创建成功</span></span><br><span class="line">		bail(<span class="string">"Create dest directory error!"</span>);</span><br><span class="line">	chdir(argv[<span class="number">2</span>]);	<span class="comment">//进入目标路径</span></span><br><span class="line">	getcwd(ddir,<span class="keyword">sizeof</span>(ddir));	<span class="comment">//获取目标路径，存入ddir</span></span><br><span class="line">	chdir(sdir);	<span class="comment">//回到源目录进行读写操作</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp)) != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//假定只有普通文件和目录文件</span></span><br><span class="line">		<span class="keyword">if</span> (dir-&gt;d_name[<span class="number">0</span>] == <span class="string">'.'</span>)	<span class="comment">//如果读取文件第一位为“.”，则跳过</span></span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (dir-&gt;d_type == DT_DIR) <span class="comment">//如果读取类型是文件夹</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name ,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			mkdir(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			create_fd = creat(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			<span class="comment">// 写入内容，调用复制，自行填写</span></span><br><span class="line">			close(create_fd);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">closedir(dp);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>目录操作</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux下文件系统的管理</title>
     <url>/posts/linux-file-management.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：我们都听过一句话，Linux/Unix中一切都是文件，所以在这里介绍一下Linux下文件系统的管理。</p>
@@ -1408,6 +1323,91 @@
       <tags>
         <tag>Linux</tag>
         <tag>文件管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下关于目录的操作及其程序设计</title>
+    <url>/posts/linux-catalog.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为Linux下目录的操作，通过学习目录操作使用C语言模拟读取目录信息等，进一步进行模拟程序的编写。</p>
+<a id="more"></a>
+
+<h2 id="读取目录"><a href="#读取目录" class="headerlink" title="读取目录"></a>读取目录</h2><ol>
+<li>打开目录</li>
+<li>读取目录信息</li>
+<li>关闭目录</li>
+</ol>
+<h3 id="打开目录"><a href="#打开目录" class="headerlink" title="打开目录"></a>打开目录</h3><p>头文件dirent.h</p>
+<blockquote>
+<p>DIR*    opendir(目录名称)；</p>
+<p>成功：    地址</p>
+<p>失败：    NULL</p>
+</blockquote>
+<h3 id="关闭目录"><a href="#关闭目录" class="headerlink" title="关闭目录"></a>关闭目录</h3><blockquote>
+<p>closedir(DIR* 指针)；</p>
+<p>成功：    0</p>
+<p>失败：    -1</p>
+</blockquote>
+<h3 id="读取目录信息"><a href="#读取目录信息" class="headerlink" title="读取目录信息"></a>读取目录信息</h3><blockquote>
+<p>struct dirent* readdir(DIR* 指针)；</p>
+<p>成功：    返回结构体指针</p>
+<p>失败：    NULL</p>
+<p>方式：    循环自动读取</p>
+<p>结构体内容：</p>
+<p>​            dt_tpye：目录类型</p>
+<p>​            dt_name：名称</p>
+</blockquote>
+<p>tips:</p>
+<p>如果文件名以<code>“.”</code>引导，该文件不可见</p>
+<p><code>.</code>为当前目录</p>
+<p><code>..</code>为父目录</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">if</span> (dp == <span class="literal">NULL</span>)</span><br><span class="line">		bail(<span class="string">"open dir error."</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp))!= <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt;d_name[<span class="number">0</span>] ==<span class="string">'.'</span>) </span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_REG)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Regular file: %s \n"</span>,dir-&gt;d_name);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(dir -&gt; d_type == DT_DIR)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Dir file: %s\n"</span>,dir-&gt;d_name);</span><br><span class="line">	&#125;</span><br><span class="line">	closedir(dp);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200318115207.png" alt></p>
+<h2 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h2><p>在Linux中可以使用命令 <code>mkdir</code> 进行创建目录，也可以在程序设计中使用mkdir进行创建。</p>
+<blockquote>
+<p> 创建目录函数</p>
+<p><code>mkdir (目录名称，权限参数)</code></p>
+<p>成功返回： 0</p>
+<p>失败返回： -1</p>
+</blockquote>
+<blockquote>
+<p>切换目录函数</p>
+<p><code>chdir(新目录名称)</code></p>
+<p>成功返回： 0</p>
+<p>失败返回： -1</p>
+</blockquote>
+<p>例如：</p>
+<ol>
+<li>给定源目录</li>
+<li>遍历目录</li>
+<li>创建一个新目录</li>
+<li>将源目录加入到新目录中</li>
+</ol>
+<p>假定：</p>
+<ol>
+<li>一级目录，不进入子目录</li>
+<li>只创建，不复制</li>
+</ol>
+<p>可行性：</p>
+<p>cpdir（ source,dest)中</p>
+<ol>
+<li>source 要存在，可读</li>
+<li>dest 要不存在，可写</li>
+<li>读取source状态，作为dest状态</li>
+<li>创建目标目录</li>
+<li>source:     readdir;chdir(dest)</li>
+<li>dest:     mkdir/create;chdir(source)</li>
+<li>关闭两个目录指针</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 512</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bail</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Error(%d):"</span>,errno);</span><br><span class="line">	perror(str);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> sdir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> ddir[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> sname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> dname[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">int</span> create_fd = <span class="number">-1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dirent</span>* <span class="title">dir</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	DIR* dp = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">sb</span>;</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">1</span>],F_OK) &lt; <span class="number">0</span>) <span class="comment">//判断源文件是否存在，不存在则报错</span></span><br><span class="line">		bail(<span class="string">"Source directory not exist!"</span>);</span><br><span class="line">	<span class="keyword">if</span>(access(argv[<span class="number">2</span>],F_OK) == <span class="number">0</span>) <span class="comment">//判断目标文件是否存在，存在则报错</span></span><br><span class="line">		bail(<span class="string">"Dest directory exist!"</span>);</span><br><span class="line">	getcwd(sdir,<span class="keyword">sizeof</span>(sdir)); <span class="comment">//获取源文件路径，存入sdir</span></span><br><span class="line">	<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb)); <span class="comment">//清空sb</span></span><br><span class="line">	stat(argv[<span class="number">1</span>],&amp;sb);	<span class="comment">//	获取权限存入sb块中</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>((mkdir(argv[<span class="number">2</span>],sb.st_mode)) &lt; <span class="number">0</span>)		<span class="comment">//创建目标目录,并判断是否创建成功</span></span><br><span class="line">		bail(<span class="string">"Create dest directory error!"</span>);</span><br><span class="line">	chdir(argv[<span class="number">2</span>]);	<span class="comment">//进入目标路径</span></span><br><span class="line">	getcwd(ddir,<span class="keyword">sizeof</span>(ddir));	<span class="comment">//获取目标路径，存入ddir</span></span><br><span class="line">	chdir(sdir);	<span class="comment">//回到源目录进行读写操作</span></span><br><span class="line">	</span><br><span class="line">	dp = opendir(argv[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">while</span>((dir = readdir(dp)) != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//假定只有普通文件和目录文件</span></span><br><span class="line">		<span class="keyword">if</span> (dir-&gt;d_name[<span class="number">0</span>] == <span class="string">'.'</span>)	<span class="comment">//如果读取文件第一位为“.”，则跳过</span></span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (dir-&gt;d_type == DT_DIR) <span class="comment">//如果读取类型是文件夹</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name ,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			mkdir(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">memset</span>(&amp;sb,<span class="number">0</span>,<span class="keyword">sizeof</span>(sb));</span><br><span class="line">			stat(dir-&gt;d_name,&amp;sb);</span><br><span class="line">			chdir(ddir);</span><br><span class="line">			create_fd = creat(dir-&gt;d_name,sb.st_mode);</span><br><span class="line">			<span class="comment">// 写入内容，调用复制，自行填写</span></span><br><span class="line">			close(create_fd);</span><br><span class="line">			chdir(sdir);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">closedir(dp);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>目录操作</tag>
       </tags>
   </entry>
   <entry>
@@ -1540,6 +1540,30 @@
       <tags>
         <tag>Linux</tag>
         <tag>文件读写</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下用户管理的程序设计</title>
+    <url>/posts/linux-user-program.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux下的用户管理中运用C语言程序设计来获得用户信息。</p>
+<a id="more"></a>
+
+<p>代码很简单，uid是当前用户的ID号，euid是当前用户的有效用户ID号。</p>
+<p>其中：</p>
+<p>#include &lt;unistd.h&gt;是Unix的标准库函数，以后会很经常用到。</p>
+<p>#include &lt;sys/types.h&gt;是Uni/Linux系统的基本系统数据类型的头文件。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">uid_t</span> uid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">uid_t</span> euid = <span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	uid = getuid();</span><br><span class="line">	euid = geteuid();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"uid = %d, euid = %d \n"</span>,uid,euid);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接来执行一下就可以看到uid和euid了~</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312204341.png" alt></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>Linux</tag>
+        <tag>程序设计</tag>
       </tags>
   </entry>
   <entry>
@@ -1750,30 +1774,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>Fadora</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下用户管理的程序设计</title>
-    <url>/posts/linux-user-program.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：此为在Linux下的用户管理中运用C语言程序设计来获得用户信息。</p>
-<a id="more"></a>
-
-<p>代码很简单，uid是当前用户的ID号，euid是当前用户的有效用户ID号。</p>
-<p>其中：</p>
-<p>#include &lt;unistd.h&gt;是Unix的标准库函数，以后会很经常用到。</p>
-<p>#include &lt;sys/types.h&gt;是Uni/Linux系统的基本系统数据类型的头文件。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">uid_t</span> uid = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">uid_t</span> euid = <span class="number">-1</span>;</span><br><span class="line">	</span><br><span class="line">	uid = getuid();</span><br><span class="line">	euid = geteuid();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"uid = %d, euid = %d \n"</span>,uid,euid);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>直接来执行一下就可以看到uid和euid了~</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/20200312204341.png" alt></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-        <tag>Linux</tag>
-        <tag>程序设计</tag>
       </tags>
   </entry>
   <entry>
@@ -2983,21 +2983,21 @@
 <p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200912232642646.png" alt="image-20200912232642646"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span> *<span class="title">lchild</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span> *<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BTNode;</span><br></pre></td></tr></table></figure>
 
-<h2 id="二叉树的遍历算法"><a href="#二叉树的遍历算法" class="headerlink" title="二叉树的遍历算法"></a>二叉树的遍历算法</h2><h4 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h4><p>访问根节点–&gt;先序遍历左子树–&gt;先序遍历右子树</p>
+<h2 id="二叉树的遍历算法"><a href="#二叉树的遍历算法" class="headerlink" title="二叉树的遍历算法"></a>二叉树的遍历算法</h2><h3 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h3><p>访问根节点–&gt;先序遍历左子树–&gt;先序遍历右子树</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BTNode *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		Visit(p);	<span class="comment">//假设访问函数为Visit</span></span><br><span class="line">		preorder(p-&gt;lchild);	<span class="comment">//先序遍历左子树</span></span><br><span class="line">		preorder(p-&gt;rchild);	<span class="comment">//先序遍历右子树</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>中序遍历左子树–&gt;访问根节点–&gt;中序遍历右子树</p>
+<h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><p>中序遍历左子树–&gt;访问根节点–&gt;中序遍历右子树</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorder</span><span class="params">(BTNode *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		inorder(p-&gt;lchild);</span><br><span class="line">		Visit(p);</span><br><span class="line">		inorder(p-&gt;rchild);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h4><p>后序遍历左子树–&gt;后序遍历右子树–&gt;访问根节点</p>
+<h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3><p>后序遍历左子树–&gt;后序遍历右子树–&gt;访问根节点</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder</span><span class="params">(BTNode *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		postorder(p-&gt;lchild);</span><br><span class="line">		postorder(p-&gt;rchild);</span><br><span class="line">		Visit(p);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_tree_depth</span><span class="params">(BTNode *root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ld,rd;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        ld = get_tree_depth(root-&gt;lchild);  <span class="comment">//求左子树深度</span></span><br><span class="line">        rd = get_tree_depth(root-&gt;rchild);  <span class="comment">//求右子树深度</span></span><br><span class="line">        <span class="keyword">return</span> (ld&gt;rd?ld:rd) +<span class="number">1</span>;            <span class="comment">//返回左右子树深度最大值+1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_tree_depth</span><span class="params">(BTNode *root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ld,rd;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        ld = get_tree_depth(root-&gt;lchild);  <span class="comment">//求左子树深度</span></span><br><span class="line">        rd = get_tree_depth(root-&gt;rchild);  <span class="comment">//求右子树深度</span></span><br><span class="line">        <span class="keyword">return</span> (ld&gt;rd?ld:rd) +<span class="number">1</span>;            <span class="comment">//返回左右子树深度最大值+1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="层次遍历"><a href="#层次遍历" class="headerlink" title="层次遍历"></a>层次遍历</h4><p>按照层次进行遍历输出，需要建立一个循环队列。先将二叉树的头结点入队，然后出队列，访问该节点。如果左子树存在则左子树根节点入队，如果右子树存在则右子树根节点入队，然后出队列，对结点进行访问。如此反复直到队列为空。</p>
+<h3 id="层次遍历"><a href="#层次遍历" class="headerlink" title="层次遍历"></a>层次遍历</h3><p>按照层次进行遍历输出，需要建立一个循环队列。先将二叉树的头结点入队，然后出队列，访问该节点。如果左子树存在则左子树根节点入队，如果右子树存在则右子树根节点入队，然后出队列，对结点进行访问。如此反复直到队列为空。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//层次遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">leavel</span><span class="params">(BTNode *node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> front = <span class="number">0</span>,rear = <span class="number">0</span>;</span><br><span class="line">    BTNode *que[MAX_SIZE];</span><br><span class="line">    BTNode *temp_node;</span><br><span class="line">    <span class="keyword">if</span>(node != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        rear =(rear + <span class="number">1</span>)% MAX_SIZE; <span class="comment">//循环队列</span></span><br><span class="line">        que[rear] = node;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(front != rear)    <span class="comment">//队列不为空的时候出队</span></span><br><span class="line">        &#123;</span><br><span class="line">            front = (front + <span class="number">1</span>) % MAX_SIZE;</span><br><span class="line">            temp_node = que[front];</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%3c"</span>,temp_node-&gt;data);  <span class="comment">//访问结点</span></span><br><span class="line">            <span class="keyword">if</span>(temp_node-&gt;lchild != <span class="literal">NULL</span>)   <span class="comment">//左子树不为空则入队</span></span><br><span class="line">            &#123;</span><br><span class="line">                rear = (rear + <span class="number">1</span>)% MAX_SIZE;</span><br><span class="line">                que[rear] = temp_node-&gt;lchild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(temp_node-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                rear = (rear + <span class="number">1</span>) % MAX_SIZE;</span><br><span class="line">                que[rear] = temp_node-&gt;rchild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="创建二叉树"><a href="#创建二叉树" class="headerlink" title="创建二叉树"></a>创建二叉树</h4><p>二叉树以链表的形式存储</p>
+<h3 id="创建二叉树"><a href="#创建二叉树" class="headerlink" title="创建二叉树"></a>创建二叉树</h3><p>二叉树以链表的形式存储</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_SIZE 128</span></span><br><span class="line"><span class="comment">// 二叉树的结构定义</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span> *<span class="title">lchild</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BTNode</span> *<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BTNode;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">            二叉树的创建</span></span><br><span class="line"><span class="comment">采取输入格式为：ABD##E##CF###</span></span><br><span class="line"><span class="comment">构建：</span></span><br><span class="line"><span class="comment">                    A</span></span><br><span class="line"><span class="comment">            B               C</span></span><br><span class="line"><span class="comment">        D       E       F       #</span></span><br><span class="line"><span class="comment">      #   #   #   #   #   #</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"><span class="function">BTNode *<span class="title">create_tree</span><span class="params">(<span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BTNode *root;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    ch = str[cnt];</span><br><span class="line">    ++cnt;</span><br><span class="line">    <span class="keyword">if</span>(ch == <span class="string">'#'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    root = (BTNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BTNode));</span><br><span class="line">    root-&gt;data = ch;</span><br><span class="line">    root-&gt;lchild = create_tree(str);</span><br><span class="line">    root-&gt;rchild = create_tree(str);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//先序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BTNode *node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%3c"</span>,node-&gt;data);</span><br><span class="line">        preorder(node-&gt;lchild);</span><br><span class="line">        preorder(node-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorder</span><span class="params">(BTNode *node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        preorder(node-&gt;lchild);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%3c"</span>,node-&gt;data);</span><br><span class="line">        preorder(node-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorder</span><span class="params">(BTNode *node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node!=<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        preorder(node-&gt;lchild);</span><br><span class="line">        preorder(node-&gt;rchild);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%3c"</span>,node-&gt;data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//层次遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">leavel</span><span class="params">(BTNode *node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> front = <span class="number">0</span>,rear = <span class="number">0</span>;</span><br><span class="line">    BTNode *que[MAX_SIZE];</span><br><span class="line">    BTNode *temp_node;</span><br><span class="line">    <span class="keyword">if</span>(node != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        rear =(rear + <span class="number">1</span>)% MAX_SIZE; <span class="comment">//循环队列</span></span><br><span class="line">        que[rear] = node;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(front != rear)    <span class="comment">//队列不为空的时候出队</span></span><br><span class="line">        &#123;</span><br><span class="line">            front = (front + <span class="number">1</span>) % MAX_SIZE;</span><br><span class="line">            temp_node = que[front];</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%3c"</span>,temp_node-&gt;data);  <span class="comment">//访问结点</span></span><br><span class="line">            <span class="keyword">if</span>(temp_node-&gt;lchild != <span class="literal">NULL</span>)   <span class="comment">//左子树不为空则入队</span></span><br><span class="line">            &#123;</span><br><span class="line">                rear = (rear + <span class="number">1</span>)% MAX_SIZE;</span><br><span class="line">                que[rear] = temp_node-&gt;lchild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(temp_node-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                rear = (rear + <span class="number">1</span>) % MAX_SIZE;</span><br><span class="line">                que[rear] = temp_node-&gt;rchild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//深度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_tree_depth</span><span class="params">(BTNode *root)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ld,rd;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        ld = get_tree_depth(root-&gt;lchild);  <span class="comment">//求左子树深度</span></span><br><span class="line">        rd = get_tree_depth(root-&gt;rchild);  <span class="comment">//求右子树深度</span></span><br><span class="line">        <span class="keyword">return</span> (ld&gt;rd?ld:rd) +<span class="number">1</span>;            <span class="comment">//返回左右子树深度最大值+1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BTNode *bt = create_tree(<span class="string">"ABD##E##CF###"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"preorderr:\n"</span>);</span><br><span class="line">	preorder(bt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"inorder:\n"</span>);</span><br><span class="line">	inorder(bt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"postorder:\n"</span>);</span><br><span class="line">	postorder(bt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"tree_leave:\n"</span>);</span><br><span class="line">    leavel(bt);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"tree_depth:\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%3d"</span>,get_tree_depth(bt));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="二叉树遍历算法的改进"><a href="#二叉树遍历算法的改进" class="headerlink" title="二叉树遍历算法的改进"></a>二叉树遍历算法的改进</h2><p>二叉树的深度优先遍历算法都是用递归函数实现的，效率低下。原因是因为相当于调用一个栈并做了诸如保护线程和恢复现场等复杂操作，才使得代码简短。可以采用二叉树深度优先遍历算法的非递归实现和线索二叉树。</p>
@@ -3370,78 +3370,6 @@
       <tags>
         <tag>python</tag>
         <tag>Opencv</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>利用python的海龟素描出一张图片的内容</title>
-    <url>/posts/turtle_draw_pic.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要： 这是一篇有关利用OpenCV+turtle根据图片来绘画出一副素描画的总结。</p>
-<a id="more"></a>
-
-<p>（拖延了好久！很抱歉@_@)</p>
-<p>其实这是我在做车牌号识别的项目中玩OpenCV产生的灵感！想着turtle竟然可以读取坐标进行画图，那我将图片的坐标让海龟自动帮我画画岂不是很好吗！哈哈哈哈哈哈哈我可真是个小天才，老资本家了（狗头）</p>
-<h2 id="视频效果展示："><a href="#视频效果展示：" class="headerlink" title="视频效果展示："></a>视频效果展示：</h2><iframe class="bilibili" src="//player.bilibili.com/player.html?aid=752975530&bvid=BV1Sk4y1r7mH&cid=182293755&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
-
-<h2 id="图片效果展示："><a href="#图片效果展示：" class="headerlink" title="图片效果展示："></a>图片效果展示：</h2><p><img src="https://gitee.com/hongcyu/image/raw/master/images/image.jpg" alt></p>
-<p>变成</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/2313S1.PNG" alt="2313S1"></p>
-<blockquote>
-<p> tip: 根据[名为一无]小伙伴提出的建议做出说明：新版<a href="https://www.bilibili.com/read/cv2/" target="_blank" rel="noopener">cv2</a>这个库的findContours这个函数对比老版本返回值只有两个，另外优化上turtle设置成速度为0就已经是最大速度了，更快可以增加一个delay(0)以去掉绘画延迟</p>
-</blockquote>
-<h2 id="步骤拆解"><a href="#步骤拆解" class="headerlink" title="步骤拆解"></a>步骤拆解</h2><h3 id="边缘检测"><a href="#边缘检测" class="headerlink" title="边缘检测"></a>边缘检测</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">image = cv2.imread(pic,<span class="number">0</span>)			<span class="comment">#读取图像</span></span><br><span class="line">edges = cv2.Canny(image,<span class="number">100</span>,<span class="number">200</span>)	<span class="comment">#进行边缘检测</span></span><br></pre></td></tr></table></figure>
-
-<p>在 OpenCV 中只需要一个函数：cv2.Canny()，就可以完成。 让我们看如何使用这个函数。这个函数的第一个参数是输入图像。第二和第三 个分别是 minVal 和 maxVal。第三个参数设置用来计算图像梯度的 Sobel 卷积核的大小，默认值为 3。最后一个参数是 L2gradient，它可以用来设定 求梯度大小的方程。当为False时 使用方程：Edge−Gradient(G) = |G2 x | + |G2 y | 代替，默认值为 False。</p>
-<p>效果图：<img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816120840476.png" alt="image-20200816120840476"></p>
-<p>很棒提取出来的边缘很不错的，各位可以试着调节minVal 和 maxVal来看看有什么区别！</p>
-<h3 id="灰度处理"><a href="#灰度处理" class="headerlink" title="灰度处理"></a>灰度处理</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">img_gray = cv2.cvtColor(edges,cv2.COLOR_BAYER_BG2GRAY)</span><br></pre></td></tr></table></figure>
-
-<p>在 OpenCV 中有超过 150 中进行颜色空间转换的方法。但是你以后就会 发现我们经常用到的也就两种：BGR↔Gray 和 BGR↔HSV。 我们要用到的函数是：cv2.cvtColor(input_image，flag)，其中 flag 就是转换类型。 对于 BGR↔Gray 的转换，我们要使用的 flag 就是 cv2.COLOR_BGR2GRAY。 同样对于 BGR↔HSV 的转换，我们用的 flag 就是 cv2.COLOR_BGR2HSV。 </p>
-<p>为什么已经变成黑白了还要进行灰度处理呢，这是为了更好的进行下一步（图像阈值）做准备，可以先来看看不进行灰度处理的效果：</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816121319592.png" alt="image-20200816121319592"></p>
-<p>点分布的不均匀，提取出来的点很少，增加灰度处理可以使得下一步图像阈值更好的进行处理。</p>
-<h3 id="图像阈值"><a href="#图像阈值" class="headerlink" title="图像阈值"></a>图像阈值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ret, thresh = cv2.threshold(img_gray,<span class="number">127</span>,<span class="number">255</span>,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>与名字一样，这种方法非常简单。但像素值高于阈值时，我们给这个像素 赋予一个新值（可能是白色），否则我们给它赋予另外一种颜色（也许是黑色）。 这个函数就是 cv2.threshhold()。这个函数的第一个参数就是原图像，原图 像应该是灰度图。第二个参数就是用来对像素值进行分类的阈值。第三个参数 就是当像素值高于（有时是小于）阈值时应该被赋予的新的像素值。OpenCV 提供了多种不同的阈值方法，这是有第四个参数来决定的。这些方法包括： </p>
-<p>• cv2.THRESH_BINARY </p>
-<p>• cv2.THRESH_BINARY_INV </p>
-<p>• cv2.THRESH_TRUNC </p>
-<p>• cv2.THRESH_TOZERO </p>
-<p>• cv2.THRESH_TOZERO_INV</p>
-<blockquote>
-<p> 这一步是为了提取出thresh为下一步提取坐标做准备，此处参数部分我也不是很懂，希望小伙伴可以帮我解答</p>
-</blockquote>
-<h3 id="提取目标轮廓坐标"><a href="#提取目标轮廓坐标" class="headerlink" title="提取目标轮廓坐标"></a>提取目标轮廓坐标</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#下面这句是老版本opencv的写法，如果运行报错可以将下句注释，取消下下句的注释</span><br><span class="line">image,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">#contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br></pre></td></tr></table></figure>
-
-<p>函数 cv2.findContours() 有三个参数，第一个是输入图像，第二个是 轮廓检索模式，第三个是轮廓近似方法。返回值有三个，第一个是图像，第二个 是轮廓，第三个是（轮廓的）层析结构。轮廓（第二个返回值）是一个 Python 列表，其中存储这图像中的所有轮廓。每一个轮廓都是一个 Numpy 数组，包 含对象边界点（x，y）的坐标。</p>
-<p>从这里就可以发现，目标轮廓就在我们得到的contours里啦！</p>
-<p>打印出contours会发现里面是很多的直矩阵的坐标：</p>
-<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816122814951.png" alt="image-20200816122814951"></p>
-<p>接下来我们只要提取出坐标就大功告成了！</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x,y,w,h = cv2.boundingRect(contours[i])</span><br></pre></td></tr></table></figure>
-
-<p>直边界矩形 一个直矩形（就是没有旋转的矩形）。它不会考虑对象是否旋转。 所以边界矩形的面积不是最小的。可以使用函数 cv2.boundingRect() 查找得到。 （x，y）为矩形左上角的坐标，（w，h）是矩形的宽和高。</p>
-<h3 id="小海龟该怎么写"><a href="#小海龟该怎么写" class="headerlink" title="小海龟该怎么写"></a>小海龟该怎么写</h3><p>其实turtle怎么写，多玩几遍就知道了，说实话我也经常忘记，但是我记得有这些步骤，我去看看语法怎么写就容易写出来（记性老差了）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(xy)</span>:</span></span><br><span class="line">    turtle.pensize(<span class="number">2</span>)		<span class="comment">#设置画笔大小</span></span><br><span class="line">    turtle.setup(width=<span class="number">0.6</span>,height=<span class="number">1.0</span>)	<span class="comment">#设置画布大小</span></span><br><span class="line">    turtle.speed(<span class="number">0</span>)	<span class="comment">#设置速度</span></span><br><span class="line">    <span class="keyword">for</span> array <span class="keyword">in</span> xy[::<span class="number">-1</span>]:	</span><br><span class="line">        turtle.penup()	<span class="comment">#提起画笔</span></span><br><span class="line">        turtle.goto((array[<span class="number">0</span>]/<span class="number">2</span>)<span class="number">-100</span>,-(array[<span class="number">1</span>]/<span class="number">2</span>)+<span class="number">250</span>)	<span class="comment">#到指定坐标</span></span><br><span class="line">        turtle.pendown()	<span class="comment">#放下画笔</span></span><br><span class="line">        turtle.forward(<span class="number">1</span>)	<span class="comment">#画多长长度</span></span><br><span class="line">        print(turtle.pos())	<span class="comment">#命令行显示出来，可以注释掉</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    turtle.done()	<span class="comment">#保留画的图</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="整体代码"><a href="#整体代码" class="headerlink" title="整体代码"></a>整体代码</h2><p>下面是整体代码的实现</p>
-<p>github:<a href="https://github.com/hongcyu/turtle_draw" target="_blank" rel="noopener">https://github.com/hongcyu/turtle_draw</a></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">array_pic</span><span class="params">(pic)</span>:</span></span><br><span class="line">    image = cv2.imread(pic,<span class="number">0</span>)</span><br><span class="line">    edges = cv2.Canny(image,<span class="number">100</span>,<span class="number">200</span>)</span><br><span class="line">    img_gray = cv2.cvtColor(edges,cv2.COLOR_BAYER_BG2GRAY)</span><br><span class="line">    ret, thresh = cv2.threshold(img_gray,<span class="number">127</span>,<span class="number">255</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="comment">#下面这句是老版本opencv的写法，如果运行报错可以将下句注释，取消下下句的注释</span></span><br><span class="line">    image,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">    <span class="comment">#contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span></span><br><span class="line">    xy = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(contours)):</span><br><span class="line">        x,y,w,h = cv2.boundingRect(contours[i])</span><br><span class="line">        list_xy = [x,y]</span><br><span class="line">        xy.append(list_xy)</span><br><span class="line">    <span class="keyword">return</span> xy</span><br><span class="line">    <span class="comment"># file = open("array.txt", mode="x")</span></span><br><span class="line">    <span class="comment"># file.writelines(str(contours))</span></span><br><span class="line">    <span class="comment"># file.close()</span></span><br><span class="line">    <span class="comment"># cv2.imshow("1.jpg",image)</span></span><br><span class="line">    <span class="comment"># cv2.waitKey(0)</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(xy)</span>:</span></span><br><span class="line">    turtle.pensize(<span class="number">2</span>)</span><br><span class="line">    turtle.setup(width=<span class="number">0.6</span>,height=<span class="number">1.0</span>)</span><br><span class="line">    turtle.speed(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> array <span class="keyword">in</span> xy[::<span class="number">-1</span>]:</span><br><span class="line">        turtle.penup()</span><br><span class="line">        turtle.goto((array[<span class="number">0</span>]/<span class="number">2</span>)<span class="number">-100</span>,-(array[<span class="number">1</span>]/<span class="number">2</span>)+<span class="number">250</span>)</span><br><span class="line">        turtle.pendown()</span><br><span class="line">        turtle.forward(<span class="number">1</span>)</span><br><span class="line">        print(turtle.pos())</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    turtle.done()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    pic = <span class="string">"image.jpg"</span></span><br><span class="line">    xy = array_pic(pic)</span><br><span class="line">    draw(xy)</span><br></pre></td></tr></table></figure>
-
-<h2 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h2><ol>
-<li><p>你需要安装opencv，在cmd中输入：<strong>pip3 install opencv-python</strong></p>
-</li>
-<li><p>要使用需要将图片放置在和py文件同一个文件夹下，接着修改下面的pic后的参数为图片名字。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"> 	pic = &quot;image.jpg&quot;</span><br><span class="line"> 	xy = array_pic(pic)</span><br><span class="line">	 draw(xy)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>turtle</tag>
       </tags>
   </entry>
   <entry>
@@ -4095,27 +4023,75 @@
       </tags>
   </entry>
   <entry>
-    <title>城市观星指南——轻松找到北极星</title>
-    <url>/posts/city-star1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：是不是憋在家里好久没出门放风了？在做好防护的前提下在空旷的楼下广场或自家阳台上看星星是缓解焦虑心情的好选择。</p>
+    <title>利用python的海龟素描出一张图片的内容</title>
+    <url>/posts/turtle_draw_pic.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要： 这是一篇有关利用OpenCV+turtle根据图片来绘画出一副素描画的总结。</p>
 <a id="more"></a>
 
-<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/city_star1.jpg" alt></p>
-<p>北极星并不是某一特定的天体，而是指最靠近北天极的一颗星， 由于地球自转轴的漂移，产生了名为岁差的现象，岁差周期大概是26000年，在这段时间中，被称为北极星的天体也会不断更替。现阶段是由勾陈一代理北极星这一称号，但现在也还不是它最最靠近北天极的时候，预计在2100年时它会到达离北天极只有28′，然后，勾陈一就将逐渐远离北天极，而勾陈四也会逐渐成为下一任北极星。</p>
-<p>下面我们看看小姐姐的视频：</p>
-<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=92102231&cid=157257711&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
+<p>（拖延了好久！很抱歉@_@)</p>
+<p>其实这是我在做车牌号识别的项目中玩OpenCV产生的灵感！想着turtle竟然可以读取坐标进行画图，那我将图片的坐标让海龟自动帮我画画岂不是很好吗！哈哈哈哈哈哈哈我可真是个小天才，老资本家了（狗头）</p>
+<h2 id="视频效果展示："><a href="#视频效果展示：" class="headerlink" title="视频效果展示："></a>视频效果展示：</h2><iframe class="bilibili" src="//player.bilibili.com/player.html?aid=752975530&bvid=BV1Sk4y1r7mH&cid=182293755&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
 
-<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>北极星是古代航海、野外活动辨认方向的一个很重要指标，另外也是小至观星入门之辨认方向星座，大至天文摄影、观测室赤道仪的准确定位等皆为十分重要的作用。由于北极星最靠近正北的方位，千百年来地球上的人们也靠它的星光来导航。</p>
-<p>在北半球的夜空中，位于北方天空的北斗七星十分显眼，这七颗恒星分别是大熊座的天枢（贪狼）、天璇（巨门）、天玑（禄存）、天权（文曲）、玉衡（廉贞）、开阳（武曲）以及瑶光（破军）。它们看起来比其他星星明亮，而且排列成勺子状。如果沿着天璇和天枢的方向延伸大约5倍，可以找到另一颗亮星，这就是北极星。无论在什么时候观测北斗七星和北极星，都会观测到这样的现象。在我国古代，北斗七星被用来“定四时，分寒暑”——“斗柄东指，天下皆春；斗柄南指，天下皆夏；斗柄西指，天下皆秋；斗柄北指，天下皆冬。”通过北斗七星的斗柄方向变化，可以知道季节更替。</p>
-<h2 id="个人感想"><a href="#个人感想" class="headerlink" title="个人感想"></a>个人感想</h2><p>我已经很久没有抬头看看星星了，忽然看到这个视频，产生了很大的感触。</p>
-<p>人有的时候停下来休息，抬头看看星空也未免不是一种感受宁静的方式。</p>
+<h2 id="图片效果展示："><a href="#图片效果展示：" class="headerlink" title="图片效果展示："></a>图片效果展示：</h2><p><img src="https://gitee.com/hongcyu/image/raw/master/images/image.jpg" alt></p>
+<p>变成</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/2313S1.PNG" alt="2313S1"></p>
+<blockquote>
+<p> tip: 根据[名为一无]小伙伴提出的建议做出说明：新版<a href="https://www.bilibili.com/read/cv2/" target="_blank" rel="noopener">cv2</a>这个库的findContours这个函数对比老版本返回值只有两个，另外优化上turtle设置成速度为0就已经是最大速度了，更快可以增加一个delay(0)以去掉绘画延迟</p>
+</blockquote>
+<h2 id="步骤拆解"><a href="#步骤拆解" class="headerlink" title="步骤拆解"></a>步骤拆解</h2><h3 id="边缘检测"><a href="#边缘检测" class="headerlink" title="边缘检测"></a>边缘检测</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">image = cv2.imread(pic,<span class="number">0</span>)			<span class="comment">#读取图像</span></span><br><span class="line">edges = cv2.Canny(image,<span class="number">100</span>,<span class="number">200</span>)	<span class="comment">#进行边缘检测</span></span><br></pre></td></tr></table></figure>
+
+<p>在 OpenCV 中只需要一个函数：cv2.Canny()，就可以完成。 让我们看如何使用这个函数。这个函数的第一个参数是输入图像。第二和第三 个分别是 minVal 和 maxVal。第三个参数设置用来计算图像梯度的 Sobel 卷积核的大小，默认值为 3。最后一个参数是 L2gradient，它可以用来设定 求梯度大小的方程。当为False时 使用方程：Edge−Gradient(G) = |G2 x | + |G2 y | 代替，默认值为 False。</p>
+<p>效果图：<img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816120840476.png" alt="image-20200816120840476"></p>
+<p>很棒提取出来的边缘很不错的，各位可以试着调节minVal 和 maxVal来看看有什么区别！</p>
+<h3 id="灰度处理"><a href="#灰度处理" class="headerlink" title="灰度处理"></a>灰度处理</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">img_gray = cv2.cvtColor(edges,cv2.COLOR_BAYER_BG2GRAY)</span><br></pre></td></tr></table></figure>
+
+<p>在 OpenCV 中有超过 150 中进行颜色空间转换的方法。但是你以后就会 发现我们经常用到的也就两种：BGR↔Gray 和 BGR↔HSV。 我们要用到的函数是：cv2.cvtColor(input_image，flag)，其中 flag 就是转换类型。 对于 BGR↔Gray 的转换，我们要使用的 flag 就是 cv2.COLOR_BGR2GRAY。 同样对于 BGR↔HSV 的转换，我们用的 flag 就是 cv2.COLOR_BGR2HSV。 </p>
+<p>为什么已经变成黑白了还要进行灰度处理呢，这是为了更好的进行下一步（图像阈值）做准备，可以先来看看不进行灰度处理的效果：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816121319592.png" alt="image-20200816121319592"></p>
+<p>点分布的不均匀，提取出来的点很少，增加灰度处理可以使得下一步图像阈值更好的进行处理。</p>
+<h3 id="图像阈值"><a href="#图像阈值" class="headerlink" title="图像阈值"></a>图像阈值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ret, thresh = cv2.threshold(img_gray,<span class="number">127</span>,<span class="number">255</span>,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>与名字一样，这种方法非常简单。但像素值高于阈值时，我们给这个像素 赋予一个新值（可能是白色），否则我们给它赋予另外一种颜色（也许是黑色）。 这个函数就是 cv2.threshhold()。这个函数的第一个参数就是原图像，原图 像应该是灰度图。第二个参数就是用来对像素值进行分类的阈值。第三个参数 就是当像素值高于（有时是小于）阈值时应该被赋予的新的像素值。OpenCV 提供了多种不同的阈值方法，这是有第四个参数来决定的。这些方法包括： </p>
+<p>• cv2.THRESH_BINARY </p>
+<p>• cv2.THRESH_BINARY_INV </p>
+<p>• cv2.THRESH_TRUNC </p>
+<p>• cv2.THRESH_TOZERO </p>
+<p>• cv2.THRESH_TOZERO_INV</p>
+<blockquote>
+<p> 这一步是为了提取出thresh为下一步提取坐标做准备，此处参数部分我也不是很懂，希望小伙伴可以帮我解答</p>
+</blockquote>
+<h3 id="提取目标轮廓坐标"><a href="#提取目标轮廓坐标" class="headerlink" title="提取目标轮廓坐标"></a>提取目标轮廓坐标</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#下面这句是老版本opencv的写法，如果运行报错可以将下句注释，取消下下句的注释</span><br><span class="line">image,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">#contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br></pre></td></tr></table></figure>
+
+<p>函数 cv2.findContours() 有三个参数，第一个是输入图像，第二个是 轮廓检索模式，第三个是轮廓近似方法。返回值有三个，第一个是图像，第二个 是轮廓，第三个是（轮廓的）层析结构。轮廓（第二个返回值）是一个 Python 列表，其中存储这图像中的所有轮廓。每一个轮廓都是一个 Numpy 数组，包 含对象边界点（x，y）的坐标。</p>
+<p>从这里就可以发现，目标轮廓就在我们得到的contours里啦！</p>
+<p>打印出contours会发现里面是很多的直矩阵的坐标：</p>
+<p><img src="https://gitee.com/hongcyu/image/raw/master/images/image-20200816122814951.png" alt="image-20200816122814951"></p>
+<p>接下来我们只要提取出坐标就大功告成了！</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x,y,w,h = cv2.boundingRect(contours[i])</span><br></pre></td></tr></table></figure>
+
+<p>直边界矩形 一个直矩形（就是没有旋转的矩形）。它不会考虑对象是否旋转。 所以边界矩形的面积不是最小的。可以使用函数 cv2.boundingRect() 查找得到。 （x，y）为矩形左上角的坐标，（w，h）是矩形的宽和高。</p>
+<h3 id="小海龟该怎么写"><a href="#小海龟该怎么写" class="headerlink" title="小海龟该怎么写"></a>小海龟该怎么写</h3><p>其实turtle怎么写，多玩几遍就知道了，说实话我也经常忘记，但是我记得有这些步骤，我去看看语法怎么写就容易写出来（记性老差了）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(xy)</span>:</span></span><br><span class="line">    turtle.pensize(<span class="number">2</span>)		<span class="comment">#设置画笔大小</span></span><br><span class="line">    turtle.setup(width=<span class="number">0.6</span>,height=<span class="number">1.0</span>)	<span class="comment">#设置画布大小</span></span><br><span class="line">    turtle.speed(<span class="number">0</span>)	<span class="comment">#设置速度</span></span><br><span class="line">    <span class="keyword">for</span> array <span class="keyword">in</span> xy[::<span class="number">-1</span>]:	</span><br><span class="line">        turtle.penup()	<span class="comment">#提起画笔</span></span><br><span class="line">        turtle.goto((array[<span class="number">0</span>]/<span class="number">2</span>)<span class="number">-100</span>,-(array[<span class="number">1</span>]/<span class="number">2</span>)+<span class="number">250</span>)	<span class="comment">#到指定坐标</span></span><br><span class="line">        turtle.pendown()	<span class="comment">#放下画笔</span></span><br><span class="line">        turtle.forward(<span class="number">1</span>)	<span class="comment">#画多长长度</span></span><br><span class="line">        print(turtle.pos())	<span class="comment">#命令行显示出来，可以注释掉</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    turtle.done()	<span class="comment">#保留画的图</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="整体代码"><a href="#整体代码" class="headerlink" title="整体代码"></a>整体代码</h2><p>下面是整体代码的实现</p>
+<p>github:<a href="https://github.com/hongcyu/turtle_draw" target="_blank" rel="noopener">https://github.com/hongcyu/turtle_draw</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">array_pic</span><span class="params">(pic)</span>:</span></span><br><span class="line">    image = cv2.imread(pic,<span class="number">0</span>)</span><br><span class="line">    edges = cv2.Canny(image,<span class="number">100</span>,<span class="number">200</span>)</span><br><span class="line">    img_gray = cv2.cvtColor(edges,cv2.COLOR_BAYER_BG2GRAY)</span><br><span class="line">    ret, thresh = cv2.threshold(img_gray,<span class="number">127</span>,<span class="number">255</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="comment">#下面这句是老版本opencv的写法，如果运行报错可以将下句注释，取消下下句的注释</span></span><br><span class="line">    image,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span><br><span class="line">    <span class="comment">#contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)</span></span><br><span class="line">    xy = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(contours)):</span><br><span class="line">        x,y,w,h = cv2.boundingRect(contours[i])</span><br><span class="line">        list_xy = [x,y]</span><br><span class="line">        xy.append(list_xy)</span><br><span class="line">    <span class="keyword">return</span> xy</span><br><span class="line">    <span class="comment"># file = open("array.txt", mode="x")</span></span><br><span class="line">    <span class="comment"># file.writelines(str(contours))</span></span><br><span class="line">    <span class="comment"># file.close()</span></span><br><span class="line">    <span class="comment"># cv2.imshow("1.jpg",image)</span></span><br><span class="line">    <span class="comment"># cv2.waitKey(0)</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(xy)</span>:</span></span><br><span class="line">    turtle.pensize(<span class="number">2</span>)</span><br><span class="line">    turtle.setup(width=<span class="number">0.6</span>,height=<span class="number">1.0</span>)</span><br><span class="line">    turtle.speed(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> array <span class="keyword">in</span> xy[::<span class="number">-1</span>]:</span><br><span class="line">        turtle.penup()</span><br><span class="line">        turtle.goto((array[<span class="number">0</span>]/<span class="number">2</span>)<span class="number">-100</span>,-(array[<span class="number">1</span>]/<span class="number">2</span>)+<span class="number">250</span>)</span><br><span class="line">        turtle.pendown()</span><br><span class="line">        turtle.forward(<span class="number">1</span>)</span><br><span class="line">        print(turtle.pos())</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">    turtle.done()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    pic = <span class="string">"image.jpg"</span></span><br><span class="line">    xy = array_pic(pic)</span><br><span class="line">    draw(xy)</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h2><ol>
+<li><p>你需要安装opencv，在cmd中输入：<strong>pip3 install opencv-python</strong></p>
+</li>
+<li><p>要使用需要将图片放置在和py文件同一个文件夹下，接着修改下面的pic后的参数为图片名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"> 	pic = &quot;image.jpg&quot;</span><br><span class="line"> 	xy = array_pic(pic)</span><br><span class="line">	 draw(xy)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
 ]]></content>
       <categories>
-        <category>随笔</category>
+        <category>python</category>
       </categories>
       <tags>
-        <tag>随笔</tag>
-        <tag>观星</tag>
+        <tag>python</tag>
+        <tag>turtle</tag>
       </tags>
   </entry>
   <entry>
@@ -4178,6 +4154,30 @@
         <tag>C语言</tag>
         <tag>python</tag>
         <tag>KMP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>城市观星指南——轻松找到北极星</title>
+    <url>/posts/city-star1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：是不是憋在家里好久没出门放风了？在做好防护的前提下在空旷的楼下广场或自家阳台上看星星是缓解焦虑心情的好选择。</p>
+<a id="more"></a>
+
+<h2 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h2><p><img src="https://cdn.jsdelivr.net/gh/hongcyu/image/images/city_star1.jpg" alt></p>
+<p>北极星并不是某一特定的天体，而是指最靠近北天极的一颗星， 由于地球自转轴的漂移，产生了名为岁差的现象，岁差周期大概是26000年，在这段时间中，被称为北极星的天体也会不断更替。现阶段是由勾陈一代理北极星这一称号，但现在也还不是它最最靠近北天极的时候，预计在2100年时它会到达离北天极只有28′，然后，勾陈一就将逐渐远离北天极，而勾陈四也会逐渐成为下一任北极星。</p>
+<p>下面我们看看小姐姐的视频：</p>
+<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=92102231&cid=157257711&page=1&high_quality=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
+
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>北极星是古代航海、野外活动辨认方向的一个很重要指标，另外也是小至观星入门之辨认方向星座，大至天文摄影、观测室赤道仪的准确定位等皆为十分重要的作用。由于北极星最靠近正北的方位，千百年来地球上的人们也靠它的星光来导航。</p>
+<p>在北半球的夜空中，位于北方天空的北斗七星十分显眼，这七颗恒星分别是大熊座的天枢（贪狼）、天璇（巨门）、天玑（禄存）、天权（文曲）、玉衡（廉贞）、开阳（武曲）以及瑶光（破军）。它们看起来比其他星星明亮，而且排列成勺子状。如果沿着天璇和天枢的方向延伸大约5倍，可以找到另一颗亮星，这就是北极星。无论在什么时候观测北斗七星和北极星，都会观测到这样的现象。在我国古代，北斗七星被用来“定四时，分寒暑”——“斗柄东指，天下皆春；斗柄南指，天下皆夏；斗柄西指，天下皆秋；斗柄北指，天下皆冬。”通过北斗七星的斗柄方向变化，可以知道季节更替。</p>
+<h2 id="个人感想"><a href="#个人感想" class="headerlink" title="个人感想"></a>个人感想</h2><p>我已经很久没有抬头看看星星了，忽然看到这个视频，产生了很大的感触。</p>
+<p>人有的时候停下来休息，抬头看看星空也未免不是一种感受宁静的方式。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+        <tag>观星</tag>
       </tags>
   </entry>
   <entry>
@@ -5114,6 +5114,42 @@
       </tags>
   </entry>
   <entry>
+    <title>软件测试——自动化测试</title>
+    <url>/posts/Software_testing_1.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：自动化测试是可以代替大量的重复机械劳动，自动的检测、处理、判断、操纵等，以实现预期目标</p>
+<a id="more"></a>
+
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>由及其设备在没有人为干预或者较少干预的情况下，按照认为人为的设计要求，自动的检测、处理、判断、操纵等，以实现预期目标的过程</p>
+<h2 id="自动化测试优点"><a href="#自动化测试优点" class="headerlink" title="自动化测试优点"></a>自动化测试优点</h2><ul>
+<li>自动化测试可以代替大量的重复性机械劳动，测试工程师可以有更多时间测试新的业务功能</li>
+<li>自动化测试可以大幅度提升回归测试的效率</li>
+<li>当有人类无法执行的任务时，自动化测试的作用更加强烈，例如24小时长时间的进行压力测试</li>
+</ul>
+<h2 id="自动化测试缺点"><a href="#自动化测试缺点" class="headerlink" title="自动化测试缺点"></a>自动化测试缺点</h2><ul>
+<li>自动化测试无法解决所有的手动测试，大多数情况用于解决重复性高，机械化的事情</li>
+<li>自动化测试其实比较脆弱，比如，由于开发人员的一个手误，写错了一处代码，测试工程师并不知道，费好大劲写好了测试脚本，人家改一处代码， 测试可能重写测试脚本，脚本维护成本较高</li>
+<li>自动化测试是按部就班的完成预先定义好的步骤，因此不存在“智能”，遇见问题没有处理能力</li>
+<li>只有人为的功能测试，才能够发现更多的软件缺陷，自动化测试优势在回归测试</li>
+<li>自动化测试脚本编写需要具备编程能力，传统的手工测试I程师需要付出较多的努力</li>
+</ul>
+<h2 id="自动化测试的场景"><a href="#自动化测试的场景" class="headerlink" title="自动化测试的场景"></a>自动化测试的场景</h2><ul>
+<li><p>图形化测试</p>
+</li>
+<li><p>移动端测试</p>
+</li>
+<li><p>并发场景</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>软件工程</category>
+      </categories>
+      <tags>
+        <tag>软件工程</tag>
+        <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>软件缺陷报告与JIRA的使用</title>
     <url>/posts/44793.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：记录了测试中的软件缺陷报告以及JIRA的使用。</p>
@@ -5151,42 +5187,6 @@
       <tags>
         <tag>软件工程</tag>
         <tag>JIRA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件测试——自动化测试</title>
-    <url>/posts/Software_testing_1.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>摘要：自动化测试是可以代替大量的重复机械劳动，自动的检测、处理、判断、操纵等，以实现预期目标</p>
-<a id="more"></a>
-
-<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>由及其设备在没有人为干预或者较少干预的情况下，按照认为人为的设计要求，自动的检测、处理、判断、操纵等，以实现预期目标的过程</p>
-<h2 id="自动化测试优点"><a href="#自动化测试优点" class="headerlink" title="自动化测试优点"></a>自动化测试优点</h2><ul>
-<li>自动化测试可以代替大量的重复性机械劳动，测试工程师可以有更多时间测试新的业务功能</li>
-<li>自动化测试可以大幅度提升回归测试的效率</li>
-<li>当有人类无法执行的任务时，自动化测试的作用更加强烈，例如24小时长时间的进行压力测试</li>
-</ul>
-<h2 id="自动化测试缺点"><a href="#自动化测试缺点" class="headerlink" title="自动化测试缺点"></a>自动化测试缺点</h2><ul>
-<li>自动化测试无法解决所有的手动测试，大多数情况用于解决重复性高，机械化的事情</li>
-<li>自动化测试其实比较脆弱，比如，由于开发人员的一个手误，写错了一处代码，测试工程师并不知道，费好大劲写好了测试脚本，人家改一处代码， 测试可能重写测试脚本，脚本维护成本较高</li>
-<li>自动化测试是按部就班的完成预先定义好的步骤，因此不存在“智能”，遇见问题没有处理能力</li>
-<li>只有人为的功能测试，才能够发现更多的软件缺陷，自动化测试优势在回归测试</li>
-<li>自动化测试脚本编写需要具备编程能力，传统的手工测试I程师需要付出较多的努力</li>
-</ul>
-<h2 id="自动化测试的场景"><a href="#自动化测试的场景" class="headerlink" title="自动化测试的场景"></a>自动化测试的场景</h2><ul>
-<li><p>图形化测试</p>
-</li>
-<li><p>移动端测试</p>
-</li>
-<li><p>并发场景</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>软件工程</category>
-      </categories>
-      <tags>
-        <tag>软件工程</tag>
-        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
