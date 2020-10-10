@@ -152,7 +152,7 @@
 <meta property="og:site_name" content="hongCYu&#39;s Blog">
 <meta property="og:description" content="摘要：栈和队列的基本概念、顺序栈/队列、链栈/队列的构成方法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-18T13:40:50.237Z">
+<meta property="og:updated_time" content="2020-09-26T07:31:02.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构——栈和队列">
 <meta name="twitter:description" content="摘要：栈和队列的基本概念、顺序栈/队列、链栈/队列的构成方法。">
@@ -536,7 +536,7 @@
 
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="栈的基本概念"><a href="#栈的基本概念" class="headerlink" title="栈的基本概念"></a>栈的基本概念</h3><ol>
 <li><p>定义</p>
-<p>栈是一种只能在一段进行插入和删除操作的线性表。其中允许进行插入或者删除操作的一端称为栈顶（top）。栈顶由一个称为栈顶指针的位置指示器（其中就是一个变量，对于顺序栈，就是进行记录栈顶元素所在数组位置标号的一个整型变量。对于链式栈，就是记录栈顶元素所在的结点地址的指针）来指示的，它是动态变化的。表的另一端称为栈底，栈底固定不变。栈的插入和删除操作一般称为入栈和出栈。</p>
+<p>栈是一种只能在一端进行插入和删除操作的线性表。其中允许进行插入或者删除操作的一端称为栈顶（top）。栈顶由一个称为栈顶指针的位置指示器（其中就是一个变量，对于顺序栈，就是进行记录栈顶元素所在数组位置标号的一个整型变量。对于链式栈，就是记录栈顶元素所在的结点地址的指针）来指示的，它是动态变化的。表的另一端称为栈底，栈底固定不变。栈的插入和删除操作一般称为入栈和出栈。</p>
 </li>
 <li><p>栈的特点</p>
 <p>由栈的定义，栈的特点是FILO。栈中的元素就好比开进死胡同的车队。</p>
@@ -581,7 +581,7 @@
 <p>4）元素x进栈的操作： ++（st.top); st.data[st.top] =x; 。既然规定了top为-1时栈空，则元素进栈操作必须是先移动指针，再进入元素，因为不存在下标为-1的数组。</p>
 </blockquote>
 <blockquote>
-<p>5）元素x出栈的操作： x = st.data[st.top]; –(st.top); 。进栈操作次序决定了出栈操作次序，由于进栈操作是先变动栈顶指针，再存入元素，因此出栈的操作必须为先取出元素再变动指针。如果上述进栈操作不变的情况下先动指针，再取出元素，则栈顶元素则会丢失，取出的是栈顶下边的元素。</p>
+<p>5）元素x出栈的操作： x = st.data[st.top]; - - (st.top); 。进栈操作次序决定了出栈操作次序，由于进栈操作是先变动栈顶指针，再存入元素，因此出栈的操作必须为先取出元素再变动指针。如果上述进栈操作不变的情况下先动指针，再取出元素，则栈顶元素则会丢失，取出的是栈顶下边的元素。</p>
 </blockquote>
 <p>顺序栈定义：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data[max_size];</span><br><span class="line">    <span class="keyword">int</span> top;</span><br><span class="line">&#125;sq_stack;</span><br></pre></td></tr></table></figure>
