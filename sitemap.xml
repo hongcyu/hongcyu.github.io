@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/Tomcat-server.html</loc>
+    
+    <lastmod>2020-10-16T06:31:23.666Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hongcyu.cn/posts/Nginx.html</loc>
+    
+    <lastmod>2020-10-16T06:30:50.478Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/8-sort.html</loc>
     
     <lastmod>2020-10-10T08:01:28.818Z</lastmod>
