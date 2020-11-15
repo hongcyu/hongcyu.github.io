@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongcyu.cn/posts/wsl.html</loc>
+    
+    <lastmod>2020-11-15T12:07:08.165Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hongcyu.cn/posts/Tomcat-server.html</loc>
     
-    <lastmod>2020-10-16T06:31:23.666Z</lastmod>
+    <lastmod>2020-10-17T13:06:00.396Z</lastmod>
     
   </url>
   
