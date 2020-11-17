@@ -154,7 +154,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20201115195743865.png">
 <meta property="og:image" content="https://gitee.com/hongcyu/image/raw/master/images/image-20201115200214422.png">
-<meta property="og:updated_time" content="2020-11-15T12:08:26.101Z">
+<meta property="og:updated_time" content="2020-11-15T12:32:07.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows中的Linux子系统">
 <meta name="twitter:description" content="摘要：这是一篇介绍Windows Subsystem for Linux安装以及使用的介绍，可以方便地在Windows下使用Linux系统。">
@@ -559,21 +559,15 @@
 
 <p>这样，以后再运行ubuntu它就会默认以root登陆。此外还可以“<strong>ubuntu /?</strong>”查看其更多使用方法。</p>
 <p>然后输入<code>passwd</code>,就可以修改root密码啦</p>
-<h2 id="使用wslconfig命令进行管理"><a href="#使用wslconfig命令进行管理" class="headerlink" title="使用wslconfig命令进行管理"></a>使用wslconfig命令进行管理</h2><ol>
-<li>设置默认运行的linux系统</li>
-</ol>
+<h2 id="使用wslconfig命令进行管理"><a href="#使用wslconfig命令进行管理" class="headerlink" title="使用wslconfig命令进行管理"></a>使用wslconfig命令进行管理</h2><p>1.设置默认运行的linux系统</p>
 <pre>wslconfig /setdefault <distributionname></distributionname></pre>
 
 <p>正如上面所说，如果执行wslconfig /setdefault ubuntu，那么执行bash命令则会运行ubuntu</p>
-<ol start="2">
-<li>卸载linux系统</li>
-</ol>
+<p>2.卸载linux系统</p>
 <pre>wslconfig /unregister <distributionname></distributionname></pre>
 
 <p>当系统出现问题，我们可以卸载后重新安装。如：wslconfig /unregeister ubuntu</p>
-<ol start="3">
-<li>查看已安装的linux系统</li>
-</ol>
+<p>3.查看已安装的linux系统</p>
 <pre>wslconfig /list</pre>
 
 
@@ -603,21 +597,21 @@
     <li class="popular-posts-item">
       
       
+      <div class="popular-posts-title"><a href="\posts\linux-catalog.html" rel="bookmark">Linux下关于目录的操作及其程序设计</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="\posts\linux-file-management.html" rel="bookmark">Linux下文件系统的管理</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="\posts\fedora-1.html" rel="bookmark">Linux-Fedora系统的安装</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\posts\linux-gcc.html" rel="bookmark">Linux下gcc编译器的使用</a></div>
-      
-    </li>
-  
-    <li class="popular-posts-item">
-      
-      
-      <div class="popular-posts-title"><a href="\posts\Linux-file-readandwrite.html" rel="bookmark">Linux下文件读写的操作</a></div>
       
     </li>
   
